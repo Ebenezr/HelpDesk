@@ -43,3 +43,19 @@ body {
     color: $color-dark;
   }
 }
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  border: none;
+}
+
+.pry-btn {
+  background: $color-primary;
+  color: white;
+  font-weight: 600;
+}
+
+.link__icons {
+  color: $color-dark;
+}

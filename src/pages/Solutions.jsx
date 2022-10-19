@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import React from "react";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
-import { BsFillBookmarkFill } from "react-icons/bs";
+import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/avata";
 
 const Solutions = () => {
@@ -9,9 +9,11 @@ const Solutions = () => {
     <section className="main-section">
       <aside className="aside">
         <NavLink className="side__nav__links" to="/questions">
+          <BsFillPatchQuestionFill className="link__icons" />
           <h3>Questions</h3>
         </NavLink>
         <NavLink className="side__nav__links" to="/questions">
+          <BsFillBookmarkFill className="link__icons" />
           <h3>Bookmarks</h3>
         </NavLink>
       </aside>
@@ -50,7 +52,7 @@ const Solutions = () => {
             <TiArrowSortedUp className="chevrons" />
             <p>150</p>
             <TiArrowSortedDown className="chevrons" />
-            <BsFillBookmarkFill className="chevrons bookmark" />
+            {/* <BsFillBookmarkFill className="chevrons bookmark" /> */}
           </div>
           <div className="question-content">
             Try this! Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -70,16 +72,20 @@ const Solutions = () => {
         </div>
         <h2 className="article-title">your answer</h2>
         <div className="your-answer">
-          <textarea name="your-answer" id="your-answer"></textarea>
+          <textarea
+            rows={7}
+            className="answer-text"
+            id="text-answer"
+          ></textarea>
           <button className="btn pry-btn">Post your answer</button>
           <small>
             Not the answer you're looking for? Browse other questions tagged
-            student account or ask your own question.
+            student account or <span>ask your own question.</span>
           </small>
         </div>
       </main>
       <article className="articles">
-        <button className="btn pri-btn">Ask Question</button>
+        <button className="btn pry-btn">Ask Question</button>
         <div className="related"></div>
       </article>
     </section>

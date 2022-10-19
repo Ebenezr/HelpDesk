@@ -5,7 +5,7 @@
   width: 100%;
 
   .aside {
-    border-right: 0.15rem solid grey;
+    border-right: 0.1rem solid grey;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -13,10 +13,14 @@
     .side__nav__links {
       text-decoration: none;
       position: relative;
-      padding: 0.9rem 1.5rem;
+      padding: 0.9rem 1.9rem;
       margin: 0.5rem 0;
+      width: 50%;
       background: $color-bg-variant;
       color: $color-dark;
+      display: flex;
+      gap: 0.7rem;
+      align-items: center;
       &::after {
         position: absolute;
         right: 0;
@@ -97,9 +101,18 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      .answer-text {
+      }
+      small {
+        color: $color-info-dark;
+        font-weight: 300;
+        span {
+          color: $color-primary;
+        }
+      }
     }
   }
   .articles {
-    // border-left: 0.15rem solid grey;
+    padding-top: 1rem;
   }
 }
