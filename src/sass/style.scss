@@ -3,7 +3,43 @@
 @import "./variables";
 
 @import "./header";
+@import "./solutions";
+
+*,
+::after,
+::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+}
 
 body {
   font-family: "Poppins", sans-serif;
+  background: white;
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+.submenu {
+  width: 3rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .chevrons {
+    font-size: 3rem;
+    color: $color-info-dark;
+    &.bookmark {
+      font-size: 2rem;
+    }
+  }
+  p {
+    color: $color-dark;
+  }
 }

@@ -1,0 +1,105 @@
+.main-section {
+  display: grid;
+  grid-template-columns: 25% auto 25%;
+  height: 100%;
+  width: 100%;
+
+  .aside {
+    border-right: 0.15rem solid grey;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 10rem;
+    .side__nav__links {
+      text-decoration: none;
+      position: relative;
+      padding: 0.9rem 1.5rem;
+      margin: 0.5rem 0;
+      background: $color-bg-variant;
+      color: $color-dark;
+      &::after {
+        position: absolute;
+        right: 0;
+        top: 0;
+        content: "";
+        height: 100%;
+        width: 0.5rem;
+        background: $color-accent;
+      }
+    }
+  }
+  .main-section-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    .section-header {
+      h3 {
+        font-weight: 500;
+        font-size: 2rem;
+      }
+    }
+    .article-title {
+      font-weight: 500;
+      font-size: 1.5rem;
+    }
+    .question {
+      padding: 0.5rem 0;
+      border-bottom: 0.1rem solid $color-info-dark;
+      display: grid;
+      grid-template-columns: 10% auto;
+      grid-template-rows: auto 20%;
+      grid-template-areas:
+        "submenu content"
+        "submenu card";
+      .user-card {
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        background: $color-primary-variant;
+        width: 20rem;
+
+        grid-area: card;
+        justify-self: flex-end;
+        display: grid;
+        gap: 0.5em;
+        grid-template-columns: 20% auto;
+        grid-template-rows: 25% auto;
+        grid-template-areas:
+          "status status"
+          "avatar username"
+          "avatar username";
+        small {
+          color: $color-primary;
+          grid-area: status;
+          font-weight: 300;
+        }
+        .avatar {
+          grid-area: avatar;
+        }
+        .username {
+          grid-area: username;
+          display: grid;
+          align-items: center;
+          font-weight: 500;
+          font-size: 1.5rem;
+          color: $color-primary;
+        }
+      }
+      .question-content {
+        grid-area: content;
+        padding-top: 1rem;
+      }
+      .submenu {
+        grid-area: submenu;
+      }
+    }
+    .your-answer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+  .articles {
+    // border-left: 0.15rem solid grey;
+  }
+}
