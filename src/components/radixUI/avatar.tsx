@@ -1,4 +1,3 @@
-import React from "react";
 import { styled } from "@stitches/react";
 import { violet, blackA } from "@radix-ui/colors";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";

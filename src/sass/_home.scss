@@ -38,10 +38,12 @@
         }
       }
       .question-title {
-        color: $color-primary;
         grid-area: quiz;
-        font-weight: 500;
-        font-size: 1.2rem;
+        p {
+          color: $color-primary;
+          font-weight: 500;
+          font-size: 1.5rem;
+        }
       }
       .labels-tags {
         grid-area: tags;

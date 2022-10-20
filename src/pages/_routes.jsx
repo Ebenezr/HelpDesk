@@ -7,7 +7,7 @@ const Routing = () => (
   <Routes>
     <Route path="/" element={<Landing />} />
     <Route path="home" element={<Home />} />
-    <Route path="solutions" element={<Solutions />} />
+    <Route path="solution" element={<Solutions />} />
   </Routes>
 );
 export default Routing;

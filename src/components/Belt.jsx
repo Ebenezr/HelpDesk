@@ -3,7 +3,7 @@ import React from "react";
 const styles = {
   wrapper: {
     backgroundColor: "#0a95ff",
-    height: "100px",
+    height: "200px",
     marginTop: "150px",
     textAlign: "center",
   },
@@ -33,7 +33,6 @@ const styles = {
   searchInput: {
     fontFamily: "Poppins, sans-serif",
     fontWeight: "bold",
-
     color: "#fff",
   },
 };

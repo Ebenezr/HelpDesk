@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import React from "react";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
-import { Avatar, AvatarFallback, AvatarImage } from "../components/avata";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/radixUI/avatar";
 
 const Solutions = () => {
   return (

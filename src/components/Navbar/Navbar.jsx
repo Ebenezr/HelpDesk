@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const styles = {
   span: {
@@ -24,6 +25,7 @@ const styles = {
     padding: "20px",
     flexWrap: "nowrap",
     color: "#7a7878",
+    textDecoration: "none",
   },
   header: {
     fontFamily: "Poppins, sans-serif",
@@ -52,10 +54,18 @@ function Navbar() {
           <a style={styles.header}>
             HELP<span style={styles.span}>DESK</span>
           </a>
-          <a style={styles.items}>HOME</a>
-          <a style={styles.items}>ASK</a>
-          <a style={styles.items}>QUESTIONS</a>
-          <a style={styles.items}>FAQS</a>
+          <NavLink to="/" style={styles.items}>
+            HOME
+          </NavLink>
+          <NavLink to="ask" style={styles.items}>
+            ASK
+          </NavLink>
+          <NavLink to="home" style={styles.items}>
+            QUESTIONS
+          </NavLink>
+          <NavLink to="home" style={styles.items}>
+            FAQS
+          </NavLink>
         </div>
         <button style={styles.button}>LOGIN</button>
       </div>

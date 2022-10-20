@@ -1,28 +1,15 @@
-import React from "react";
-import Navbar from "../components/Navbar/Navbar";
-import Footer from "../features/Footer";
-import Welcome from "../features/WelcomeMessage";
-import Footers from "../features/Footer";
-import Belt from "../features/Belt"
-
-
-const styles = {
-    Landing: {
-        backgroundColor: "#f1f2f3",
-        heght: "1100px"
-    }
-}
+import Belt from "../components/Belt";
+import LandingFooter from "../components/Landing-Footer";
+import Welcome from "../components/WelcomeMessage";
 
 function Landing() {
-    return(
-        <div style={styles.Landing}>
-            <Navbar/>
-            <Welcome/>
-            <Belt/>
-            <Footers/>
-        </div>
-        
-    )
+  return (
+    <div>
+      <Welcome />
+      <Belt />
+      <LandingFooter />
+    </div>
+  );
 }
 
 export default Landing;
