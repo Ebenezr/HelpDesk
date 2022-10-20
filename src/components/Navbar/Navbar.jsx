@@ -13,7 +13,7 @@ const styles = {
     padding: "20px",
     justifyContent: "end",
     alignItems: "center",
-    borderBottom: "1px solid #aba8a8",
+    boxShadow: "rgba(33, 35, 38, 0.1) 0px 10px 10px -10px",
   },
 
   items: {
