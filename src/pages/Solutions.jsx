@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../components/avata";
 const Solutions = () => {
   return (
     <section className="main-section">
+      {/* side bar */}
       <aside className="aside">
         <NavLink className="side__nav__links" to="/questions">
           <BsFillPatchQuestionFill className="link__icons" />
@@ -17,6 +18,7 @@ const Solutions = () => {
           <h3>Bookmarks</h3>
         </NavLink>
       </aside>
+      {/* main content area  */}
       <main className="main-section-content">
         <div className="section-header">
           <h3>Enabling two step authenthification</h3>
@@ -24,6 +26,7 @@ const Solutions = () => {
         </div>
 
         <div className="question">
+          {/* submenu for question votting and bookmarking */}
           <div className="submenu">
             <TiArrowSortedUp className="chevrons" />
             <p>23</p>
@@ -39,8 +42,10 @@ const Solutions = () => {
           </div>
           <div className="user-card">
             <small>asked 3 days ago</small>
+            {/* image component */}
             <Avatar className="avatar">
-              <AvatarImage src=" " alt="Pedro Duarte" />
+              <AvatarImage src=" " alt="Avatar" />
+              {/* if image isnt available revert to user initials */}
               <AvatarFallback>AN</AvatarFallback>
             </Avatar>
             <p className="username">Allan</p>
@@ -48,6 +53,7 @@ const Solutions = () => {
         </div>
         <h2 className="article-title">1 answer</h2>
         <div className="question">
+          {/* submenu for solution votting */}
           <div className="submenu">
             <TiArrowSortedUp className="chevrons" />
             <p>150</p>
@@ -84,6 +90,7 @@ const Solutions = () => {
           </small>
         </div>
       </main>
+      {/* articles sections */}
       <article className="articles">
         <button className="btn pry-btn">Ask Question</button>
         <div className="related"></div>

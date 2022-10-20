@@ -4,6 +4,7 @@
   height: 100%;
   width: 100%;
 
+  //side bar
   .aside {
     border-right: 0.1rem solid grey;
     display: flex;
@@ -32,6 +33,7 @@
       }
     }
   }
+  //main center content area
   .main-section-content {
     display: flex;
     flex-direction: column;
@@ -111,6 +113,7 @@
       }
     }
   }
+  //articles sections
   .articles {
     padding-top: 1rem;
   }
