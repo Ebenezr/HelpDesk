@@ -1,13 +1,12 @@
-import Home from "./pages/Home";
-import Solutions from "./pages/Solutions";
-import "./sass/style.scss";
-
+// import "./sass/style.scss";
+import React from "react";
+import Landing from "./pages/Landing";
 function App() {
   return (
     <>
-      <Home />
+      <Landing/>
     </>
-  );
+  )
 }
 
 export default App;
