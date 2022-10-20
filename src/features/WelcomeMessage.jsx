@@ -38,7 +38,7 @@ const styles = {
     fontWeight: "0",
     height: "30px",
     width: "8%",
-    backgroundColor: "#f2dece",
+    backgroundColor: "#fcede1",
     borderRadius: "7px",
     color: "#f48225",
     borderColor: "#f48225",
