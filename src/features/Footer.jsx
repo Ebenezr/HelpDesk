@@ -4,7 +4,7 @@ const styles = {
     footer: {
         // padding: "350px",
         marginLeft: "45px",
-        marginTop: "350px",
+        marginTop: "100px",
         textAlign: "center"
     },
     starter: {
