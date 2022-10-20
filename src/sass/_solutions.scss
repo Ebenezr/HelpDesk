@@ -6,7 +6,7 @@
 
   //side bar
   .aside {
-    border-right: 0.1rem solid grey;
+    border-right: 0.1rem solid $color-info-dark;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
