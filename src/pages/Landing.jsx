@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
+import Welcome from "../features/WelcomeMessage";
 
 const styles = {
     Landing: {
@@ -12,6 +13,7 @@ function Landing() {
     return(
         <div style={styles.Landing}>
             <Navbar/>
+            <Welcome/>
         </div>
         
     )
