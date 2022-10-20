@@ -5,6 +5,7 @@ import Welcome from "../features/WelcomeMessage";
 import Footers from "../features/Footer";
 import Belt from "../features/Belt"
 
+
 const styles = {
     Landing: {
         backgroundColor: "#f1f2f3",
@@ -16,6 +17,7 @@ function Landing() {
     return(
         <div style={styles.Landing}>
             <Navbar/>
+
             <Welcome/>
             <Belt/>
             <Footers/>
