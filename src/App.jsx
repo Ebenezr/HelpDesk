@@ -1,12 +1,15 @@
-// import "./sass/style.scss";
+import "./sass/style.scss";
 import React from "react";
-import Landing from "./pages/Landing";
+import Navbar from "./components/Navbar/Navbar";
+import Solutions from "./pages/Solutions";
+
 function App() {
   return (
     <>
-      <Landing/>
+      <Navbar />
+      <Solutions />
     </>
-  )
+  );
 }
 
 export default App;
