@@ -1,0 +1,62 @@
+.main-section {
+  //main center content area
+  .main-section-content {
+    .user-account {
+      display: grid;
+      grid-template-columns: 15% auto 18%;
+      align-items: center;
+      gap: 0.5rem;
+      span {
+        h3 {
+          font-size: 1.4rem;
+          font-weight: 500;
+          color: $color-primary;
+        }
+        small {
+          color: $color-info-dark;
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+        }
+      }
+    }
+    .user-articles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0.5rem;
+      div {
+        padding: 0.5rem;
+        overflow: hidden;
+        p {
+          color: $color-info-dark;
+          font-size: 1.2rem;
+        }
+        .span-card {
+          border: solid $color-info-dark 0.1rem;
+          border-radius: 0.3rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          max-height: 15rem;
+
+          .tags-wrapper {
+            display: flex;
+            flex-direction: column;
+          }
+          span {
+            display: flex;
+            gap: 0.2rem;
+            small {
+              color: $color-primary;
+            }
+          }
+        }
+      }
+    }
+  }
+  //articles sections
+  .articles {
+    padding-top: 1rem;
+  }
+}

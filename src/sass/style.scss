@@ -3,6 +3,7 @@
 @import "./variables";
 
 @import "./home";
+@import "./profile";
 @import "./solutions";
 
 *,
@@ -55,7 +56,12 @@ body {
   color: white;
   font-weight: 600;
 }
-
+.sec-btn {
+  background: $color-accent-variant;
+  color: $color-accent;
+  font-weight: 500;
+  border: solid $color-accent 0.1rem;
+}
 .link__icons {
   color: $color-dark;
 }

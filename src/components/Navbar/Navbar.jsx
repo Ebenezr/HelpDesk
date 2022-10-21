@@ -54,16 +54,16 @@ function Navbar() {
           <a style={styles.header}>
             HELP<span style={styles.span}>DESK</span>
           </a>
-          <NavLink to="/" style={styles.items}>
+          <NavLink to="profile" style={styles.items}>
             HOME
           </NavLink>
           <NavLink to="ask" style={styles.items}>
             ASK
           </NavLink>
-          <NavLink to="home" style={styles.items}>
+          <NavLink to="questions" style={styles.items}>
             QUESTIONS
           </NavLink>
-          <NavLink to="home" style={styles.items}>
+          <NavLink to="profile" style={styles.items}>
             FAQS
           </NavLink>
         </div>
