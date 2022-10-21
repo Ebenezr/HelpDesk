@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
+import { MdAccountCircle } from "react-icons/md";
 
 function Home() {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ function Home() {
         <NavLink className="side__nav__links" to="/questions">
           <BsFillBookmarkFill className="link__icons" />
           <h3>Bookmarks</h3>
+        </NavLink>
+        <NavLink className="side__nav__links" to="/profile">
+          <MdAccountCircle className="link__icons" />
+          <h3>Profile</h3>
         </NavLink>
       </aside>
       {/* main content area  */}
