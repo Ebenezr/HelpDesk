@@ -6,6 +6,8 @@ import Searchbar from "./components/Navbar/Searchbar";
 import Footer from "./components/Navbar/Footer";
 import { getQuestions } from "./features/questions/questionSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Landing from "./pages/Landing";
+import Solutions from "../src/pages/Solutions";
 
 function App() {
   const dispatch = useDispatch();

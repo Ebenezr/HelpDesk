@@ -1,0 +1,3 @@
+globalconfig=/etc/npmrc
+globalignorefile=/etc/npmignore
+prefix=/usr/local
