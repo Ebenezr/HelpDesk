@@ -43,6 +43,7 @@ const styles = {
     color: "#f1f2f3",
     border: "none",
     padding: "3px 12px",
+
   },
 };
 
@@ -66,6 +67,7 @@ function Navbar() {
           <NavLink to="profile" style={styles.items}>
             FAQS
           </NavLink>
+
         </div>
         <button style={styles.button}>LOGIN</button>
       </div>

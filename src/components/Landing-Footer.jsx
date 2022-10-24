@@ -3,8 +3,8 @@ import React from "react";
 const styles = {
   footer: {
     // padding: "350px",
-    marginLeft: "45px",
-    marginTop: "100px",
+    marginLeft: "25px",
+    marginTop: "20px",
     textAlign: "center",
   },
   starter: {
