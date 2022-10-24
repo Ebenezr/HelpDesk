@@ -1,9 +1,6 @@
-import React from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
-  Avatar,
-  AvatarFallback,
   AvatarFallbackLg,
   AvatarImage,
   AvatarLg,
@@ -11,6 +8,7 @@ import {
 import { MdEmail, MdAccountCircle } from "react-icons/md";
 
 function Userprofile() {
+  const navigate = useNavigate();
   return (
     <section className="main-section">
       {/* side bar */}
@@ -42,7 +40,12 @@ function Userprofile() {
               <MdEmail /> ebenezar.bukosia@student.moringaschool.com
             </small>
           </span>
-          <button className="btn sec-btn">Edit profile</button>
+          <button
+            className="btn sec-btn"
+            onClick={() => navigate("/myaccount")}
+          >
+            Edit profile
+          </button>
         </div>
         <article className="user-articles">
           <div className="user-questions-wrapper">

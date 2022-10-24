@@ -1,0 +1,45 @@
+.main-section {
+  height: 100%;
+  //main center content area
+  .main-section-content {
+    .user-account {
+      display: grid;
+      grid-template-columns: 15% auto 18%;
+      align-items: center;
+      gap: 0.5rem;
+      span {
+        h3 {
+          font-size: 1.4rem;
+          font-weight: 500;
+          color: $color-primary;
+        }
+        small {
+          color: $color-info-dark;
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+        }
+      }
+    }
+    .user-articles {
+      //background: green;
+      .edit-profile {
+        border-radius: 0.5rem;
+        border: solid $color-info-dark 0.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+      }
+      .input_group {
+        display: flex;
+        flex-direction: column;
+        .inputs {
+          padding: 0.5rem 0.7rem;
+          border-radius: 0.3rem;
+          border: solid $color-info-dark 0.1rem;
+        }
+      }
+    }
+  }
+}
