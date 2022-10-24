@@ -18,6 +18,7 @@ export const getQuestions = createAsyncThunk(
 //initialstate values
 const initialState = {
   allquestions: [],
+  total: 0,
   isLoading: true,
 };
 
@@ -31,8 +32,8 @@ const quetionsSlice = createSlice({
     [getQuestions.fulfilled]: (state, action) => {
       console.log(action);
       state.isLoading = false;
-      state.allquestions = action.payload;
-      //   state.votes = action.payload.votes;
+      state.allquestions = action.payload.questions;
+      state.total = action.payload.count;
     },
     [getQuestions.rejected]: (state, action) => {
       state.isLoading = false;

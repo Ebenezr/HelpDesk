@@ -7,11 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 function Home() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { allquestions, votes } = useSelector((store) => store.questions);
+  const { allquestions, total } = useSelector((store) => store.questions);
 
-  useEffect(() => {
-    console.log(allquestions);
-  }, []);
   return (
     <section className="main-section">
       {/* side bar */}
@@ -33,21 +30,21 @@ function Home() {
       <main className="main-section-content">
         <div className="section-header">
           <h3>All Questions</h3>
-          <small>{allquestions.length} questions</small>
+          <small>{total} questions</small>
         </div>
         {allquestions?.map((question) => (
-          <div className="quiz-card">
+          <div className="quiz-card" key={question?.id}>
             {/* question cards */}
             <div className="quiz-card-status">
               <p>{question?.votes} votes</p>
-              <small>{question?.solutions.length} answers</small>
+              <small>{question?.solutions?.length} answers</small>
             </div>
             <div className="question-title">
               <p>{question?.title}</p>
             </div>
             <div className="labels-tags">
               {question?.tags?.map((tag) => (
-                <small>{tag?.name}</small>
+                <small key={tag?.id}>{tag?.name}</small>
               ))}
             </div>
             <div className="userinfo-card">
