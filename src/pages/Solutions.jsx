@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
 import {
@@ -9,7 +9,10 @@ import {
 } from "../components/radixUI/avatar";
 import { MdAccountCircle } from "react-icons/md";
 
-const Solutions = () => {
+const Solutions = ({ props }) => {
+  useEffect(() => {
+    console.log(props);
+  }, []);
   return (
     <section className="main-section">
       {/* side bar */}
@@ -30,7 +33,7 @@ const Solutions = () => {
       {/* main content area  */}
       <main className="main-section-content">
         <div className="section-header">
-          <h3>Enabling two step authenthification</h3>
+          <h3>{props?.title}</h3>
           <small>Asked 2 days ago</small>
         </div>
 
@@ -42,13 +45,7 @@ const Solutions = () => {
             <TiArrowSortedDown className="chevrons" />
             <BsFillBookmarkFill className="chevrons bookmark" />
           </div>
-          <div className="question-content">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro sequi
-            molestiae nesciunt recusandae excepturi reprehenderit eaque iure
-            quas aliquid culpa? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Porro sequi molestiae nesciunt recusandae
-            excepturi reprehenderit eaque iure quas aliquid culpa?
-          </div>
+          <div className="question-content">{props?.description}</div>
           <div className="user-card">
             <small>asked 3 days ago</small>
             {/* image component */}
@@ -57,34 +54,30 @@ const Solutions = () => {
               {/* if image isnt available revert to user initials */}
               <AvatarFallback>AN</AvatarFallback>
             </Avatar>
-            <p className="username">Allan</p>
+            <p className="username">{props?.user?.username}</p>
           </div>
         </div>
-        <h2 className="article-title">1 answer</h2>
-        <div className="question">
-          {/* submenu for solution votting */}
-          <div className="submenu">
-            <TiArrowSortedUp className="chevrons" />
-            <p>150</p>
-            <TiArrowSortedDown className="chevrons" />
-            {/* <BsFillBookmarkFill className="chevrons bookmark" /> */}
+        <h2 className="article-title">{props?.solution.length} Answers</h2>
+        {props?.solutions?.map((soln) => (
+          <div className="question" key={soln.id}>
+            {/* submenu for solution votting */}
+            <div className="submenu">
+              <TiArrowSortedUp className="chevrons" />
+              <p>{soln?.votes}</p>
+              <TiArrowSortedDown className="chevrons" />
+              {/* <BsFillBookmarkFill className="chevrons bookmark" /> */}
+            </div>
+            <div className="question-content">{soln?.description}</div>
+            <div className="user-card">
+              <small>answered 3s ago</small>
+              <Avatar className="avatar">
+                <AvatarImage src=" " alt="Pedro Duarte" />
+                <AvatarFallback>EB</AvatarFallback>
+              </Avatar>
+              <p className="username">Ebenezar</p>
+            </div>
           </div>
-          <div className="question-content">
-            Try this! Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Porro sequi molestiae nesciunt recusandae excepturi reprehenderit
-            eaque iure quas aliquid culpa? Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Porro sequi molestiae nesciunt
-            recusandae excepturi reprehenderit eaque iure quas aliquid culpa?
-          </div>
-          <div className="user-card">
-            <small>answered 3s ago</small>
-            <Avatar className="avatar">
-              <AvatarImage src=" " alt="Pedro Duarte" />
-              <AvatarFallback>EB</AvatarFallback>
-            </Avatar>
-            <p className="username">Ebenezar</p>
-          </div>
-        </div>
+        ))}
         <h2 className="article-title">your answer</h2>
         <div className="your-answer">
           <textarea
