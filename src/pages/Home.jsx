@@ -26,6 +26,7 @@ import { getQuestions } from "../features/questions/questionSlice";
 
 function Home() {
   const navigate = useNavigate();
+  const [quiz, setQuiz] = useState();
   const { isLoading, allquestions, total, total_pages } = useSelector(
     (store) => store.questions
   );
@@ -70,7 +71,7 @@ function Home() {
               <div className="question-title">
                 <p
                   onClick={() => {
-                    <Solutions props={question} />;
+                    <Solutions question={question} />;
                     navigate("/solutions");
                   }}
                 >

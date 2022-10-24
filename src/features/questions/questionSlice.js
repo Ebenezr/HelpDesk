@@ -66,7 +66,7 @@ const quetionsSlice = createSlice({
       })
       .addCase(getQuestions.rejected, (state, action) => {
         state.isLoading = false;
-        initialState.error = action.error.message;
+        // initialState.error = action.error.message;
       });
   },
 });

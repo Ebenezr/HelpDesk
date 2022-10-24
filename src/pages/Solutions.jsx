@@ -9,9 +9,9 @@ import {
 } from "../components/radixUI/avatar";
 import { MdAccountCircle } from "react-icons/md";
 
-const Solutions = ({ props }) => {
+const Solutions = ({ question }) => {
   useEffect(() => {
-    console.log(props);
+    console.log(question);
   }, []);
   return (
     <section className="main-section">
@@ -33,7 +33,7 @@ const Solutions = ({ props }) => {
       {/* main content area  */}
       <main className="main-section-content">
         <div className="section-header">
-          <h3>{props?.title}</h3>
+          <h3>{question?.title}</h3>
           <small>Asked 2 days ago</small>
         </div>
 
@@ -45,7 +45,7 @@ const Solutions = ({ props }) => {
             <TiArrowSortedDown className="chevrons" />
             <BsFillBookmarkFill className="chevrons bookmark" />
           </div>
-          <div className="question-content">{props?.description}</div>
+          <div className="question-content">{question?.description}</div>
           <div className="user-card">
             <small>asked 3 days ago</small>
             {/* image component */}
@@ -54,11 +54,11 @@ const Solutions = ({ props }) => {
               {/* if image isnt available revert to user initials */}
               <AvatarFallback>AN</AvatarFallback>
             </Avatar>
-            <p className="username">{props?.user?.username}</p>
+            <p className="username">{question?.user?.username}</p>
           </div>
         </div>
-        <h2 className="article-title">{props?.solution.length} Answers</h2>
-        {props?.solutions?.map((soln) => (
+        <h2 className="article-title">{question?.solution.length} Answers</h2>
+        {question?.solutions?.map((soln) => (
           <div className="question" key={soln.id}>
             {/* submenu for solution votting */}
             <div className="submenu">
