@@ -3,8 +3,8 @@ import React from "react";
 const styles = {
   wrapper: {
     backgroundColor: "#0a95ff",
-    height: "200px",
-    marginTop: "150px",
+    height: "130px",
+    marginTop: "120px",
     textAlign: "center",
   },
   starter: {
@@ -22,6 +22,8 @@ const styles = {
     fontFamily: "Poppins, sans-serif",
     fontSize: "12px",
     borderRadius: "30px",
+    // marginTop: "100px",
+
   },
   searchWrapper: {
     fontFamily: "Poppins, sans-serif",
@@ -29,11 +31,18 @@ const styles = {
     backgroundColor: "#f48225",
     color: "#fff",
     borderColor: "#f48225",
+    marginTop: "65px",
+    borderRadius: "5px",
+    height: "30px",
+    width: "90px"
   },
   searchInput: {
     fontFamily: "Poppins, sans-serif",
     fontWeight: "bold",
     color: "#fff",
+    borderRadius: "10px",
+    height: "30px",
+    
   },
 };
 
