@@ -2,7 +2,12 @@ import { NavLink } from "react-router-dom";
 import React from "react";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
-import { Avatar, AvatarFallback, AvatarImage } from "../components/avata";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../components/radixUI/avatar";
+import { MdAccountCircle } from "react-icons/md";
 
 const Solutions = () => {
   return (
@@ -16,6 +21,10 @@ const Solutions = () => {
         <NavLink className="side__nav__links" to="/questions">
           <BsFillBookmarkFill className="link__icons" />
           <h3>Bookmarks</h3>
+        </NavLink>
+        <NavLink className="side__nav__links" to="/profile">
+          <MdAccountCircle className="link__icons" />
+          <h3>Profile</h3>
         </NavLink>
       </aside>
       {/* main content area  */}

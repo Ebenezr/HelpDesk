@@ -1,10 +1,10 @@
+import Belt from "../components/Belt";
+import LandingFooter from "../components/Landing-Footer";
+import Register from "../components/Registry";
+import Welcome from "../components/WelcomeMessage";
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
-import Footer from "../features/Footer";
-import Welcome from "../features/WelcomeMessage";
-import Footers from "../features/Footer";
-import Belt from "../features/Belt"
-
+//import Footers from "../features/Footer";
 
 const styles = {
     Landing: {
@@ -14,16 +14,13 @@ const styles = {
 }
 
 function Landing() {
-    return(
-        <div style={styles.Landing}>
-            <Navbar/>
-
-            <Welcome/>
-            <Belt/>
-            <Footers/>
-        </div>
-        
-    )
-}
+  return (
+    <div>
+      <Welcome />
+      <Register/>
+      <Belt />
+      <LandingFooter />
+    </div>
+  );
 
 export default Landing;

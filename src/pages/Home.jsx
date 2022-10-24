@@ -1,10 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React from "react";
-import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
-import { Avatar, AvatarFallback, AvatarImage } from "../components/avata";
+import { MdAccountCircle } from "react-icons/md";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <section className="main-section">
       {/* side bar */}
@@ -16,6 +17,10 @@ function Home() {
         <NavLink className="side__nav__links" to="/questions">
           <BsFillBookmarkFill className="link__icons" />
           <h3>Bookmarks</h3>
+        </NavLink>
+        <NavLink className="side__nav__links" to="/profile">
+          <MdAccountCircle className="link__icons" />
+          <h3>Profile</h3>
         </NavLink>
       </aside>
       {/* main content area  */}
@@ -31,123 +36,82 @@ function Home() {
             <small>2 answers</small>
           </div>
           <div className="question-title">
-            Try this! Loremipsum dolor sit ipsum dolor sit amet consectetur
+            <p>Enabling two step authenthification</p>
           </div>
           <div className="labels-tags">
             <small>account</small>
-            <small>student support</small>
-            <small>student support</small>
+            <small>student mail</small>
+            <small>canva</small>
             <small>student support</small>
           </div>
           <div className="userinfo-card">
-            <p className="username">Ebenezar</p>
-            <small>asked 2days ago</small>
+            <p className="username">Cecilia</p>
+            <small>asked 14 days ago</small>
           </div>
         </div>
         <div className="quiz-card">
           {/* question cards */}
           <div className="quiz-card-status">
-            <p>15 votes</p>
-            <small>2 answers</small>
+            <p>0 votes</p>
+            <small>0 answers</small>
           </div>
           <div className="question-title">
-            Try this! Loremipsum dolor sit ipsum dolor sit amet consectetur
+            <p>Deploying Rails api</p>
           </div>
           <div className="labels-tags">
             <small>account</small>
-            <small>student support</small>
-            <small>student support</small>
-            <small>student support</small>
+            <small>phase 4</small>
+            <small>ruby</small>
+            <small>heroku</small>
           </div>
           <div className="userinfo-card">
-            <p className="username">Ebenezar</p>
-            <small>asked 2days ago</small>
+            <p className="username">Alice</p>
+            <small>asked 2 min ago</small>
           </div>
         </div>
         <div className="quiz-card">
           {/* question cards */}
           <div className="quiz-card-status">
-            <p>15 votes</p>
-            <small>2 answers</small>
+            <p>23 votes</p>
+            <small>4 answers</small>
           </div>
           <div className="question-title">
-            Try this! Loremipsum dolor sit ipsum dolor sit amet consectetur
+            <p>Filling Health form</p>
           </div>
           <div className="labels-tags">
-            <small>account</small>
             <small>student support</small>
-            <small>student support</small>
-            <small>student support</small>
+            <small>space</small>
           </div>
           <div className="userinfo-card">
-            <p className="username">Ebenezar</p>
-            <small>asked 2days ago</small>
+            <p className="username">Allan</p>
+            <small>asked 1 sec ago</small>
           </div>
         </div>
         <div className="quiz-card">
           {/* question cards */}
           <div className="quiz-card-status">
-            <p>15 votes</p>
-            <small>2 answers</small>
+            <p>1 votes</p>
+            <small>6 answers</small>
           </div>
           <div className="question-title">
-            Try this! Loremipsum dolor sit ipsum dolor sit amet consectetur
+            <p>Can’t login on canva</p>
           </div>
           <div className="labels-tags">
             <small>account</small>
-            <small>student support</small>
-            <small>student support</small>
+            <small>canva</small>
             <small>student support</small>
           </div>
           <div className="userinfo-card">
             <p className="username">Ebenezar</p>
-            <small>asked 2days ago</small>
-          </div>
-        </div>
-        <div className="quiz-card">
-          {/* question cards */}
-          <div className="quiz-card-status">
-            <p>15 votes</p>
-            <small>2 answers</small>
-          </div>
-          <div className="question-title">
-            Try this! Loremipsum dolor sit ipsum dolor sit amet consectetur
-          </div>
-          <div className="labels-tags">
-            <small>account</small>
-            <small>student support</small>
-            <small>student support</small>
-            <small>student support</small>
-          </div>
-          <div className="userinfo-card">
-            <p className="username">Ebenezar</p>
-            <small>asked 2days ago</small>
-          </div>
-        </div>
-        <div className="quiz-card">
-          {/* question cards */}
-          <div className="quiz-card-status">
-            <p>15 votes</p>
-            <small>2 answers</small>
-          </div>
-          <div className="question-title">
-            Try this! Loremipsum dolor sit ipsum dolor sit amet consectetur
-          </div>
-          <div className="labels-tags">
-            <small>account</small>
-            <small>student support</small>
-            <small>student support</small>
-            <small>student support</small>
-          </div>
-          <div className="userinfo-card">
-            <p className="username">Ebenezar</p>
-            <small>asked 2days ago</small>
+            <small>asked 2 days ago</small>
           </div>
         </div>
       </main>
       {/* articles sections */}
       <article className="articles">
-        <button className="btn pry-btn">Ask Question</button>
+        <button className="btn pry-btn" onClick={() => navigate("/solution")}>
+          Ask Question
+        </button>
         <div className="related"></div>
       </article>
     </section>
