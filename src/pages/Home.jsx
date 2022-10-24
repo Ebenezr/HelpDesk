@@ -1,11 +1,17 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 
 function Home() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { allquestions, votes } = useSelector((store) => store.questions);
 
+  useEffect(() => {
+    console.log(allquestions);
+  }, []);
   return (
     <section className="main-section">
       {/* side bar */}
@@ -27,85 +33,29 @@ function Home() {
       <main className="main-section-content">
         <div className="section-header">
           <h3>All Questions</h3>
-          <small>356 questions</small>
+          <small>{allquestions.length} questions</small>
         </div>
-        <div className="quiz-card">
-          {/* question cards */}
-          <div className="quiz-card-status">
-            <p>15 votes</p>
-            <small>2 answers</small>
+        {allquestions?.map((question) => (
+          <div className="quiz-card">
+            {/* question cards */}
+            <div className="quiz-card-status">
+              <p>{question?.votes} votes</p>
+              <small>{question?.solutions.length} answers</small>
+            </div>
+            <div className="question-title">
+              <p>{question?.title}</p>
+            </div>
+            <div className="labels-tags">
+              {question?.tags?.map((tag) => (
+                <small>{tag?.name}</small>
+              ))}
+            </div>
+            <div className="userinfo-card">
+              <p className="username">{question?.user?.username}</p>
+              <small>asked 14 days ago</small>
+            </div>
           </div>
-          <div className="question-title">
-            <p>Enabling two step authenthification</p>
-          </div>
-          <div className="labels-tags">
-            <small>account</small>
-            <small>student mail</small>
-            <small>canva</small>
-            <small>student support</small>
-          </div>
-          <div className="userinfo-card">
-            <p className="username">Cecilia</p>
-            <small>asked 14 days ago</small>
-          </div>
-        </div>
-        <div className="quiz-card">
-          {/* question cards */}
-          <div className="quiz-card-status">
-            <p>0 votes</p>
-            <small>0 answers</small>
-          </div>
-          <div className="question-title">
-            <p>Deploying Rails api</p>
-          </div>
-          <div className="labels-tags">
-            <small>account</small>
-            <small>phase 4</small>
-            <small>ruby</small>
-            <small>heroku</small>
-          </div>
-          <div className="userinfo-card">
-            <p className="username">Alice</p>
-            <small>asked 2 min ago</small>
-          </div>
-        </div>
-        <div className="quiz-card">
-          {/* question cards */}
-          <div className="quiz-card-status">
-            <p>23 votes</p>
-            <small>4 answers</small>
-          </div>
-          <div className="question-title">
-            <p>Filling Health form</p>
-          </div>
-          <div className="labels-tags">
-            <small>student support</small>
-            <small>space</small>
-          </div>
-          <div className="userinfo-card">
-            <p className="username">Allan</p>
-            <small>asked 1 sec ago</small>
-          </div>
-        </div>
-        <div className="quiz-card">
-          {/* question cards */}
-          <div className="quiz-card-status">
-            <p>1 votes</p>
-            <small>6 answers</small>
-          </div>
-          <div className="question-title">
-            <p>Can’t login on canva</p>
-          </div>
-          <div className="labels-tags">
-            <small>account</small>
-            <small>canva</small>
-            <small>student support</small>
-          </div>
-          <div className="userinfo-card">
-            <p className="username">Ebenezar</p>
-            <small>asked 2 days ago</small>
-          </div>
-        </div>
+        ))}
       </main>
       {/* articles sections */}
       <article className="articles">
