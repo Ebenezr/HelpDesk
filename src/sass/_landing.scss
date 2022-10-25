@@ -13,8 +13,46 @@
     align-items: center;
     justify-content: space-around;
 
+    .sign__up {
+      h1 {
+        font-weight: 300;
+        color: $color-primary;
+        font-size: 1.9rem;
+      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 25%;
+      padding: 0.5rem;
+      .formBody {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        gap: 0.5rem;
+        .input_group {
+          .inputs {
+            width: 100%;
+            border: 0.1rem solid $color-info-dark;
+            outline: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+          }
+        }
+      }
+      .footer {
+        width: 100%;
+        button {
+          width: 100%;
+          border-radius: 0.5rem;
+        }
+      }
+    }
+
     .welcome__wrapper {
       .buttons {
+        padding-top: 1rem;
         display: flex;
         gap: 0.3rem;
       }
@@ -63,6 +101,7 @@
         width: 100%;
         font-weight: "bold";
         color: "#fff";
+        outline: none;
         border-radius: "0.5rem";
       }
       button {

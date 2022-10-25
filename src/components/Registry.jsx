@@ -36,18 +36,15 @@ function Register() {
     <div className="sign__up">
       <h1>Join Our Community</h1>
       <form className="formBody">
-        <div>
+        <span className="input_group">
           <input
-            style={styles.elements}
             type="text"
             id="fullname"
-            placeholder="FULL NAME"
-          />
-        </div>
+            className="inputs"
+            placeholder="Full Name"
+          ></input>
+        </span>
         <span className="input_group">
-          <Label htmlFor="email" css={{ lineHeight: "35px" }}>
-            Email
-          </Label>
           <input
             type="email"
             id="email"
@@ -55,23 +52,25 @@ function Register() {
             placeholder="name@student.moringaschool.com"
           ></input>
         </span>
-        <div className="password">
+        <span className="input_group">
           <input
-            style={styles.elements}
             type="password"
-            placeholder="PASSOWRD"
-          />
-        </div>
-        <div className="confirm-password">
+            id="password"
+            className="inputs"
+            placeholder="********"
+          ></input>
+        </span>
+        <span className="input_group">
           <input
-            style={styles.elements}
             type="password"
-            placeholder="CONFIRM PASSWORD"
-          />
-        </div>
+            id="confirm_password"
+            className="inputs"
+            placeholder="********"
+          ></input>
+        </span>
       </form>
       <div class="footer">
-        <button className="btn pri-btn" type="submit" class="btn">
+        <button className="btn pry-btn" type="submit" class="btn">
           PROCEED
         </button>
       </div>
