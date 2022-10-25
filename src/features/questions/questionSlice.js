@@ -17,6 +17,8 @@ export const getQuestions = createAsyncThunk(
 
 export const postQuestions = createAsyncThunk(
   "questions/addnewQuestion",
+  async (formData) => {
+    try {
   async (formData, thunkAPI) => {
     try {
       const responce = await axios.post(url, formData);
