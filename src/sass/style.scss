@@ -8,6 +8,7 @@
 @import "./account";
 @import "./searchbar";
 @import "./footer";
+@import "./landing";
 
 *,
 ::after,
@@ -63,6 +64,12 @@ body {
 .sec-btn {
   background: $color-accent-variant;
   color: $color-accent;
+  font-weight: 500;
+  border: solid $color-accent 0.1rem;
+}
+.ter-btn {
+  background: $color-accent;
+  color: white;
   font-weight: 500;
   border: solid $color-accent 0.1rem;
 }
