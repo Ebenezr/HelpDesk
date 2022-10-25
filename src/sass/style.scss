@@ -2,8 +2,12 @@
 
 @import "./variables";
 
-@import "./header";
+@import "./home";
+@import "./profile";
 @import "./solutions";
+@import "./account";
+@import "./searchbar";
+@import "./footer";
 
 *,
 ::after,
@@ -19,6 +23,7 @@ body {
   background: white;
   height: 100vh;
   width: 100vw;
+  // overflow: hidden;
 }
 
 #root {
@@ -55,7 +60,12 @@ body {
   color: white;
   font-weight: 600;
 }
-
+.sec-btn {
+  background: $color-accent-variant;
+  color: $color-accent;
+  font-weight: 500;
+  border: solid $color-accent 0.1rem;
+}
 .link__icons {
   color: $color-dark;
 }

@@ -1,10 +1,10 @@
-import Solutions from "./pages/Solutions";
 import "./sass/style.scss";
+import Routing from "./pages/_routes";
 
 function App() {
   return (
     <>
-      <Solutions />
+      <Routing />
     </>
   );
 }
