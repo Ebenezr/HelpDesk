@@ -21,9 +21,8 @@ function Landing() {
       <Register />
       <Belt />
       <LandingFooter />
-      {/* <Footer /> */}
+ 
     </div>
   );
 }
-
 export default Landing;
