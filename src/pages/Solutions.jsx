@@ -44,7 +44,6 @@ const Solutions = ({ question }) => {
             <h3>{question?.title}</h3>
             <small>Asked 2 days ago</small>
           </div>
-
           <div className="question">
             {/* submenu for question votting and bookmarking */}
             <div className="submenu">

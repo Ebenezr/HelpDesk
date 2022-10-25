@@ -4,7 +4,6 @@ const styles = {
   containerFluid: {
     fontFamily: "Poppins, sans-serif",
     padding: "15px",
-    marginLeft: "35px",
   },
   starter: {
     fontFamily: "Poppins, sans-serif",

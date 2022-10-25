@@ -85,6 +85,7 @@ function Home() {
                     onClick={() => {
                       <Solutions question={question} />;
                       navigate("/solutions");
+                      console.log(question);
                     }}
                   >
                     {question?.title}
