@@ -53,6 +53,20 @@ const initialState = {
 const quetionsSlice = createSlice({
   name: "questions",
   initialState,
+  reducers: {
+    upvote: (state, { payload }) => {
+      const question = state.allquestions.find(
+        (quiz) => quiz.id === payload.id
+      );
+      question.vote = question.vote + 1;
+    },
+    downvote: (state, { payload }) => {
+      const question = state.allquestions.find(
+        (quiz) => quiz.id === payload.id
+      );
+      question.vote = question.vote - 1;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getQuestions.pending, (state, action) => {
@@ -70,5 +84,7 @@ const quetionsSlice = createSlice({
       });
   },
 });
+
+export const { upvote, downvote } = quetionsSlice.actions;
 
 export default quetionsSlice.reducer;

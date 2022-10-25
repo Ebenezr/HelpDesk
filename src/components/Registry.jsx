@@ -1,47 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "../components/radixUI/Label";
-// const styles = {
-//   form: {
-//     marginLeft: "1000px",
-//     marginTop: "-135px",
-//     textAlign: "center",
-//   },
-//   header: {
-//     fontFamily: "Poppins, sans-serif",
-//     fontWeight: "small",
-//     color: "#0a95ff",
-//   },
-//   elements: {
-//     height: "30px",
-//     borderRadius: "5px",
-//     borderColor: "#f1f2f3",
-//     margin: "2px",
-//     color: "#aba8a8",
-//   },
-//   button: {
-//     height: "30px",
-//     borderRadius: "5px",
-//     backgroundColor: "#0a95ff",
-//     color: "#f1f2f3",
-//     width: "120px",
-//   },
-//   tagLine: {
-//     color: "#aba8a8",
-//     fontWeight: "small",
-//   },
-// };
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../features/users/userSlice";
 
 function Register() {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((store) => store.user);
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+  });
+
+  //hangle change event
+  const handleChange = (event) => {
+    const key = event.target.id;
+    const value = event.target.value;
+
+    setFormData({ ...formData, [key]: value });
+  };
+  //handle submision
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    try {
+      dispatch(registerUser(formData)).unwrap();
+    } catch (err) {
+      console.log("Failed to post", err);
+    } finally {
+      setFormData({
+        first_name: "",
+        last_name: "",
+        username: "",
+        email: "",
+        password: "",
+        confirm_password: "",
+      });
+    }
+  };
+
+  useEffect(() => {}, []);
+
   return (
-    <div className="sign__up">
+    <form className="sign__up" onSubmit={handleSubmit}>
       <h1>Join Our Community</h1>
-      <form className="formBody">
+      <div className="formBody">
         <span className="input_group">
           <input
             type="text"
-            id="fullname"
+            id="last_name"
             className="inputs"
-            placeholder="Full Name"
+            placeholder="First Name"
+            value={formData?.last_name}
+            onChange={handleChange}
+          ></input>
+        </span>
+        <span className="input_group">
+          <input
+            type="text"
+            id="first_name"
+            className="inputs"
+            placeholder="Last Name"
+            value={formData?.first_name}
+            onChange={handleChange}
+          ></input>
+        </span>
+        <span className="input_group">
+          <input
+            type="text"
+            id="username"
+            className="inputs"
+            placeholder="User Name"
+            value={formData?.username}
+            onChange={handleChange}
           ></input>
         </span>
         <span className="input_group">
@@ -49,26 +82,34 @@ function Register() {
             type="email"
             id="email"
             className="inputs"
-            placeholder="name@student.moringaschool.com"
+            placeholder="Email"
+            value={formData?.email}
+            onChange={handleChange}
           ></input>
         </span>
         <span className="input_group">
           <input
+            autoComplete="new-password"
             type="password"
             id="password"
             className="inputs"
-            placeholder="********"
+            placeholder="Password"
+            value={formData?.password}
+            onChange={handleChange}
           ></input>
         </span>
         <span className="input_group">
           <input
+            autoComplete="new-password"
             type="password"
             id="confirm_password"
             className="inputs"
-            placeholder="********"
-          ></input>
+            placeholder="Password Confirmation"
+            value={formData?.confirm_password}
+            onChange={handleChange}
+          />
         </span>
-      </form>
+      </div>
       <div className="signup__footer">
         <button className="btn pry-btn" type="submit">
           PROCEED
@@ -80,7 +121,7 @@ function Register() {
           service
         </p>
       </div>
-    </div>
+    </form>
   );
 }
 
