@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../radixUI/avatar";
 function Searchbar() {
   return (
     <nav className="searchbar">
-      <NavLink to="landing" className="logo">
+      <NavLink to="/" className="logo">
         HELP<span>DESK</span>
       </NavLink>
 

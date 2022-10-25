@@ -45,7 +45,6 @@
           font-weight: 500;
           font-size: 1.5rem;
         }
-      }
       .labels-tags {
         grid-area: tags;
         display: flex;
@@ -68,15 +67,38 @@
         .username {
           color: $color-primary;
         }
+        .timestamp {
+          display: flex;
+          gap: 0.3rem;
+          align-items: center;
+          color: $color-info-dark;
+          font-size: 0.9rem;
+          .time-ago {
+            font-size: 0.9rem;
+          }
         small {
           color: $color-info-dark;
-          font-size: 0.7rem;
+          font-size: 0.9rem;
+          .time-ago {
+            font-size: 0.9rem;
+          }
         }
       }
+    }
+  }
+  .pagination {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    button {
+      background: $color-accent;
+      color: white;
     }
   }
   //articles sections
   .articles {
     padding-top: 1rem;
   }
+}
+}
 }

@@ -27,18 +27,16 @@ const styles = {
 
 function LandingFooter() {
   return (
-    <footer style={styles.footer}>
-      <div>
-        <p style={styles.starter}>Ask your Questions,</p>
-        <p style={styles.seconder}>Get your Answers</p>
-        <p style={styles.content}>
-          Just post your question on our portal and
-          <br></br>
-          You'll get your answer with all
-          <br></br>
-          the details as requested.
-        </p>
-      </div>
+    <footer className="landing__footer">
+      <h2>Ask your Questions,</h2>
+      <h3>Get your Answers</h3>
+      <p>
+        Just post your question on our portal and
+        <br></br>
+        You'll get your answer with all
+        <br></br>
+        the details as requested.
+      </p>
     </footer>
   );
 }
