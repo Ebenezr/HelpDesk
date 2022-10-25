@@ -1,3 +1,4 @@
+
 import Belt from "../components/Belt";
 import LandingFooter from "../components/Landing-Footer";
 import Register from "../components/Registry";
@@ -20,7 +21,7 @@ function Landing() {
       <Register />
       <Belt />
       <LandingFooter />
-      {/* <Footer /> */}
+ 
     </div>
   );
 }
