@@ -23,7 +23,6 @@ const styles = {
     fontSize: "12px",
     borderRadius: "30px",
     // marginTop: "100px",
-
   },
   searchWrapper: {
     fontFamily: "Poppins, sans-serif",
@@ -34,7 +33,7 @@ const styles = {
     marginTop: "65px",
     borderRadius: "5px",
     height: "30px",
-    width: "90px"
+    width: "90px",
   },
   searchInput: {
     fontFamily: "Poppins, sans-serif",
@@ -42,26 +41,25 @@ const styles = {
     color: "#fff",
     borderRadius: "10px",
     height: "30px",
-    
   },
 };
 
 function Belt() {
   return (
-    <div style={styles.wrapper}>
-      <p style={styles.starter}>Ask a Question ?</p>
-      <p style={styles.content}>
+    <div className="belt-wrapper">
+      <h2 className="belt-title">Ask a Question ?</h2>
+      <p className="belt-text">
         You can ask your question/ post on our community by providing all the
         required details
       </p>
-      <form style={styles.search}>
+      <form className="landing-form">
         <input
-          style={styles.searchInput}
+          className="search-input"
           type="text"
-          placeholder="Search..."
+          placeholder="Search Anything..."
           name="search"
         />
-        <button style={styles.searchWrapper} type="submit">
+        <button className="btn sec-btn" type="submit">
           SEARCH
         </button>
       </form>
