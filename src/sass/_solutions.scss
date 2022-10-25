@@ -31,6 +31,9 @@
         width: 0.5rem;
         background: $color-accent;
       }
+      &.active {
+        background: $color-bg-variant;
+      }
     }
   }
   //main center content area

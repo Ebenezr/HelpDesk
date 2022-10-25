@@ -2,7 +2,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
-import { MdArrowBack, MdArrowForward, MdBook, MdHome } from "react-icons/md";
 import { MdAccountCircle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Solutions from "./Solutions";
@@ -14,6 +13,7 @@ import ReactTimeAgo from "react-time-ago";
 import { motion } from "framer-motion";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
+
 
 function Home() {
   const navigate = useNavigate();
@@ -34,19 +34,35 @@ function Home() {
       <section className="main-section">
         {/* side bar */}
         <aside className="aside">
-          <NavLink className="side__nav__links" to="/questions">
+          <NavLink
+            className="side__nav__links"
+            to="/questions"
+            activeclassname="active"
+          >
             <BsFillPatchQuestionFill className="link__icons" />
             <h3>Questions</h3>
           </NavLink>
-          <NavLink className="side__nav__links" to="/questions">
+          <NavLink
+            className="side__nav__links"
+            activeclassname="active"
+            to="/questions"
+          >
             <BsFillBookmarkFill className="link__icons" />
             <h3>Bookmarks</h3>
           </NavLink>
-          <NavLink className="side__nav__links" to="/profile">
+          <NavLink
+            className="side__nav__links"
+            activeclassname="active"
+            to="/profile"
+          >
             <MdAccountCircle className="link__icons" />
             <h3>Profile</h3>
           </NavLink>
-          <NavLink className="side__nav__links" to="/home">
+          <NavLink
+            className="side__nav__links"
+            activeclassname="active"
+            to="/home"
+          >
             <MdHome className="link__icons" />
             <h3>Home</h3>
           </NavLink>
