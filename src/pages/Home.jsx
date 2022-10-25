@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
-import { MdAccountCircle } from "react-icons/md";
+import { MdAccountCircle, MdHome } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Solutions from "./Solutions";
 import { getQuestions } from "../features/questions/questionSlice";
@@ -12,7 +12,7 @@ import ReactTimeAgo from "react-time-ago";
 import { motion } from "framer-motion";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
-
+import { HiLightBulb } from "react-icons/hi";
 
 function Home() {
   const navigate = useNavigate();
@@ -44,10 +44,10 @@ function Home() {
           <NavLink
             className="side__nav__links"
             activeclassname="active"
-            to="/questions"
+            to="/ask"
           >
-            <BsFillBookmarkFill className="link__icons" />
-            <h3>Bookmarks</h3>
+            <HiLightBulb className="link__icons" />
+            <h3>Ask</h3>
           </NavLink>
           <NavLink
             className="side__nav__links"
@@ -84,8 +84,7 @@ function Home() {
                   <p
                     onClick={() => {
                       <Solutions question={question} />;
-                      navigate("/solutions");
-                      console.log(question);
+                      // navigate("/solutions");
                     }}
                   >
                     {question?.title}
@@ -103,7 +102,7 @@ function Home() {
                     asked
                     <ReactTimeAgo
                       className="time-ago"
-                      date={question?.created_at}
+                      date={Date.parse(question?.created_at)}
                       locale="en-US"
                     />
                   </small>

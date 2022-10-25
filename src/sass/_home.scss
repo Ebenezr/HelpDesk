@@ -20,13 +20,13 @@
         "status quiz quiz"
         "status tags user";
       gap: 0.5rem;
-      //background: green;
       padding: 2rem 0;
       border-top: 0.1rem solid $color-info-dark;
       //border-bottom: 0.1rem solid $color-info-dark;
       .quiz-card-status {
         grid-area: status;
         display: flex;
+        gap: 0.5rem;
         flex-direction: column;
         align-items: flex-end;
         justify-content: center;
@@ -45,25 +45,25 @@
           font-weight: 500;
           font-size: 1.5rem;
         }
-      .labels-tags {
-        grid-area: tags;
-        display: flex;
-        gap: 0.3rem;
+        .labels-tags {
+          grid-area: tags;
+          display: flex;
+          gap: 0.3rem;
 
-        color: $color-primary;
-        small {
-          font-size: 0.7rem;
-          line-height: 2;
-          background: $color-primary-variant;
-          padding: 0.1rem 0.3rem;
-          border-radius: 0.2rem;
+          color: $color-primary;
+          small {
+            font-size: 0.7rem;
+            line-height: 2;
+            background: $color-primary-variant;
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.2rem;
+          }
         }
       }
       .userinfo-card {
         display: flex;
         gap: 0.3rem;
         align-items: center;
-
         .username {
           color: $color-primary;
         }
@@ -76,29 +76,28 @@
           .time-ago {
             font-size: 0.9rem;
           }
-        small {
-          color: $color-info-dark;
-          font-size: 0.9rem;
-          .time-ago {
+          small {
+            color: $color-info-dark;
             font-size: 0.9rem;
+            .time-ago {
+              font-size: 0.7rem;
+            }
           }
         }
       }
     }
-  }
-  .pagination {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    button {
-      background: $color-accent;
-      color: white;
+    .pagination {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      button {
+        background: $color-accent;
+        color: white;
+      }
+    }
+    //articles sections
+    .articles {
+      padding-top: 1rem;
     }
   }
-  //articles sections
-  .articles {
-    padding-top: 1rem;
-  }
-}
-}
 }

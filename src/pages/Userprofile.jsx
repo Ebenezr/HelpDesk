@@ -8,6 +8,7 @@ import {
 import { MdEmail, MdAccountCircle, MdHome } from "react-icons/md";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
+import { HiLightBulb } from "react-icons/hi";
 
 function Userprofile() {
   const navigate = useNavigate();
@@ -21,9 +22,13 @@ function Userprofile() {
             <BsFillPatchQuestionFill className="link__icons" />
             <h3>Questions</h3>
           </NavLink>
-          <NavLink className="side__nav__links" to="/questions">
-            <BsFillBookmarkFill className="link__icons" />
-            <h3>Bookmarks</h3>
+          <NavLink
+            className="side__nav__links"
+            activeclassname="active"
+            to="/ask"
+          >
+            <HiLightBulb className="link__icons" />
+            <h3>Ask</h3>
           </NavLink>
           <NavLink className="side__nav__links" to="/profile">
             <MdAccountCircle className="link__icons" />
