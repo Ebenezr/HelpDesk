@@ -8,8 +8,9 @@ import Userprofile from "./Userprofile";
 const Routing = () => (
   <Routes>
     <Route path="/" element={<Landing />} />
+    <Route path="home" element={<Landing />} />
     <Route path="questions" element={<Home />} />
-    <Route path="solution" element={<Solutions />} />
+    <Route path="solutions" element={<Solutions />} />
     <Route path="profile" element={<Userprofile />} />
     <Route path="myaccount" element={<Useraccount />} />
   </Routes>
