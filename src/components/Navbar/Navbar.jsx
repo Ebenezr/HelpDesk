@@ -15,6 +15,7 @@ const styles = {
     justifyContent: "end",
     alignItems: "center",
     boxShadow: "rgba(33, 35, 38, 0.1) 0px 10px 10px -10px",
+    borderBottom: "1px solid #aba8a8",
   },
 
   items: {
@@ -25,6 +26,7 @@ const styles = {
     padding: "20px",
     flexWrap: "nowrap",
     color: "#7a7878",
+
     textDecoration: "none",
   },
   header: {

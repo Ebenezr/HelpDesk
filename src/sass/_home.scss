@@ -45,7 +45,6 @@
           font-weight: 500;
           font-size: 1.5rem;
         }
-      }
       .labels-tags {
         grid-area: tags;
         display: flex;
@@ -77,6 +76,9 @@
           .time-ago {
             font-size: 0.9rem;
           }
+        small {
+          color: $color-info-dark;
+          font-size: 0.7rem;
         }
       }
     }
@@ -94,4 +96,6 @@
   .articles {
     padding-top: 1rem;
   }
+}
+}
 }

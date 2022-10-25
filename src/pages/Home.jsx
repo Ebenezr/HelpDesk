@@ -1,3 +1,4 @@
+
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
@@ -137,7 +138,5 @@ function Home() {
       </section>
       <Footer_main />
     </>
-  );
-}
-
+)}
 export default Home;

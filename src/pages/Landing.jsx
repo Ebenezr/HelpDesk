@@ -1,3 +1,4 @@
+
 import Belt from "../components/Belt";
 import LandingFooter from "../components/Landing-Footer";
 import Register from "../components/Registry";
@@ -24,4 +25,5 @@ function Landing() {
     </div>
   );
 }
+
 export default Landing;
