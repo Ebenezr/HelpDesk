@@ -15,6 +15,7 @@ const styles = {
     justifyContent: "end",
     alignItems: "center",
     boxShadow: "rgba(33, 35, 38, 0.1) 0px 10px 10px -10px",
+    borderBottom: "1px solid #aba8a8",
   },
 
   items: {
@@ -25,6 +26,7 @@ const styles = {
     padding: "20px",
     flexWrap: "nowrap",
     color: "#7a7878",
+
     textDecoration: "none",
   },
   header: {
@@ -43,7 +45,6 @@ const styles = {
     color: "#f1f2f3",
     border: "none",
     padding: "3px 12px",
-
   },
 };
 
@@ -55,19 +56,18 @@ function Navbar() {
           <a style={styles.header}>
             HELP<span style={styles.span}>DESK</span>
           </a>
-          <NavLink to="profile" style={styles.items}>
+          <NavLink to="/questions" style={styles.items}>
             HOME
           </NavLink>
-          <NavLink to="ask" style={styles.items}>
+          <NavLink to="/ask" style={styles.items}>
             ASK
           </NavLink>
-          <NavLink to="questions" style={styles.items}>
+          <NavLink to="/questions" style={styles.items}>
             QUESTIONS
           </NavLink>
-          <NavLink to="profile" style={styles.items}>
+          <NavLink to="/profile" style={styles.items}>
             FAQS
           </NavLink>
-
         </div>
         <button style={styles.button}>LOGIN</button>
       </div>

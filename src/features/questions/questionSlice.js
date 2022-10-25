@@ -19,7 +19,9 @@ export const postQuestions = createAsyncThunk(
   "questions/addnewQuestion",
   async (formData) => {
     try {
-      const responce = await axios.get(url, formData);
+  async (formData, thunkAPI) => {
+    try {
+      const responce = await axios.post(url, formData);
       return responce.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);
@@ -32,6 +34,7 @@ export const patchQuestions = createAsyncThunk(
   async (id, formData) => {
     try {
       const responce = await axios.get(`${url}/${id}`, formData);
+      const responce = await axios.patch(`${url}/${id}`, formData);
       return responce.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);

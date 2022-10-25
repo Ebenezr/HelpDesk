@@ -42,21 +42,21 @@ const styles = {
     borderRadius: "7px",
     color: "#f48225",
     borderColor: "#f48225",
-  }
+  },
 };
 
 function Welcome() {
   return (
-    <div style={styles.containerFluid}>
-      <p style={styles.starter}>Ask to the Experts</p>
-      <p style={styles.content}>
+    <div className="welcome__wrapper">
+      <h2 className="welcome__title">Ask to the Experts</h2>
+      <p>
         Online portal for students to comminivate with each other<br></br>
         It allows the students to ask the questions and students with <br></br>
         required expertise will provide solutions.
       </p>
-      <div style={styles.buttons}>
-        <button style={styles.button1}>EXPLORE</button>
-        <button style={styles.button2}>EXPLORE</button>
+      <div className="buttons">
+        <button className="btn ter-btn">EXPLORE</button>
+        <button className="btn sec-btn">EXPLORE</button>
       </div>
     </div>
   );
