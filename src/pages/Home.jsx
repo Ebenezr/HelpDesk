@@ -1,8 +1,6 @@
-
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
-import { MdArrowBack, MdArrowForward, MdBook, MdHome } from "react-icons/md";
 import { MdAccountCircle } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Solutions from "./Solutions";
@@ -14,6 +12,7 @@ import ReactTimeAgo from "react-time-ago";
 import { motion } from "framer-motion";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
+
 
 function Home() {
   const navigate = useNavigate();
@@ -157,63 +156,4 @@ function Home() {
   );
 }
 
-
-                <div className="userinfo-card">
-                  <p className="username">{question?.user?.username}</p>
-                  <small className="timestamp">
-                    asked
-                    <ReactTimeAgo
-                      className="time-ago"
-                      date={question?.created_at}
-                      locale="en-US"
-                    />
-                  </small>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div>
-              <h1>Loading...</h1>
-            </div>
-          )}
-          <div className="pagination">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="btn"
-              //isLoading={isFetching}
-              disabled={page === 1}
-              onClick={() => {
-                setPage(page - 1);
-              }}
-            >
-              Previus
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="btn"
-              onClick={() => {
-                setPage(page + 1);
-              }}
-            >
-              Next
-            </motion.button>
-          </div>
-        </main>
-        {/* articles sections */}
-        <article className="articles">
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="btn pry-btn"
-          >
-            Ask Question
-          </motion.button>
-          <div className="related"></div>
-        </article>
-      </section>
-      <Footer_main />
-    </>
-)}
 export default Home;
