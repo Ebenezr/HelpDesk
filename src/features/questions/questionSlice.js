@@ -13,6 +13,18 @@ export const getQuestions = createAsyncThunk(
   }
 );
 
+export const searchQuestions = createAsyncThunk(
+  "questions/searchQuestions",
+  async (term, thunkAPI) => {
+    try {
+      const resp = await Axios.get(`/search/${term}`);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
+
 export const postQuestions = createAsyncThunk(
   "questions/addnewQuestion",
   async (formData, thunkAPI) => {
@@ -81,6 +93,19 @@ const quetionsSlice = createSlice({
         state.total = action.payload.count;
       })
       .addCase(getQuestions.rejected, (state, action) => {
+        state.isLoading = false;
+        // initialState.error = action.error.message;
+      })
+      .addCase(searchQuestions.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(searchQuestions.fulfilled, (state, action) => {
+        // console.log(action);
+        state.isLoading = false;
+        state.allquestions = action.payload.questions;
+        state.total = action.payload.count;
+      })
+      .addCase(searchQuestions.rejected, (state, action) => {
         state.isLoading = false;
         // initialState.error = action.error.message;
       });

@@ -5,6 +5,7 @@ import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../radixUI/avatar";
 import { logOut } from "../../features/users/userSlice";
 import { useDispatch } from "react-redux";
+import { searchQuestions } from "../../features/questions/questionSlice";
 
 function Searchbar() {
   const navigate = useNavigate();
@@ -19,13 +20,23 @@ function Searchbar() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //search questions
+  const handleSearch = (event) => {
+    dispatch(searchQuestions(event.target.value));
+  };
+
   return (
     <nav className="searchbar">
       <NavLink to="/" className="logo">
         HELP<span>DESK</span>
       </NavLink>
 
-      <input type="search" className="search-input" placeholder="Search..." />
+      <input
+        type="search"
+        className="search-input"
+        placeholder="Search..."
+        onChange={handleSearch}
+      />
 
       <NavLink to="profile">
         {/* image component */}
