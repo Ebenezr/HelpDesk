@@ -48,6 +48,15 @@
           border-radius: 0.5rem;
         }
       }
+      .sign-up-terms {
+        text-align: center;
+        p {
+          color: $color-info-dark;
+          span {
+            color: $color-primary;
+          }
+        }
+      }
     }
 
     .welcome__wrapper {

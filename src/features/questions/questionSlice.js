@@ -1,13 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-const url = "http://127.0.0.1:3000/questions";
+import Axios from "../../API/axios";
 
 export const getQuestions = createAsyncThunk(
   "questions/getQuestions",
   async (page = 1, thunkAPI) => {
     try {
-      const resp = await axios.get(`${url}?page=${page}`);
+      const resp = await Axios.get(`/questions/?page=${page}`);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
+
+export const searchQuestions = createAsyncThunk(
+  "questions/searchQuestions",
+  async (term, thunkAPI) => {
+    try {
+      const resp = await Axios.get(`/search/${term}`);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);
@@ -19,7 +29,7 @@ export const postQuestions = createAsyncThunk(
   "questions/addnewQuestion",
   async (formData, thunkAPI) => {
     try {
-      const responce = await axios.post(url, formData);
+      const responce = await Axios.post("/questions", formData);
       return responce.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);
@@ -31,7 +41,7 @@ export const patchQuestions = createAsyncThunk(
   "questions/patchQuestion",
   async (id, formData) => {
     try {
-      const responce = await axios.patch(`${url}/${id}`, formData);
+      const responce = await Axios.patch(`/questions/${id}`, formData);
       return responce.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);
@@ -48,6 +58,7 @@ const initialState = {
   total: 0,
   isLoading: true,
   error: null,
+  currentQuestion: {},
 };
 
 const quetionsSlice = createSlice({
@@ -66,6 +77,9 @@ const quetionsSlice = createSlice({
       );
       question.vote = question.vote - 1;
     },
+    get_current_quiz: (state, { payload }) => {
+      currentQuestion: payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -79,6 +93,19 @@ const quetionsSlice = createSlice({
         state.total = action.payload.count;
       })
       .addCase(getQuestions.rejected, (state, action) => {
+        state.isLoading = false;
+        // initialState.error = action.error.message;
+      })
+      .addCase(searchQuestions.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(searchQuestions.fulfilled, (state, action) => {
+        // console.log(action);
+        state.isLoading = false;
+        state.allquestions = action.payload.questions;
+        state.total = action.payload.count;
+      })
+      .addCase(searchQuestions.rejected, (state, action) => {
         state.isLoading = false;
         // initialState.error = action.error.message;
       });

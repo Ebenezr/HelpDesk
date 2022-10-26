@@ -10,7 +10,6 @@
 @import "./landing";
 @import "./askquestion";
 
-
 *,
 ::after,
 ::before {
@@ -73,6 +72,10 @@ body {
   color: white;
   font-weight: 500;
   border: solid $color-accent 0.1rem;
+}
+.log-out-btn {
+  background: $color-accent;
+  color: white;
 }
 .link__icons {
   color: $color-dark;
