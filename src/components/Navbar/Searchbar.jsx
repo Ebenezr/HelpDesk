@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { MdNotifications } from "react-icons/md";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../radixUI/avatar";
 import { logOut } from "../../features/users/userSlice";
 import { useDispatch } from "react-redux";
 import { searchQuestions } from "../../features/questions/questionSlice";
+import debounce from "lodash.debounce";
 
 function Searchbar() {
   const navigate = useNavigate();
@@ -25,6 +26,16 @@ function Searchbar() {
     dispatch(searchQuestions(event.target.value));
   };
 
+  const debouncedResults = useMemo(() => {
+    return debounce(handleSearch, 300);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
+
   return (
     <nav className="searchbar">
       <NavLink to="/" className="logo">
@@ -35,7 +46,7 @@ function Searchbar() {
         type="search"
         className="search-input"
         placeholder="Search..."
-        onChange={handleSearch}
+        onChange={debouncedResults}
       />
 
       <NavLink to="profile">

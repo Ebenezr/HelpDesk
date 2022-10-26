@@ -110,11 +110,12 @@ const userSlice = createSlice({
       .addCase(updateUser.pending, (state, action) => {
         //user mod
         state.isLoading = true;
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
-        state.token = action.payload.token;
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;

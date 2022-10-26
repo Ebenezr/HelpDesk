@@ -9,15 +9,18 @@ import { MdEmail, MdAccountCircle, MdHome } from "react-icons/md";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function Userprofile() {
   const { isLoading } = useSelector((store) => store.user);
+  const [acc, setAcc] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
+    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
     const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    setAcc(loggedUser);
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;
   }, []);
@@ -55,12 +58,15 @@ function Userprofile() {
             <AvatarLg>
               <AvatarImage src=" " alt="Avatar" />
               {/* if image isnt available revert to user initials */}
-              <AvatarFallbackLg>EB</AvatarFallbackLg>
+              <AvatarFallbackLg>
+                {acc?.first_name?.slice(0, 1)}
+                {acc?.last_name?.slice(0, 1)}
+              </AvatarFallbackLg>
             </AvatarLg>
             <span>
-              <h3>Ebenezar</h3>
+              <h3>{acc?.username}</h3>
               <small>
-                <MdEmail /> ebenezar.bukosia@student.moringaschool.com
+                <MdEmail /> {acc?.email}
               </small>
             </span>
             <button
