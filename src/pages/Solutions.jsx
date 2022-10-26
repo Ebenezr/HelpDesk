@@ -38,7 +38,7 @@ const Solutions = ({ question }) => {
             <MdAccountCircle className="link__icons" />
             <h3>Profile</h3>
           </NavLink>
-          <NavLink className="side__nav__links" to="/home">
+          <NavLink className="side__nav__links" to="/">
             <MdHome className="link__icons" />
             <h3>Home</h3>
           </NavLink>

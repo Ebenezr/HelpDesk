@@ -5,11 +5,21 @@ import Solutions from "./Solutions";
 import Useraccount from "./Useraccount";
 import Userprofile from "./Userprofile";
 import Askquestion from "./Askquestion";
+import Login from "../components/Forms/Login";
+import Register from "../components/Forms/Register";
 
 const Routing = () => (
   <Routes>
-    <Route path="/" element={<Landing />} />
-    <Route path="home" element={<Landing />} />
+    <Route path="/" element={<Landing />}>
+      <Route path="register" element={<Register />} />
+      <Route path="login" element={<Login />} />
+      <Route path="///" element={<Login />} />
+    </Route>
+    <Route path="home" element={<Landing />}>
+      <Route path="register" element={<Register />} />
+      <Route path="login" element={<Login />} />
+      <Route path="/home/" element={<Login />} />
+    </Route>
     <Route path="questions" element={<Home />} />
     <Route path="solutions" element={<Solutions />} />
     <Route path="profile" element={<Userprofile />} />

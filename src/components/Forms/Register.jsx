@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Label } from "../components/radixUI/Label";
+import { Label } from "../radixUI/Label";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../features/users/userSlice";
+import { registerUser } from "../../features/users/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((store) => store.user);
+  const { isLoading, authenticated } = useSelector((store) => store.user);
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -41,7 +43,9 @@ function Register() {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    authenticated ? navigate("/questions") : navigate("/");
+  }, [authenticated]);
 
   return (
     <form className="sign__up" onSubmit={handleSubmit}>
@@ -49,6 +53,7 @@ function Register() {
       <div className="formBody">
         <span className="input_group">
           <input
+            required
             type="text"
             id="last_name"
             className="inputs"
@@ -59,6 +64,7 @@ function Register() {
         </span>
         <span className="input_group">
           <input
+            required
             type="text"
             id="first_name"
             className="inputs"
@@ -69,6 +75,7 @@ function Register() {
         </span>
         <span className="input_group">
           <input
+            required
             type="text"
             id="username"
             className="inputs"
@@ -79,6 +86,7 @@ function Register() {
         </span>
         <span className="input_group">
           <input
+            required
             type="email"
             id="email"
             className="inputs"
@@ -89,6 +97,7 @@ function Register() {
         </span>
         <span className="input_group">
           <input
+            required
             autoComplete="new-password"
             type="password"
             id="password"
@@ -100,6 +109,7 @@ function Register() {
         </span>
         <span className="input_group">
           <input
+            required
             autoComplete="new-password"
             type="password"
             id="confirm_password"
@@ -115,10 +125,10 @@ function Register() {
           PROCEED
         </button>
       </div>
-      <div>
+      <div className="sign-up-terms">
         <p>
-          By proceeding you agree to the privacy policy and <br></br> terms of
-          service
+          By proceeding you agree to the privacy policy and <br></br>
+          <span>terms of service</span>
         </p>
       </div>
     </form>

@@ -17,7 +17,13 @@ export const loginUser = createAsyncThunk(
       const resp = await Axios.post("/auth/login", formData);
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error?.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -29,7 +35,13 @@ export const registerUser = createAsyncThunk(
       const resp = await Axios.post("/users", formData);
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error?.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -41,7 +53,13 @@ export const updateUser = createAsyncThunk(
       const resp = await Axios.patch(`/users/${id}`, formData);
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error?.message);
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -55,7 +73,9 @@ const initialState = {
   solutions: [],
   token: "",
   isLoading: true,
-  authenticated: false,
+  isSuccess: false,
+  isError: false,
+  message: "",
 };
 
 //logins user
@@ -81,13 +101,17 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.authenticated = true;
+        state.isSuccess = true;
+        state.isSuccess = true;
         localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", JSON.stringify(action.payload.token));
         localStorage.setItem("authenticated", JSON.stringify(true));
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
         // initialState.error = action.error.message;
       })
       .addCase(registerUser.pending, (state, action) => {
@@ -98,13 +122,17 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.authenticated = true;
+        state.isSuccess = true;
+        state.isSuccess = true;
         localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", JSON.stringify(action.payload.token));
         localStorage.setItem("authenticated", JSON.stringify(true));
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
         // initialState.error = action.error.message;
       })
       .addCase(updateUser.pending, (state, action) => {
@@ -114,11 +142,15 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isSuccess = true;
         state.user = action.payload.user;
         localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
         // initialState.error = action.error.message;
       });
   },

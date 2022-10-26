@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Label } from "../radixUI/Label";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/users/userSlice";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, authenticated } = useSelector((store) => store.user);
+  const { isLoading, isSuccess, isError, message } = useSelector(
+    (store) => store.user
+  );
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -35,8 +37,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    authenticated ? navigate("/questions") : navigate("/");
-  }, [authenticated]);
+    isSuccess ? navigate("/questions") : navigate("/");
+    isError ? alert(message) : null;
+  }, [dispatch, isLoading]);
 
   return (
     <form className="sign__up" onSubmit={handleSubmit}>
@@ -44,6 +47,7 @@ const Login = () => {
       <div className="formBody">
         <span className="input_group">
           <input
+            required
             type="text"
             id="username"
             className="inputs"
@@ -55,6 +59,7 @@ const Login = () => {
 
         <span className="input_group">
           <input
+            required
             autoComplete="new-password"
             type="password"
             id="password"
@@ -72,7 +77,10 @@ const Login = () => {
       </div>
       <div className="sign-up-terms">
         <p>
-          Don't have an account? <br></br> <span>Sign up</span>
+          Don't have an account? <br></br>
+          <NavLink className="span" to="register">
+            Sign up
+          </NavLink>
         </p>
       </div>
     </form>

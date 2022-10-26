@@ -57,11 +57,7 @@ function Home() {
             <MdAccountCircle className="link__icons" />
             <h3>Profile</h3>
           </NavLink>
-          <NavLink
-            className="side__nav__links"
-            activeclassname="active"
-            to="/home"
-          >
+          <NavLink className="side__nav__links" activeclassname="active" to="/">
             <MdHome className="link__icons" />
             <h3>Home</h3>
           </NavLink>

@@ -188,7 +188,7 @@ function Useraccount() {
                 </Label>
                 <input
                   type="text"
-                  id="password"
+                  id="confirm_password"
                   className="inputs"
                   placeholder="*******"
                   value={formData?.confirm_password}

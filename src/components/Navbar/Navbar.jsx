@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useNavigationType } from "react-router-dom";
 
 const styles = {
   span: {
@@ -45,10 +45,12 @@ const styles = {
     color: "#f1f2f3",
     border: "none",
     padding: "3px 12px",
+    textDecoration: "none",
   },
 };
 
 function Navbar() {
+  const navigate = useNavigate();
   return (
     <nav>
       <div style={styles.wrapper}>
@@ -69,7 +71,10 @@ function Navbar() {
             FAQS
           </NavLink>
         </div>
-        <button style={styles.button}>LOGIN</button>
+
+        <button style={styles.button} onClick={() => navigate("login")}>
+          LOGIN
+        </button>
       </div>
     </nav>
   );

@@ -52,8 +52,9 @@
         text-align: center;
         p {
           color: $color-info-dark;
-          span {
+          .span {
             color: $color-primary;
+            text-decoration: none;
           }
         }
       }

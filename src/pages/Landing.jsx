@@ -1,10 +1,9 @@
 import Belt from "../components/Belt";
 import LandingFooter from "../components/Landing-Footer";
-import Register from "../components/Forms/Registry";
 import Welcome from "../components/WelcomeMessage";
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
-import Login from "../components/Forms/Login";
+import { Outlet } from "react-router-dom";
 
 function Landing() {
   return (
@@ -12,7 +11,7 @@ function Landing() {
       <Navbar />
       <header className="landing__header">
         <Welcome />
-        <Login />
+        <Outlet />
       </header>
       <Belt />
       <LandingFooter />
