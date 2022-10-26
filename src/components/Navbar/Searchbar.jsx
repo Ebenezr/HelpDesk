@@ -1,9 +1,24 @@
+import { useEffect, useState } from "react";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { MdNotifications } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../radixUI/avatar";
+import { logOut } from "../../features/users/userSlice";
+import { useDispatch } from "react-redux";
 
 function Searchbar() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [acc, setAcc] = useState({});
+  const [authenticated, setAuth] = useState({});
+  useEffect(() => {
+    const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    setAcc(loggedUser);
+    setAuth(auth);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <nav className="searchbar">
       <NavLink to="/" className="logo">
@@ -17,7 +32,10 @@ function Searchbar() {
         <Avatar className="avatar">
           <AvatarImage src=" " alt="Avatar" />
           {/* if image isnt available revert to user initials */}
-          <AvatarFallback>EB</AvatarFallback>
+          <AvatarFallback>
+            {acc?.first_name?.slice(0, 1)}
+            {acc?.last_name?.slice(0, 1)}
+          </AvatarFallback>
         </Avatar>
       </NavLink>
       <NavLink to="profile">
@@ -26,6 +44,15 @@ function Searchbar() {
       <NavLink to="profile">
         <MdNotifications className="nav__icons" />
       </NavLink>
+      <button
+        className=" btn log-out-btn"
+        onClick={() => {
+          navigate("/");
+          dispatch(logOut());
+        }}
+      >
+        {authenticated ? "Log out" : "Log in"}
+      </button>
     </nav>
   );
 }

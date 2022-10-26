@@ -1,11 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import Axios from "../../API/axios";
 import { useNavigate } from "react-router-dom";
 
-const url = "http://127.0.0.1:3000/users";
 export const getUsers = createAsyncThunk("user/getUser", async (thunkAPI) => {
   try {
-    const resp = await axios.get(url);
+    const resp = await Axios.get("/users");
     return resp.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error?.message);
@@ -16,7 +15,7 @@ export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (formData, thunkAPI) => {
     try {
-      const resp = await axios.post(url, formData);
+      const resp = await Axios.post("/auth/login", formData);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);
@@ -28,7 +27,7 @@ export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (formData, thunkAPI) => {
     try {
-      const resp = await axios.post(url, formData);
+      const resp = await Axios.post("/users", formData);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);
@@ -40,7 +39,7 @@ export const updateUser = createAsyncThunk(
   "user/patchUser",
   async (id, formData, thunkAPI) => {
     try {
-      const resp = await axios.patch(`${url}/${id}`, formData);
+      const resp = await Axios.patch(`/users/${id}`, formData);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);
@@ -57,12 +56,23 @@ const initialState = {
   solutions: [],
   token: "",
   isLoading: true,
+  authenticated: false,
 };
 
 //logins user
 const userSlice = createSlice({
   name: "login",
   initialState,
+  reducers: {
+    //logout dispact action
+    logOut: (state) => {
+      state.authenticated = false;
+      localStorage.setItem("user", JSON.stringify({}));
+      localStorage.setItem("token", JSON.stringify(""));
+      localStorage.setItem("authenticated", JSON.stringify(false));
+    },
+  },
+
   extraReducers(builder) {
     builder
       .addCase(loginUser.pending, (state, action) => {
@@ -72,6 +82,10 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        state.authenticated = true;
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
+        localStorage.setItem("token", JSON.stringify(action.payload.token));
+        localStorage.setItem("authenticated", JSON.stringify(true));
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -85,6 +99,10 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        state.authenticated = true;
+        localStorage.setItem("user", JSON.stringify(action.payload.user));
+        localStorage.setItem("token", JSON.stringify(action.payload.token));
+        localStorage.setItem("authenticated", JSON.stringify(true));
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -106,4 +124,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { logOut } = userSlice.actions;
 export default userSlice.reducer;

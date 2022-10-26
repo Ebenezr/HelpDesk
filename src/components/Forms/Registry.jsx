@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Label } from "../components/radixUI/Label";
+import { Label } from "../radixUI/Label";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../features/users/userSlice";
+import { registerUser } from "../../features/users/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((store) => store.user);
+  const { isLoading, authenticated } = useSelector((store) => store.user);
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -41,7 +43,9 @@ function Register() {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    authenticated ? navigate("/questions") : navigate("/");
+  }, [authenticated]);
 
   return (
     <form className="sign__up" onSubmit={handleSubmit}>
@@ -115,10 +119,10 @@ function Register() {
           PROCEED
         </button>
       </div>
-      <div>
+      <div className="sign-up-terms">
         <p>
-          By proceeding you agree to the privacy policy and <br></br> terms of
-          service
+          By proceeding you agree to the privacy policy and <br></br>
+          <span>terms of service</span>
         </p>
       </div>
     </form>

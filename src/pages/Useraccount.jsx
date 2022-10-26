@@ -10,8 +10,18 @@ import { Label } from "../components/radixUI/Label";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Useraccount() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((store) => store.user);
+  useEffect(() => {
+    const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    //if user isnt loged in redirect to login page
+    !auth ? navigate("/") : null;
+  }, []);
   return (
     <>
       <Searchbar />

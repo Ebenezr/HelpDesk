@@ -9,9 +9,19 @@ import { MdEmail, MdAccountCircle, MdHome } from "react-icons/md";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function Userprofile() {
+  const { isLoading } = useSelector((store) => store.user);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    //if user isnt loged in redirect to login page
+    !auth ? navigate("/") : null;
+  }, []);
+
   return (
     <>
       <Searchbar />
