@@ -26,6 +26,7 @@ function Userprofile() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    //fetch logedin user's info
     dispatch(getUserBookmarks());
     dispatch(getUserSolutions());
     dispatch(getUserQuestions());
