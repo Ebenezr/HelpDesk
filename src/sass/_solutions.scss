@@ -121,3 +121,33 @@
     padding-top: 1rem;
   }
 }
+
+@media (max-width: $breakpoint-mobile) {
+  .main-section {
+    padding: 0.5rem;
+    grid-template-columns: 1fr;
+    order: -1;
+    .aside {
+      display: none;
+    }
+    .main-section-content {
+      .question {
+        .user-card {
+          text-align: right;
+          max-width: 12rem;
+          max-height: 4rem;
+          font-size: 0.7rem;
+          small {
+            font-size: 0.9rem;
+          }
+          .avatar {
+            display: none;
+          }
+          .username {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

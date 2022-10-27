@@ -88,9 +88,14 @@ function Home() {
                     {question?.title}
                   </p>
                 </div>
-                <div className="labels-tags">
-                  {question?.tags?.map((tag) => (
-                    <small key={tag?.id}>{tag?.name}</small>
+                <div
+                  className="labels-tags"
+                  style={{ display: "flex", gap: "5px" }}
+                >
+                  {question?.tag_list?.map((tag, index) => (
+                    <small style={{ color: "#7a7878" }} key={index}>
+                      {tag}
+                    </small>
                   ))}
                 </div>
 

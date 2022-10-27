@@ -5,7 +5,7 @@
   flex-direction: column;
   gap: 1rem;
   .landing__header {
-    // background: green;
+    //background: green;
     padding: 0 2rem;
     height: 50%;
     display: flex;
@@ -138,6 +138,34 @@
     }
     p {
       color: $color-info-dark;
+    }
+  }
+}
+@media (max-width: $breakpoint-mobile) {
+  .langing-page {
+    height: 100vh;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    .landing__header {
+      //background: green;
+
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      .sign__up {
+        .formBody {
+        }
+      }
+    }
+    .belt-wrapper {
+      text-align: center;
+      .landing-form {
+        display: none;
+      }
     }
   }
 }

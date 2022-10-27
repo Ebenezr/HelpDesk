@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
@@ -17,16 +17,38 @@ import { useDispatch } from "react-redux";
 import {
   getQuestions,
   postBookmark,
+  postSolutions,
 } from "../features/questions/questionSlice";
 
 const Solutions = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [question, setQuiz] = useState({});
+  const [solution, setSolution] = useState("");
   useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz") || "");
     setQuiz(quiz);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleChange = (event) => {
+    setSolution(event.target.value);
+    console.log(solution);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(solution);
+    try {
+      dispatch(
+        postSolutions({
+          votes: 0,
+          description: solution,
+          question_id: question.id,
+        })
+      ).unwrap();
+    } catch (e) {}
+  };
   return (
     <>
       <Searchbar />
@@ -125,23 +147,34 @@ const Solutions = () => {
               </div>
             </div>
           ))}
-          <h2 className="article-title">your answer</h2>
-          <div className="your-answer">
+          <h2 className="article-title">Your answer</h2>
+          <form className="your-answer" onSubmit={handleSubmit}>
             <textarea
               rows={7}
               className="answer-text"
               id="text-answer"
+              value={solution}
+              onChange={handleChange}
             ></textarea>
-            <button className="btn pry-btn">Post your answer</button>
+            <button className="btn pry-btn" type="submit">
+              Post your answer
+            </button>
             <small>
               Not the answer you're looking for? Browse other questions tagged
               student account or <span>ask your own question.</span>
             </small>
-          </div>
+          </form>
         </main>
         {/* articles sections */}
         <article className="articles">
-          <button className="btn pry-btn">Ask Question</button>
+          <button
+            className="btn pry-btn"
+            onClick={() => {
+              navigate("/ask");
+            }}
+          >
+            Ask Question
+          </button>
           <div className="related"></div>
         </article>
       </section>

@@ -61,7 +61,17 @@ export const postBookmark = createAsyncThunk(
   }
 );
 
-
+export const postSolutions = createAsyncThunk(
+  "questions/postSolution",
+  async (formData, thunkAPI) => {
+    try {
+      const responce = await Axios.post("/solutions", formData);
+      return responce.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
 //initialstate values
 const initialState = {
   page: 0,
@@ -70,6 +80,8 @@ const initialState = {
   allquestions: [],
   total: 0,
   isLoading: true,
+  isSuccess: false,
+  isError: false,
   error: null,
   currentQuestion: {},
 };
@@ -102,11 +114,14 @@ const quetionsSlice = createSlice({
       .addCase(getQuestions.fulfilled, (state, action) => {
         // console.log(action);
         state.isLoading = false;
+        state.isSuccess = true;
         state.allquestions = action.payload.questions;
         state.total = action.payload.count;
       })
       .addCase(getQuestions.rejected, (state, action) => {
         state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
         // initialState.error = action.error.message;
       })
       .addCase(searchQuestions.pending, (state, action) => {
@@ -115,11 +130,14 @@ const quetionsSlice = createSlice({
       .addCase(searchQuestions.fulfilled, (state, action) => {
         // console.log(action);
         state.isLoading = false;
+        state.isSuccess = true;
         state.allquestions = action.payload.questions;
         state.total = action.payload.count;
       })
       .addCase(searchQuestions.rejected, (state, action) => {
         state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
         // initialState.error = action.error.message;
       })
       .addCase(postBookmark.pending, (state, action) => {
@@ -127,12 +145,31 @@ const quetionsSlice = createSlice({
       })
       .addCase(postBookmark.fulfilled, (state, action) => {
         // console.log(action);
+        state.isSuccess = true;
         state.isLoading = false;
         //state.allquestions = action.payload.questions;
         state.total = action.payload.count;
       })
       .addCase(postBookmark.rejected, (state, action) => {
         state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        // initialState.error = action.error.message;
+      })
+      .addCase(postSolutions.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(postSolutions.fulfilled, (state, action) => {
+        // console.log(action);
+        state.isSuccess = true;
+        state.isLoading = false;
+        //state.allquestions = action.payload.questions;
+        //state.total = action.payload.count;
+      })
+      .addCase(postSolutions.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
         // initialState.error = action.error.message;
       });
   },

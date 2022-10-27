@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { updateUser } from "../features/users/userSlice";
+import Axios from "../API/axios";
 
 function Useraccount() {
   const dispatch = useDispatch();
@@ -51,17 +52,19 @@ function Useraccount() {
 
     setFormData({ ...formData, [key]: value });
   };
+  const patchUser = async (formData) => {
+    await Axios.patch(`/users/${acc.id}`, formData).then((res) =>
+      localStorage.setItem("user", JSON.stringify(res?.data))
+    );
+  };
 
   //handle submision
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
-    try {
-      dispatch(updateUser(acc?.id, formData)).unwrap();
-    } catch (err) {
-      console.log("Failed to post", err);
-    } finally {
-    }
+    patchUser(formData);
+
+    //dispatch(updateUser(acc?.id, formData)).unwrap();
   };
   return (
     <>

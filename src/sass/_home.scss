@@ -50,8 +50,8 @@
           display: flex;
           gap: 0.3rem;
 
-          color: $color-primary;
           small {
+            color: $color-primary;
             font-size: 0.7rem;
             line-height: 2;
             background: $color-primary-variant;
@@ -100,4 +100,6 @@
       padding-top: 1rem;
     }
   }
+}
+@media (max-width: $breakpoint-mobile) {
 }

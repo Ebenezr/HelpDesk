@@ -21,7 +21,6 @@
     }
   }
   .search-input {
-    padding: 0.5rem;
     border: solid $color-info-dark 0.1rem;
     padding: 1rem 0.7rem;
     border-radius: 1rem;
@@ -31,5 +30,25 @@
   .nav__icons {
     color: $color-dark;
     font-size: 2.1rem;
+  }
+}
+@media (max-width: $breakpoint-mobile) {
+  .searchbar {
+    height: 8%;
+    .logo {
+      font-size: 1rem;
+      span {
+        font-size: 1rem;
+      }
+    }
+    .search-input {
+      padding: 0.3rem;
+    }
+    .nav__icons {
+      display: none;
+    }
+    button {
+      display: none;
+    }
   }
 }

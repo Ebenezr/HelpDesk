@@ -1,0 +1,67 @@
+.nav-bar {
+  height: 5%;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+  padding: 0 0.7rem;
+
+  display: flex;
+  align-items: center;
+  div {
+    width: 100%;
+    //@at-root: green;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: space-evenly;
+    .nav-link {
+      text-decoration: none;
+      color: $color-dark;
+      font-weight: 400;
+      font-size: 1rem;
+    }
+    a {
+      color: $color-primary;
+      font-weight: 600;
+      font-size: 1.6rem;
+      span {
+        color: $color-accent;
+        font-size: 1.6rem;
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .nav-bar {
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    div {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      gap: 0.5rem;
+
+      .nav-link {
+        text-decoration: none;
+        color: $color-dark;
+        font-weight: 400;
+      }
+
+      a {
+        color: $color-primary;
+        font-weight: 600;
+        font-size: 1.1rem;
+        span {
+          color: $color-accent;
+          font-size: 1.1rem;
+        }
+      }
+    }
+    button {
+      display: none;
+    }
+  }
+}

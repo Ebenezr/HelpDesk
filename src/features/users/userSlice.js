@@ -179,7 +179,6 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isSuccess = true;
-        state.isSuccess = true;
         localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", JSON.stringify(action.payload.token));
         localStorage.setItem("authenticated", JSON.stringify(true));

@@ -70,13 +70,12 @@ function Searchbar() {
       <button
         className=" btn log-out-btn"
         onClick={() => {
-          navigate("/");
+          navigate("/home");
           dispatch(logOut());
         }}
       >
         {authenticated ? "Log out" : "Log in"}
       </button>
- 
     </nav>
   );
 }

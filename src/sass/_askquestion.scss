@@ -56,3 +56,18 @@
   display: flex;
   justify-content: space-between;
 }
+@media (max-width: $breakpoint-mobile) {
+  .ask-question {
+    padding: 0.5rem;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .main-row {
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+      flex-direction: column-reverse;
+    }
+  }
+}

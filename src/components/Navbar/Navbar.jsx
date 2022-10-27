@@ -33,7 +33,7 @@ const styles = {
     fontFamily: "Poppins, sans-serif",
     fontSize: "medium",
     fontWeight: "bold",
-    padding: "900px",
+    //padding: "900px",
   },
   button: {
     fontFamily: "Poppins, sans-serif",
@@ -52,30 +52,28 @@ const styles = {
 function Navbar() {
   const navigate = useNavigate();
   return (
-    <nav>
-      <div style={styles.wrapper}>
-        <div style={styles.list}>
-          <a style={styles.header}>
-            HELP<span style={styles.span}>DESK</span>
-          </a>
-          <NavLink to="/questions" style={styles.items}>
-            HOME
-          </NavLink>
-          <NavLink to="/ask" style={styles.items}>
-            ASK
-          </NavLink>
-          <NavLink to="/questions" style={styles.items}>
-            QUESTIONS
-          </NavLink>
-          <NavLink to="/profile" style={styles.items}>
-            FAQS
-          </NavLink>
-        </div>
-
-        <button style={styles.button} onClick={() => navigate("login")}>
-          LOGIN
-        </button>
+    <nav className="nav-bar">
+      <div>
+        <a className="logo">
+          HELP<span>DESK</span>
+        </a>
+        <NavLink to="/questions" className="nav-link">
+          HOME
+        </NavLink>
+        <NavLink to="/ask" className="nav-link">
+          ASK
+        </NavLink>
+        <NavLink to="/questions" className="nav-link">
+          QUESTIONS
+        </NavLink>
+        <NavLink to="/profile" className="nav-link">
+          FAQS
+        </NavLink>
       </div>
+
+      <button style={styles.button} onClick={() => navigate("login")}>
+        LOGIN
+      </button>
     </nav>
   );
 }

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, authenticated, isSuccess } = useSelector(
+  const { isLoading, authenticated, isSuccess, user } = useSelector(
     (store) => store.user
   );
   const [formData, setFormData] = useState({
@@ -45,9 +45,9 @@ function Register() {
     }
   };
 
-  // useEffect(() => {
-  //   isSuccess ? navigate("/questions") : null;
-  // }, [isSuccess]);
+  useEffect(() => {
+    if (isSuccess) navigate("/questions");
+  }, [user, navigate]);
 
   return (
     <form className="sign__up" onSubmit={handleSubmit}>
