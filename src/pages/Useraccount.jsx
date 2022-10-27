@@ -17,7 +17,7 @@ import { updateUser } from "../features/users/userSlice";
 
 function Useraccount() {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((store) => store.user);
+  const { isLoading, user } = useSelector((store) => store.user);
   const [acc, setAcc] = useState({});
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -30,13 +30,23 @@ function Useraccount() {
   });
 
   useEffect(() => {
-    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    const loggedUser = JSON.parse(localStorage.getItem("user"));
     const auth = JSON.parse(localStorage.getItem("authenticated") || "");
     setAcc(loggedUser);
-    setFormData(acc);
+    console.log(user);
+    console.log(acc);
+    // setFormData({
+    //   ...formData,
+    //   first_name: acc?.first_name,
+    //   last_name: acc?.last_name,
+    //   username: acc?.username,
+    //   email: acc?.email,
+    //   password: "",
+    //   confirm_password: "",
+    // });
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;
-  }, []);
+  }, [user]);
 
   //hangle change event
   const handleChange = (event) => {
@@ -78,7 +88,7 @@ function Useraccount() {
             <MdAccountCircle className="link__icons" />
             <h3>Profile</h3>
           </NavLink>
-          <NavLink className="side__nav__links" to="/home">
+          <NavLink className="side__nav__links" to="/">
             <MdHome className="link__icons" />
             <h3>Home</h3>
           </NavLink>
@@ -125,7 +135,7 @@ function Useraccount() {
                   type="text"
                   id="username"
                   className="inputs"
-                  placeholder="Doe"
+                  placeholder={acc?.username}
                   value={formData?.username}
                   onChange={handleChange}
                 ></input>
@@ -138,7 +148,7 @@ function Useraccount() {
                   type="email"
                   id="email"
                   className="inputs"
-                  placeholder="name@student.moringaschool.com"
+                  placeholder={acc?.email}
                   value={formData?.email}
                   onChange={handleChange}
                 ></input>
@@ -151,7 +161,7 @@ function Useraccount() {
                   type="text"
                   id="first_name"
                   className="inputs"
-                  placeholder="Jon Doe"
+                  placeholder={acc?.first_name}
                   value={formData?.first_name}
                   onChange={handleChange}
                 ></input>
@@ -164,7 +174,7 @@ function Useraccount() {
                   type="text"
                   id="last_name"
                   className="inputs"
-                  placeholder="Jon Doe"
+                  placeholder={acc?.last_name}
                   value={formData?.last_name}
                   onChange={handleChange}
                 ></input>
@@ -195,7 +205,9 @@ function Useraccount() {
                   onChange={handleChange}
                 ></input>
               </span>
-              <button type="submit">Submit</button>
+              <button type="submit" className="sec-btn">
+                Submit
+              </button>
             </form>
           </article>
         </main>

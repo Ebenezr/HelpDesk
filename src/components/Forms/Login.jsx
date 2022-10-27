@@ -7,7 +7,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, isSuccess, isError, message } = useSelector(
+  const { isLoading, isSuccess, isError, message, user } = useSelector(
     (store) => store.user
   );
   const [formData, setFormData] = useState({
@@ -37,9 +37,8 @@ const Login = () => {
   };
 
   useEffect(() => {
-    isSuccess ? navigate("/questions") : navigate("/");
-    isError ? alert(message) : null;
-  }, [dispatch, isLoading]);
+    if (isSuccess) navigate("/questions");
+  }, [user, navigate]);
 
   return (
     <form className="sign__up" onSubmit={handleSubmit}>
@@ -78,7 +77,7 @@ const Login = () => {
       <div className="sign-up-terms">
         <p>
           Don't have an account? <br></br>
-          <NavLink className="span" to="register">
+          <NavLink className="span" to="/home/register">
             Sign up
           </NavLink>
         </p>

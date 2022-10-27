@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
 import {
@@ -11,10 +11,19 @@ import { MdAccountCircle, MdHome } from "react-icons/md";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
+import ReactTimeAgo from "react-time-ago";
+import { upvote, downvote } from "../features/questions/questionSlice";
+import { useDispatch } from "react-redux";
 
-const Solutions = ({ question }) => {
+const Solutions = () => {
+  const dispatch = useDispatch();
+  const [question, setQuiz] = useState({});
   useEffect(() => {
-    console.log(question);
+    const quiz = JSON.parse(localStorage.getItem("quiz") || "");
+    setQuiz(quiz);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
@@ -38,7 +47,7 @@ const Solutions = ({ question }) => {
             <MdAccountCircle className="link__icons" />
             <h3>Profile</h3>
           </NavLink>
-          <NavLink className="side__nav__links" to="/">
+          <NavLink className="side__nav__links" to="/home">
             <MdHome className="link__icons" />
             <h3>Home</h3>
           </NavLink>
@@ -52,9 +61,19 @@ const Solutions = ({ question }) => {
           <div className="question">
             {/* submenu for question votting and bookmarking */}
             <div className="submenu">
-              <TiArrowSortedUp className="chevrons" />
-              <p>23</p>
-              <TiArrowSortedDown className="chevrons" />
+              <TiArrowSortedUp
+                className="chevrons"
+                onClick={() => {
+                  dispatch(upvote(question.id));
+                }}
+              />
+              <p>{question?.votes}</p>
+              <TiArrowSortedDown
+                className="chevrons"
+                onClick={() => {
+                  dispatch(downvote(question?.id));
+                }}
+              />
               <BsFillBookmarkFill className="chevrons bookmark" />
             </div>
             <div className="question-content">{question?.description}</div>
@@ -69,7 +88,9 @@ const Solutions = ({ question }) => {
               <p className="username">{question?.user?.username}</p>
             </div>
           </div>
-          <h2 className="article-title">{question?.solution.length} Answers</h2>
+          <h2 className="article-title">
+            {question?.solution?.length} Answers
+          </h2>
           {question?.solutions?.map((soln) => (
             <div className="question" key={soln.id}>
               {/* submenu for solution votting */}
@@ -81,7 +102,14 @@ const Solutions = ({ question }) => {
               </div>
               <div className="question-content">{soln?.description}</div>
               <div className="user-card">
-                <small>answered 3s ago</small>
+                <small>
+                  answered{" "}
+                  <ReactTimeAgo
+                    className="time-ago"
+                    date={Date.parse(question?.created_at)}
+                    locale="en-US"
+                  />
+                </small>
                 <Avatar className="avatar">
                   <AvatarImage src=" " alt="Pedro Duarte" />
                   <AvatarFallback>EB</AvatarFallback>

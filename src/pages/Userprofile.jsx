@@ -11,19 +11,31 @@ import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  getUserBookmarks,
+  getUserQuestions,
+  getUserSolutions,
+  getUserTags,
+} from "../features/users/userSlice";
 
 function Userprofile() {
-  const { isLoading } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const { isLoading, bookmarks, solutions, questions, tags, user } =
+    useSelector((store) => store.user);
   const [acc, setAcc] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
+    dispatch(getUserBookmarks());
+    dispatch(getUserSolutions());
+    dispatch(getUserQuestions());
+    dispatch(getUserTags());
     const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
     const auth = JSON.parse(localStorage.getItem("authenticated") || "");
     setAcc(loggedUser);
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -80,61 +92,63 @@ function Userprofile() {
             <div className="user-questions-wrapper">
               <p>My Questions</p>
               <div className="span-card">
-                <span>
-                  <button className="btn info-btn">23</button>
-                  <small>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing.
-                  </small>
-                </span>
-                <span>
-                  <button className="btn info-btn">23</button>
-                  <small>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing.
-                  </small>
-                </span>
-                <span>
-                  <button className="btn info-btn">23</button>
-                  <small>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing.
-                  </small>
-                </span>
-                <span>
-                  <button className="btn info-btn">23</button>
-                  <small>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing.
-                  </small>
-                </span>
+                {questions?.map((quiz) => (
+                  <span key={quiz?.id}>
+                    <button className="info-btn">{quiz?.votes}</button>
+                    <small
+                      onClick={() => {
+                        localStorage.setItem("quiz", JSON.stringify(quiz));
+                        navigate("/solutions");
+                      }}
+                    >
+                      {quiz?.title}
+                    </small>
+                  </span>
+                ))}
               </div>
             </div>
             <div className="user-solutions-wrapper">
               <p>My Answers</p>
               <div className="span-card">
-                <span>
-                  <button className="btn info-btn">23</button>
-                  <small>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing.
-                  </small>
-                </span>
+                {solutions?.map((quiz) => (
+                  <span key={quiz?.id}>
+                    <button className="info-btn">{quiz?.votes}</button>
+                    <small>{quiz?.title}</small>
+                  </span>
+                ))}
               </div>
             </div>
             <div className="user-tags-wrapper">
               <p>My Tags</p>
               <div className="span-card">
                 <span className="tags-wrapper">
-                  <small>student account</small>
-                  <small>heroku</small>
+                  {tags?.map((tag) => (
+                    <small key={tag?.id}>{tag?.name}</small>
+                  ))}
                 </span>
               </div>
             </div>
             <div className="user-bookmarks-wrapper">
               <p>My Booksmarks</p>
               <div className="span-card">
-                <span>
-                  <button className="btn info-btn">23</button>
-                  <small>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing.
-                  </small>
-                </span>
+                {bookmarks?.map((book) => (
+                  <span key={book?.id}>
+                    <button className="info-btn">
+                      {book?.question?.votes}
+                    </button>
+                    <small
+                      onClick={() => {
+                        localStorage.setItem(
+                          "quiz",
+                          JSON.stringify(book?.question)
+                        );
+                        navigate("/solutions");
+                      }}
+                    >
+                      {book?.question?.title}
+                    </small>
+                  </span>
+                ))}
               </div>
             </div>
           </article>

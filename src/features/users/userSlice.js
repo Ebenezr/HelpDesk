@@ -64,6 +64,77 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+export const getUserBookmarks = createAsyncThunk(
+  "user/getUserBookmarks",
+  async (thunkAPI) => {
+    try {
+      const resp = await Axios.get("/mybookmarks");
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getUserSolutions = createAsyncThunk(
+  "user/getUserSolutions",
+  async (thunkAPI) => {
+    try {
+      const resp = await Axios.get("/mysolutions");
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getUserQuestions = createAsyncThunk(
+  "user/getUserQuestions",
+  async (thunkAPI) => {
+    try {
+      const resp = await Axios.get("/myquestions");
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const getUserTags = createAsyncThunk(
+  "user/getUserTags",
+  async (thunkAPI) => {
+    try {
+      const resp = await Axios.get("/mytags");
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const initialState = {
   user: {},
   isLoading: true,
@@ -71,6 +142,7 @@ const initialState = {
   bookmarks: [],
   questions: [],
   solutions: [],
+  tags: [],
   token: "",
   isLoading: true,
   isSuccess: false,
@@ -85,7 +157,12 @@ const userSlice = createSlice({
   reducers: {
     //logout dispact action
     logOut: (state) => {
-      state.authenticated = false;
+      state.isSuccess = false;
+      state.user = {};
+      state.bookmarks = [];
+      state.questions = [];
+      state.solutions = [];
+      state.tags = [];
       localStorage.setItem("user", JSON.stringify({}));
       localStorage.setItem("token", JSON.stringify(""));
       localStorage.setItem("authenticated", JSON.stringify(false));
@@ -147,6 +224,70 @@ const userSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+        // initialState.error = action.error.message;
+      })
+      .addCase(getUserBookmarks.pending, (state, action) => {
+        //user mod
+        state.isLoading = true;
+      })
+      .addCase(getUserBookmarks.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.bookmarks = action.payload;
+      })
+      .addCase(getUserBookmarks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+        // initialState.error = action.error.message;
+      })
+      .addCase(getUserSolutions.pending, (state, action) => {
+        //user mod
+        state.isLoading = true;
+      })
+      .addCase(getUserSolutions.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.solutions = action.payload;
+      })
+      .addCase(getUserSolutions.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+        // initialState.error = action.error.message;
+      })
+      .addCase(getUserQuestions.pending, (state, action) => {
+        //user mod
+        state.isLoading = true;
+      })
+      .addCase(getUserQuestions.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.questions = action.payload;
+      })
+      .addCase(getUserQuestions.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+        // initialState.error = action.error.message;
+      })
+      .addCase(getUserTags.pending, (state, action) => {
+        //user mod
+        state.isLoading = true;
+      })
+      .addCase(getUserTags.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.tags = action.payload;
+      })
+      .addCase(getUserTags.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;

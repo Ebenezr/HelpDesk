@@ -16,7 +16,6 @@ import { HiLightBulb } from "react-icons/hi";
 
 function Home() {
   const navigate = useNavigate();
-  const [quiz, setQuiz] = useState();
   const { isLoading, allquestions, total, total_pages } = useSelector(
     (store) => store.questions
   );
@@ -57,7 +56,11 @@ function Home() {
             <MdAccountCircle className="link__icons" />
             <h3>Profile</h3>
           </NavLink>
-          <NavLink className="side__nav__links" activeclassname="active" to="/">
+          <NavLink
+            className="side__nav__links"
+            activeclassname="active"
+            to="/home"
+          >
             <MdHome className="link__icons" />
             <h3>Home</h3>
           </NavLink>
@@ -79,8 +82,8 @@ function Home() {
                 <div className="question-title">
                   <p
                     onClick={() => {
-                      <Solutions question={question} />;
-                      // navigate("/solutions");
+                      localStorage.setItem("quiz", JSON.stringify(question));
+                      navigate("/solutions");
                     }}
                   >
                     {question?.title}

@@ -65,17 +65,17 @@ const quetionsSlice = createSlice({
   name: "questions",
   initialState,
   reducers: {
-    upvote: (state, { payload }) => {
+    upvote: (state, payload) => {
       const question = state.allquestions.find(
         (quiz) => quiz.id === payload.id
       );
-      question.vote = question.vote + 1;
+      question.votes = question.votes + 1;
     },
-    downvote: (state, { payload }) => {
+    downvote: (state, payload) => {
       const question = state.allquestions.find(
         (quiz) => quiz.id === payload.id
       );
-      question.vote = question.vote - 1;
+      question.votes = question.votes - 1;
     },
     get_current_quiz: (state, { payload }) => {
       currentQuestion: payload;
