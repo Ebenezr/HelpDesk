@@ -33,7 +33,7 @@
       }
     }
     .section2 {
-      width: 30%;
+      width: auto;
       display: flex;
       flex-direction: column;
       .sec2-title {
@@ -43,7 +43,7 @@
         font-weight: 600;
         color: $color-dark;
       }
-      .sec2-body {
+      .accordion {
         background: white;
         padding: 10px;
         flex: 1;

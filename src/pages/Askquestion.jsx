@@ -2,6 +2,12 @@ import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import Footer_main from "../components/Navbar/Footer_main";
 import Navbar from "../components/Navbar/Navbar";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../components/radixUI/Accordion";
 
 const SummaryRow = ({ title, rows }) => {
   const [open, setOpen] = useState(true);
@@ -49,28 +55,37 @@ export default function App() {
           </div>
           <div className="section2">
             <div className="sec2-title">How To Draft your question</div>
-            <div className="sec2-body">
-              <SummaryRow
-                title="1. Write a title for the question"
-                rows={["Summarize the problem"]}
-              />
-              <SummaryRow
-                title="2. Write the body section"
-                rows={[
-                  "Describe what you've tried",
-                  "Describe details of your issue",
-                ]}
-              />
-              <SummaryRow
-                title="3. Add related tags"
-                rows={[
-                  "Include related tags of your question by searching and chhoosing them",
-                ]}
-              />
-              <SummaryRow
-                title="4. Post question"
-                rows={["review for any typo", "Post your question"]}
-              />
+            <div className="accordion">
+              <Accordion type="single" defaultValue="item-1" collapsible>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>
+                    1. Write a title for the question
+                  </AccordionTrigger>
+                  <AccordionContent>Summarize the problem.</AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-2">
+                  <AccordionTrigger>2. Write the body section</AccordionTrigger>
+                  <AccordionContent>
+                    Describe what you've tried <br></br>Describe details of your
+                    issue
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>3. Add related tags</AccordionTrigger>
+                  <AccordionContent>
+                    Include related tags of your question by searching and
+                    chhoosing them.
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                  <AccordionTrigger>4. Post question</AccordionTrigger>
+                  <AccordionContent>
+                    Review for any typo", "Post your question
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           </div>
         </div>

@@ -11,8 +11,6 @@ import { MdAccountCircle, MdHome } from "react-icons/md";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en.json";
 import ReactTimeAgo from "react-time-ago";
 import { upvote, downvote } from "../features/questions/questionSlice";
 import { useDispatch } from "react-redux";

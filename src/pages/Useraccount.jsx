@@ -25,25 +25,13 @@ function Useraccount() {
     last_name: "",
     username: "",
     email: "",
-    password: "",
-    confirm_password: "",
   });
 
   useEffect(() => {
     const loggedUser = JSON.parse(localStorage.getItem("user"));
     const auth = JSON.parse(localStorage.getItem("authenticated") || "");
     setAcc(loggedUser);
-    console.log(user);
-    console.log(acc);
-    // setFormData({
-    //   ...formData,
-    //   first_name: acc?.first_name,
-    //   last_name: acc?.last_name,
-    //   username: acc?.username,
-    //   email: acc?.email,
-    //   password: "",
-    //   confirm_password: "",
-    // });
+
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;
   }, [user]);
@@ -54,6 +42,14 @@ function Useraccount() {
     const value = event.target.value;
 
     setFormData({ ...formData, [key]: value });
+  };
+  const getUserData = () => {
+    setFormData({
+      first_name: acc?.first_name,
+      last_name: acc?.last_name,
+      username: acc?.username,
+      email: acc?.email,
+    });
   };
 
   //handle submision
@@ -110,7 +106,9 @@ function Useraccount() {
                 <MdEmail /> {acc?.email}
               </small>
             </span>
-            <button className="btn sec-btn">Edit profile</button>
+            <button className="btn sec-btn" onClick={getUserData}>
+              Edit profile
+            </button>
           </div>
           <article className="user-articles">
             <form className="edit-profile" onSubmit={handleSubmit}>
@@ -179,32 +177,7 @@ function Useraccount() {
                   onChange={handleChange}
                 ></input>
               </span>
-              <span className="input_group">
-                <Label htmlFor="password" css={{ lineHeight: "35px" }}>
-                  Password
-                </Label>
-                <input
-                  type="text"
-                  id="password"
-                  className="inputs"
-                  placeholder="*******"
-                  value={formData?.password}
-                  onChange={handleChange}
-                ></input>
-              </span>
-              <span className="input_group">
-                <Label htmlFor="cornfirm_password" css={{ lineHeight: "35px" }}>
-                  Confirm Password
-                </Label>
-                <input
-                  type="text"
-                  id="confirm_password"
-                  className="inputs"
-                  placeholder="*******"
-                  value={formData?.confirm_password}
-                  onChange={handleChange}
-                ></input>
-              </span>
+
               <button type="submit" className="sec-btn">
                 Submit
               </button>
