@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 
@@ -22,19 +21,27 @@ const SummaryRow = ({ title, rows }) => {
 
 export default function App() {
   return (
-    <div>
+    <section className="ask-question">
       <h2>Ask a Question </h2>
       <div className="main-row">
         <div className="section1">
           <p className="title">Title</p>
-          <p>It's specific with your question</p>
-          <input placeholder="e.g how do I enable two step authentication" />
+          <p className="desc">It's specific with your question</p>
+          <input
+            placeholder="e.g how do I enable two step authentication"
+            className="inputs"
+          />
           <p className="title">Body</p>
-          <p>It's specific with your question</p>
-          <input style={{ height: 120 }} />
+          <p className="desc">It's specific with your question</p>
+          <textarea rows={6} className="inputs" />
           <p className="title">Tags</p>
-          <p>Add tags to describe what your question is about</p>
-          <input placeholder="e.g (Two step authentication)" />
+          <p className="desc">
+            Add tags to describe what your question is about
+          </p>
+          <input
+            className="inputs"
+            placeholder="e.g (Two step authentication)"
+          />
         </div>
         <div className="section2">
           <div className="sec2-title">How To Draft your question</div>
@@ -47,13 +54,13 @@ export default function App() {
               title="2. Write the body section"
               rows={[
                 "Describe what you've tried",
-                "Describe details of your issue"
+                "Describe details of your issue",
               ]}
             />
             <SummaryRow
               title="3. Add related tags"
               rows={[
-                "Include related tags of your question by searching and chhoosing them"
+                "Include related tags of your question by searching and chhoosing them",
               ]}
             />
             <SummaryRow
@@ -63,7 +70,7 @@ export default function App() {
           </div>
         </div>
       </div>
-      <button>Post question </button>
-    </div>
+      <button className="btn pry-btn">Post question </button>
+    </section>
   );
 }
