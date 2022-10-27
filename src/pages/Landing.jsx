@@ -11,6 +11,7 @@ function Landing() {
       <Navbar />
       <header className="landing__header">
         <Welcome />
+        {/* switch between login and signup */}
         <Outlet />
       </header>
       <Belt />
