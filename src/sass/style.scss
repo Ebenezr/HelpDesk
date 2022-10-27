@@ -54,6 +54,7 @@ body {
   padding: 0.5rem 1rem;
   border-radius: 0.3rem;
   border: none;
+  cursor: pointer;
 }
 
 .pry-btn {
@@ -91,7 +92,7 @@ body {
 
 //inputs
 .inputs {
-  padding: 0.5rem 0.7rem;
+  padding: 0.8rem 0.7rem;
   border-radius: 0.3rem;
   border: solid $color-info-dark 0.1rem;
   width: 100%;

@@ -36,13 +36,6 @@ function Useraccount() {
     !auth ? navigate("/") : null;
   }, [user]);
 
-  //hangle change event
-  const handleChange = (event) => {
-    const key = event.target.id;
-    const value = event.target.value;
-
-    setFormData({ ...formData, [key]: value });
-  };
   const getUserData = () => {
     setFormData({
       first_name: acc?.first_name,
@@ -51,10 +44,18 @@ function Useraccount() {
       email: acc?.email,
     });
   };
+  //hangle change event
+  const handleChange = (event) => {
+    const key = event.target.id;
+    const value = event.target.value;
+
+    setFormData({ ...formData, [key]: value });
+  };
 
   //handle submision
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(formData);
     try {
       dispatch(updateUser(acc?.id, formData)).unwrap();
     } catch (err) {

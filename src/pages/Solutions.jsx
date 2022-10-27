@@ -14,6 +14,10 @@ import { HiLightBulb } from "react-icons/hi";
 import ReactTimeAgo from "react-time-ago";
 import { upvote, downvote } from "../features/questions/questionSlice";
 import { useDispatch } from "react-redux";
+import {
+  getQuestions,
+  postBookmark,
+} from "../features/questions/questionSlice";
 
 const Solutions = () => {
   const dispatch = useDispatch();
@@ -72,7 +76,12 @@ const Solutions = () => {
                   dispatch(downvote(question?.id));
                 }}
               />
-              <BsFillBookmarkFill className="chevrons bookmark" />
+              <BsFillBookmarkFill
+                className="chevrons bookmark"
+                onClick={() => {
+                  dispatch(postBookmark({ question_id: question?.id }));
+                }}
+              />
             </div>
             <div className="question-content">{question?.description}</div>
             <div className="user-card">

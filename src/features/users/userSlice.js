@@ -47,7 +47,7 @@ export const registerUser = createAsyncThunk(
 );
 
 export const updateUser = createAsyncThunk(
-  "user/patchUser",
+  "user/updateUser",
   async (id, formData, thunkAPI) => {
     try {
       const resp = await Axios.patch(`/users/${id}`, formData);
@@ -199,6 +199,7 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
+        console.log(action.payload);
         state.isSuccess = true;
         state.isSuccess = true;
         localStorage.setItem("user", JSON.stringify(action.payload.user));
@@ -215,13 +216,13 @@ const userSlice = createSlice({
       .addCase(updateUser.pending, (state, action) => {
         //user mod
         state.isLoading = true;
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.user = action.payload.user;
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
+        state.user = action.payload;
+        console.log(action.payload);
+        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;

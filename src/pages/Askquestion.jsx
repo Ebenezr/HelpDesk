@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import Footer_main from "../components/Navbar/Footer_main";
 import Navbar from "../components/Navbar/Navbar";
 import {
@@ -8,30 +10,43 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/radixUI/Accordion";
-
-const SummaryRow = ({ title, rows }) => {
-  const [open, setOpen] = useState(true);
-  return (
-    <div>
-      <div className="row-title">
-        <div>{title}</div>
-        <MdKeyboardArrowDown onClick={() => setOpen(!open)} size={20} />
-      </div>
-      <ul>
-        {open &&
-          rows.map((r) => {
-            return <li>{r}</li>;
-          })}
-      </ul>
-    </div>
-  );
-};
+import { postQuestions } from "../features/questions/questionSlice";
 
 export default function App() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+  });
+
+  //hangle change event
+  const handleChange = (event) => {
+    const key = event.target.id;
+    const value = event.target.value;
+
+    setFormData({ ...formData, [key]: value });
+  };
+
+  //handle submision
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("formData");
+    try {
+      dispatch(postQuestions(formData)).unwrap();
+      navigate("/questions");
+    } catch (err) {
+      console.log("Failed to post", err);
+    } finally {
+    }
+  };
+
   return (
     <>
       <Navbar />
-      <section className="ask-question">
+      <form className="ask-question" onSubmit={handleSubmit}>
         <h2>Ask a Question </h2>
         <div className="main-row">
           <div className="section1">
@@ -89,8 +104,10 @@ export default function App() {
             </div>
           </div>
         </div>
-        <button className="btn pry-btn">Post question </button>
-      </section>
+        <button className="btn pry-btn" type="submit">
+          Post question
+        </button>
+      </form>
       <Footer_main />
     </>
   );

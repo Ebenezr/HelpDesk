@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
 import { MdAccountCircle, MdHome } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import Solutions from "./Solutions";
 import { getQuestions } from "../features/questions/questionSlice";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
@@ -144,6 +143,7 @@ function Home() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="btn pry-btn"
+            onClick={() => navigate("/ask")}
           >
             Ask Question
           </motion.button>

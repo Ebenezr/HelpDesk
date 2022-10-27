@@ -7,6 +7,7 @@ import { logOut } from "../../features/users/userSlice";
 import { useDispatch } from "react-redux";
 import { searchQuestions } from "../../features/questions/questionSlice";
 import debounce from "lodash.debounce";
+import DropdownMenuDemo from "./DropDown";
 
 function Searchbar() {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ function Searchbar() {
       >
         {authenticated ? "Log out" : "Log in"}
       </button>
+ 
     </nav>
   );
 }

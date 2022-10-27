@@ -49,6 +49,19 @@ export const patchQuestions = createAsyncThunk(
   }
 );
 
+export const postBookmark = createAsyncThunk(
+  "questions/postBookmark",
+  async (formData, thunkAPI) => {
+    try {
+      const responce = await Axios.post("/bookmarks", formData);
+      return responce.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
+
+
 //initialstate values
 const initialState = {
   page: 0,
@@ -106,6 +119,19 @@ const quetionsSlice = createSlice({
         state.total = action.payload.count;
       })
       .addCase(searchQuestions.rejected, (state, action) => {
+        state.isLoading = false;
+        // initialState.error = action.error.message;
+      })
+      .addCase(postBookmark.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(postBookmark.fulfilled, (state, action) => {
+        // console.log(action);
+        state.isLoading = false;
+        //state.allquestions = action.payload.questions;
+        state.total = action.payload.count;
+      })
+      .addCase(postBookmark.rejected, (state, action) => {
         state.isLoading = false;
         // initialState.error = action.error.message;
       });
