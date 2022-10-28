@@ -156,6 +156,10 @@ const userSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
+    reset: (state) => {
+      state.isSuccess = false;
+      state.isError = false;
+    },
     //logout dispact action
     logOut: (state) => {
       state.isSuccess = false;
@@ -318,5 +322,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { logOut } = userSlice.actions;
+export const { logOut, reset } = userSlice.actions;
 export default userSlice.reducer;

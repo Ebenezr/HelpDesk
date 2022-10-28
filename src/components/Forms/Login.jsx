@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Label } from "../radixUI/Label";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/users/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
+import { reset } from "../../features/users/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, isSuccess, isError, message, user } = useSelector(
-    (store) => store.user
-  );
+  const { isLoading, isSuccess, isError } = useSelector((store) => store.user);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -22,28 +20,34 @@ const Login = () => {
     setFormData({ ...formData, [key]: value });
   };
   //handle submision
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      dispatch(loginUser(formData)).unwrap();
+      const originalPromiseResults = await dispatch(loginUser(formData))
+        .unwrap()
+        .then((originalPromiseResult) => {
+          //navigate to homepage on success
+          setTimeout(() => {
+            navigate("/questions");
+          }, 1000);
+        })
+        .catch((err) => {});
+
+      return originalPromiseResults;
     } catch (err) {
       console.log("Failed to login", err);
     } finally {
-      setFormData({
-        username: "",
-        password: "",
-      });
+      //reset store states
+      setTimeout(() => {
+        dispatch(reset());
+        //reset form inputs
+        setFormData({
+          username: "",
+          password: "",
+        });
+      }, 1000);
     }
   };
-  const [status, setStatus] = useState(null);
-  useEffect(() => {
-    isError ? setStatus(true) : null;
-    //reset issucces status
-    setTimeout(() => {
-      setStatus(null);
-      if (isSuccess) navigate("/questions");
-    }, 1500);
-  }, [user, navigate]);
 
   return (
     <form className="sign__up" onSubmit={handleSubmit}>
@@ -89,7 +93,7 @@ const Login = () => {
       </div>
       {isSuccess ? (
         <div className="form__status active">Login Success</div>
-      ) : status && isError ? (
+      ) : isError ? (
         <div className="form__status">
           Failed To Login check you password or username
         </div>
