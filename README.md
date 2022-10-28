@@ -11,6 +11,10 @@
 
 ## Project Description
 
+## Screen shots
+
+![image](https://user-images.githubusercontent.com/37300065/198547930-fa1c4f07-d015-42b3-ad1e-721f12c906fb.png)
+
 ## Table of content
 
 - [Technologies](#description)
