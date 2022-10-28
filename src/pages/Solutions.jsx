@@ -13,40 +13,73 @@ import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
 import ReactTimeAgo from "react-time-ago";
 import { upvote, downvote } from "../features/questions/questionSlice";
-import { useDispatch } from "react-redux";
 import {
   getQuestions,
+  getQuestion,
   postBookmark,
   postSolutions,
 } from "../features/questions/questionSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Axios from "../API/axios";
 
 const Solutions = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [question, setQuiz] = useState({});
   const [solution, setSolution] = useState("");
+  const [acc, setAcc] = useState({});
+  const { user } = useSelector((store) => store.user);
+  const { isLoading, currentQuestion } = useSelector(
+    (store) => store.questions
+  );
+  //get seleted question
   useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz") || "");
     setQuiz(quiz);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // dispatch(getQuestion(quiz.id)).unwrap();
+  }, [dispatch]);
+  //get current selected question
+
+  //get current logged in user
+  useEffect(() => {
+    const loggedUser = JSON.parse(localStorage.getItem("user"));
+
+    setAcc(loggedUser);
+
+    //if user isnt loged in redirect to login page
+  }, [user]);
 
   const handleChange = (event) => {
     setSolution(event.target.value);
-    console.log(solution);
   };
 
+  //bookmark a question
+  const postBook = async (formData) => {
+    await Axios.post(`/bookmarks`, formData).then((res) => {});
+  };
+
+  //post a solution
+  const postSoln = async (formData) => {
+    await Axios.post(`/solutions`, formData)
+      .then((res) => {
+        dispatch(getQuestion(question?.id));
+      })
+      .then(() => {
+        const quiz = JSON.parse(localStorage.getItem("quiz") || "");
+        setQuiz(quiz);
+      });
+  };
+
+  //post solution
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(solution);
     try {
-      dispatch(
-        postSolutions({
-          votes: 0,
-          description: solution,
-          question_id: question.id,
-        })
-      ).unwrap();
+      postSoln({
+        user_id: acc?.id,
+        votes: 0,
+        description: solution,
+        question_id: question.id,
+      });
     } catch (e) {}
   };
   return (
@@ -80,7 +113,14 @@ const Solutions = () => {
         <main className="main-section-content">
           <div className="section-header">
             <h3>{question?.title}</h3>
-            <small>Asked 2 days ago</small>
+            <small>
+              Asked{" "}
+              {/* <ReactTimeAgo
+                className="time-ago"
+                date={Date.parse(question.created_at)}
+                locale="en-US"
+              /> */}
+            </small>
           </div>
           <div className="question">
             {/* submenu for question votting and bookmarking */}
@@ -101,52 +141,69 @@ const Solutions = () => {
               <BsFillBookmarkFill
                 className="chevrons bookmark"
                 onClick={() => {
-                  dispatch(postBookmark({ question_id: question?.id }));
+                  postBook({ question_id: question?.id, user_id: acc?.id });
                 }}
               />
             </div>
             <div className="question-content">{question?.description}</div>
             <div className="user-card">
-              <small>asked 3 days ago</small>
+              <small>
+                asked{" "}
+                {/* <ReactTimeAgo
+                  style={{ fontSize: "0.8rem" }}
+                  className="time-ago"
+                  date={Date.parse(question?.created_at)}
+                  locale="en-US"
+                /> */}
+              </small>
               {/* image component */}
               <Avatar className="avatar">
                 <AvatarImage src=" " alt="Avatar" />
                 {/* if image isnt available revert to user initials */}
-                <AvatarFallback>AN</AvatarFallback>
+                <AvatarFallback>
+                  {question?.user?.first_name?.slice(0, 1)}
+                  {question?.user?.last_name?.slice(0, 1)}
+                </AvatarFallback>
               </Avatar>
               <p className="username">{question?.user?.username}</p>
             </div>
           </div>
-          <h2 className="article-title">
-            {question?.solution?.length} Answers
-          </h2>
-          {question?.solutions?.map((soln) => (
-            <div className="question" key={soln.id}>
-              {/* submenu for solution votting */}
-              <div className="submenu">
-                <TiArrowSortedUp className="chevrons" />
-                <p>{soln?.votes}</p>
-                <TiArrowSortedDown className="chevrons" />
-                {/* <BsFillBookmarkFill className="chevrons bookmark" /> */}
+          <div className="solutions-wrapper">
+            <h2 className="article-title">
+              {question?.solution?.length} Answers
+            </h2>
+            {question?.solutions?.map((soln) => (
+              <div className="question" key={soln.id}>
+                {/* submenu for solution votting */}
+                <div className="submenu">
+                  <TiArrowSortedUp className="chevrons" />
+                  <p>{soln?.votes}</p>
+                  <TiArrowSortedDown className="chevrons" />
+                  {/* <BsFillBookmarkFill className="chevrons bookmark" /> */}
+                </div>
+                <div className="question-content">{soln?.description}</div>
+                <div className="user-card">
+                  <small>
+                    answered{" "}
+                    <ReactTimeAgo
+                      style={{ fontSize: "0.8rem" }}
+                      className="time-ago"
+                      date={Date.parse(soln?.created_at)}
+                      locale="en-US"
+                    />
+                  </small>
+                  <Avatar className="avatar">
+                    <AvatarImage src=" " alt="Pedro Duarte" />
+                    <AvatarFallback>
+                      {soln?.user?.first_name?.slice(0, 1)}
+                      {soln?.user?.last_name?.slice(0, 1)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <p className="username">{question?.user?.username}</p>
+                </div>
               </div>
-              <div className="question-content">{soln?.description}</div>
-              <div className="user-card">
-                <small>
-                  answered{" "}
-                  <ReactTimeAgo
-                    className="time-ago"
-                    date={Date.parse(question?.created_at)}
-                    locale="en-US"
-                  />
-                </small>
-                <Avatar className="avatar">
-                  <AvatarImage src=" " alt="Pedro Duarte" />
-                  <AvatarFallback>EB</AvatarFallback>
-                </Avatar>
-                <p className="username">Ebenezar</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
           <h2 className="article-title">Your answer</h2>
           <form className="your-answer" onSubmit={handleSubmit}>
             <textarea

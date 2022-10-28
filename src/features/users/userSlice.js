@@ -144,7 +144,7 @@ const initialState = {
   solutions: [],
   tags: [],
   token: "",
-  isLoading: true,
+  isLoading: false,
   isSuccess: false,
   isError: false,
   message: "",
@@ -179,6 +179,8 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isSuccess = true;
+        //reset issucces status
+
         localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", JSON.stringify(action.payload.token));
         localStorage.setItem("authenticated", JSON.stringify(true));
@@ -188,6 +190,7 @@ const userSlice = createSlice({
         state.isError = true;
         state.user = null;
         state.message = action.payload;
+
         // initialState.error = action.error.message;
       })
       .addCase(registerUser.pending, (state, action) => {
@@ -195,12 +198,13 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         console.log(action.payload);
+        state.isLoading = false;
         state.isSuccess = true;
-        state.isSuccess = true;
+        //reset issucces status
+
         localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", JSON.stringify(action.payload.token));
         localStorage.setItem("authenticated", JSON.stringify(true));
@@ -210,6 +214,7 @@ const userSlice = createSlice({
         state.isError = true;
         state.user = null;
         state.message = action.payload;
+
         // initialState.error = action.error.message;
       })
       .addCase(updateUser.pending, (state, action) => {
@@ -219,6 +224,8 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        //reset issucces status
+
         state.user = action.payload;
         console.log(action.payload);
         localStorage.setItem("user", JSON.stringify(action.payload));
@@ -228,6 +235,7 @@ const userSlice = createSlice({
         state.isError = true;
         state.user = null;
         state.message = action.payload;
+
         // initialState.error = action.error.message;
       })
       .addCase(getUserBookmarks.pending, (state, action) => {
@@ -237,6 +245,8 @@ const userSlice = createSlice({
       .addCase(getUserBookmarks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        //reset issucces status
+
         state.bookmarks = action.payload;
       })
       .addCase(getUserBookmarks.rejected, (state, action) => {
@@ -244,6 +254,7 @@ const userSlice = createSlice({
         state.isError = true;
         state.user = null;
         state.message = action.payload;
+
         // initialState.error = action.error.message;
       })
       .addCase(getUserSolutions.pending, (state, action) => {
@@ -253,6 +264,8 @@ const userSlice = createSlice({
       .addCase(getUserSolutions.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        //reset issucces status
+
         state.solutions = action.payload;
       })
       .addCase(getUserSolutions.rejected, (state, action) => {
@@ -260,6 +273,7 @@ const userSlice = createSlice({
         state.isError = true;
         state.user = null;
         state.message = action.payload;
+
         // initialState.error = action.error.message;
       })
       .addCase(getUserQuestions.pending, (state, action) => {
@@ -269,6 +283,8 @@ const userSlice = createSlice({
       .addCase(getUserQuestions.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        //reset issucces status
+
         state.questions = action.payload;
       })
       .addCase(getUserQuestions.rejected, (state, action) => {
@@ -276,6 +292,7 @@ const userSlice = createSlice({
         state.isError = true;
         state.user = null;
         state.message = action.payload;
+
         // initialState.error = action.error.message;
       })
       .addCase(getUserTags.pending, (state, action) => {
@@ -285,6 +302,8 @@ const userSlice = createSlice({
       .addCase(getUserTags.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+        //reset issucces status
+
         state.tags = action.payload;
       })
       .addCase(getUserTags.rejected, (state, action) => {
@@ -292,6 +311,7 @@ const userSlice = createSlice({
         state.isError = true;
         state.user = null;
         state.message = action.payload;
+
         // initialState.error = action.error.message;
       });
   },

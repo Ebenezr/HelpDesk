@@ -35,9 +35,14 @@ const Login = () => {
       });
     }
   };
-
+  const [status, setStatus] = useState(null);
   useEffect(() => {
-    if (isSuccess) navigate("/questions");
+    isError ? setStatus(true) : null;
+    //reset issucces status
+    setTimeout(() => {
+      setStatus(null);
+      if (isSuccess) navigate("/questions");
+    }, 1500);
   }, [user, navigate]);
 
   return (
@@ -71,7 +76,7 @@ const Login = () => {
       </div>
       <div className="signup__footer">
         <button className="btn pry-btn" type="submit">
-          LOGIN
+          {isLoading ? "LOGING YOU IN..." : "LOGIN"}
         </button>
       </div>
       <div className="sign-up-terms">
@@ -82,6 +87,13 @@ const Login = () => {
           </NavLink>
         </p>
       </div>
+      {isSuccess ? (
+        <div className="form__status active">Login Success</div>
+      ) : status && isError ? (
+        <div className="form__status">
+          Failed To Login check you password or username
+        </div>
+      ) : null}
     </form>
   );
 };

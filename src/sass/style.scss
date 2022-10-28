@@ -98,3 +98,41 @@ body {
   border: solid $color-info-dark 0.1rem;
   width: 100%;
 }
+
+//toast component
+.form__status {
+  align-self: center;
+  color: $color-dark;
+  font-weight: 500;
+  background-color: $color-danger;
+  width: 60%;
+  border-radius: $border-radius-1;
+  padding: $space-2xs;
+  text-align: center;
+  transition: 300ms ease;
+  &.active {
+    background: $color-success !important;
+    color: $color-dark !important;
+  }
+  &.loading {
+    background: $color-dark-variant;
+    color: white;
+  }
+}
+.solutions-wrapper {
+  overflow: hidden;
+  overflow-y: auto;
+
+  max-height: 20rem;
+}
+
+::-webkit-scrollbar {
+  width: 0.6rem;
+  border-radius: 0.3rem;
+  background: $color-info-dark;
+}
+::-webkit-scrollbar-thumb {
+  background: $color-primary;
+  -webkit-border-radius: 1ex;
+  -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
+}

@@ -12,6 +12,17 @@ export const getQuestions = createAsyncThunk(
     }
   }
 );
+export const getQuestion = createAsyncThunk(
+  "questions/getQuestion",
+  async (id, thunkAPI) => {
+    try {
+      const resp = await Axios.get(`/questions/${id}`);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
 
 export const searchQuestions = createAsyncThunk(
   "questions/searchQuestions",
@@ -79,7 +90,7 @@ const initialState = {
   per_page: 0,
   allquestions: [],
   total: 0,
-  isLoading: true,
+  isLoading: false,
   isSuccess: false,
   isError: false,
   error: null,
@@ -115,6 +126,8 @@ const quetionsSlice = createSlice({
         // console.log(action);
         state.isLoading = false;
         state.isSuccess = true;
+        //reset issucces status
+
         state.allquestions = action.payload.questions;
         state.total = action.payload.count;
       })
@@ -122,6 +135,27 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        //reset state
+
+        // initialState.error = action.error.message;
+      })
+      .addCase(getQuestion.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getQuestion.fulfilled, (state, action) => {
+        // console.log(action);
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.currentQuestion = action.payload;
+        localStorage.setItem("quiz", JSON.stringify(action.payload));
+        //reset issucces status
+      })
+      .addCase(getQuestion.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        //reset state
+
         // initialState.error = action.error.message;
       })
       .addCase(searchQuestions.pending, (state, action) => {
@@ -131,6 +165,8 @@ const quetionsSlice = createSlice({
         // console.log(action);
         state.isLoading = false;
         state.isSuccess = true;
+        //reset issucces status
+
         state.allquestions = action.payload.questions;
         state.total = action.payload.count;
       })
@@ -138,6 +174,8 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        //reset state
+
         // initialState.error = action.error.message;
       })
       .addCase(postBookmark.pending, (state, action) => {
@@ -147,6 +185,8 @@ const quetionsSlice = createSlice({
         // console.log(action);
         state.isSuccess = true;
         state.isLoading = false;
+        //reset issucces status
+
         //state.allquestions = action.payload.questions;
         state.total = action.payload.count;
       })
@@ -154,6 +194,8 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        //reset state
+
         // initialState.error = action.error.message;
       })
       .addCase(postSolutions.pending, (state, action) => {
@@ -163,6 +205,8 @@ const quetionsSlice = createSlice({
         // console.log(action);
         state.isSuccess = true;
         state.isLoading = false;
+        //reset issucces status
+
         //state.allquestions = action.payload.questions;
         //state.total = action.payload.count;
       })
@@ -170,6 +214,8 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        //reset state
+
         // initialState.error = action.error.message;
       });
   },

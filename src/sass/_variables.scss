@@ -12,7 +12,29 @@ $color-dark: #373737;
 $color-primary: #0a95ff;
 $color-primary-variant: #c9e6f4;
 
+$color-dark-variant: #677483;
+$color-danger: #ff7782;
+$color-success: #41f1b6;
+$color-warning: #ffbb55;
+
 //breaking point
 $breakpoint-tablet: 850px;
 $breakpoint-mobile: 700px;
 $breakpoint-ipad: 1280px;
+
+//border radius
+$card-border-radius: 2rem;
+$border-radius-1: 0.4rem;
+$border-radius-2: 0.8rem;
+$border-radius-3: 1.2rem;
+
+//spaces
+$space-3xs: clamp(0.31rem, calc(0.27rem + 0.15vw), 0.38rem);
+$space-2xs: clamp(0.69rem, calc(0.64rem + 0.15vw), 0.75rem);
+$space-xs: clamp(1rem, calc(0.91rem + 0.3vw), 1.13rem);
+$space-s: clamp(1.31rem, calc(1.18rem + 0.45vw), 1.5rem);
+$space-m: clamp(2rem, calc(1.82rem + 0.61vw), 2.25rem);
+$space-l: clamp(2.63rem, calc(2.35rem + 0.91vw), 3rem);
+$space-xl: clamp(3.94rem, calc(3.53rem + 1.36vw), 4.5rem);
+$space-2xl: clamp(5.25rem, calc(4.7rem + 1.82vw), 6rem);
+$space-3xl: clamp(7.88rem, calc(7.06rem + 2.73vw), 9rem);

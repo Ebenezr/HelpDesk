@@ -18,9 +18,11 @@ import Axios from "../API/axios";
 
 export default function App() {
   const { isLoading, isSuccess } = useSelector((store) => store.questions);
+  const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedTags, setTags] = useState([]);
+  const [acc, setAcc] = useState({});
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -60,6 +62,13 @@ export default function App() {
       label: "student-support",
     },
   ];
+  useEffect(() => {
+    const loggedUser = JSON.parse(localStorage.getItem("user"));
+
+    setAcc(loggedUser);
+
+    //if user isnt loged in redirect to login page
+  }, [user]);
 
   //hangle change event
   const handleChange = (event) => {
@@ -70,10 +79,12 @@ export default function App() {
   };
 
   const postQuiz = async (formData) => {
-    await Axios.post(`/questions`, formData).then((res) => {
-      navigate("/questions");
-      dispatch(getQuestions(page));
-    });
+    await Axios.post(`/questions`, { ...formData, user_id: acc?.id }).then(
+      (res) => {
+        navigate("/questions");
+        dispatch(getQuestions(page));
+      }
+    );
   };
 
   //handle submision

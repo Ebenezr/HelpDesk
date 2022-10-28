@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, authenticated, isSuccess, user } = useSelector(
+  const { isLoading, isSuccess, isError, user } = useSelector(
     (store) => store.user
   );
   const [formData, setFormData] = useState({
@@ -45,8 +45,14 @@ function Register() {
     }
   };
 
+  const [status, setStatus] = useState(null);
   useEffect(() => {
-    if (isSuccess) navigate("/questions");
+    isError ? setStatus(true) : null;
+    //reset issucces status
+    setTimeout(() => {
+      setStatus(null);
+      if (isSuccess) navigate("/questions");
+    }, 1500);
   }, [user, navigate]);
 
   return (
@@ -124,7 +130,7 @@ function Register() {
       </div>
       <div className="signup__footer">
         <button className="btn pry-btn" type="submit">
-          PROCEED
+          {isLoading ? "SIGNING YOU UP..." : " PROCEED"}
         </button>
       </div>
       <div className="sign-up-terms">
@@ -133,6 +139,13 @@ function Register() {
           <span>terms of service</span>
         </p>
       </div>
+      {isSuccess ? (
+        <div className="form__status active">Account Created</div>
+      ) : isError === true && status === true ? (
+        <div className="form__status">
+          Failed To Create account check on your details.
+        </div>
+      ) : null}
     </form>
   );
 }
