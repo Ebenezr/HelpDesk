@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, useNavigationType } from "react-router-dom";
 
 const styles = {
@@ -50,6 +50,15 @@ const styles = {
 };
 
 function Navbar() {
+  const [authenticated, setAuth] = useState(null);
+  const [acc, setAcc] = useState({});
+  useEffect(() => {
+    const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    setAcc(loggedUser);
+    setAuth(auth);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const navigate = useNavigate();
   return (
     <nav className="nav-bar">
@@ -72,7 +81,7 @@ function Navbar() {
       </div>
 
       <button style={styles.button} onClick={() => navigate("login")}>
-        LOGIN
+        {authenticated ? "Log out" : "Log in"}
       </button>
     </nav>
   );
