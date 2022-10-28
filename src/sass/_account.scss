@@ -24,21 +24,29 @@
     }
     .user-articles {
       //background: green;
-      .edit-profile {
-        border-radius: 0.5rem;
-        border: solid $color-info-dark 0.1rem;
+      .form-wrapper {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
-        padding: 0.5rem;
-      }
-      .input_group {
-        display: flex;
-        flex-direction: column;
-        .inputs {
-          padding: 0.5rem 0.7rem;
-          border-radius: 0.3rem;
+        gap: 1rem;
+        .edit-profile {
+          border-radius: 0.5rem;
           border: solid $color-info-dark 0.1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          padding: 0.5rem;
+        }
+        .input_group {
+          display: flex;
+          flex-direction: column;
+          .inputs {
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.3rem;
+            border: solid $color-info-dark 0.1rem;
+          }
+        }
+        button {
+          width: 40%;
         }
       }
     }

@@ -54,8 +54,8 @@ function Navbar() {
   const [acc, setAcc] = useState({});
   useEffect(() => {
     const auth = JSON.parse(localStorage.getItem("authenticated") || "");
-    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
-    setAcc(loggedUser);
+    // const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    //setAcc(loggedUser);
     setAuth(auth);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

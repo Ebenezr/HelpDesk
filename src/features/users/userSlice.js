@@ -2,15 +2,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "../../API/axios";
 
-export const getUsers = createAsyncThunk("user/getUser", async (thunkAPI) => {
-  try {
-    const resp = await Axios.get("/users");
-    return resp.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error?.message);
-  }
-});
-
+//logged user info
+const loggedUser = JSON.parse(localStorage.getItem("user"));
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (formData, thunkAPI) => {
@@ -49,9 +42,9 @@ export const registerUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",
-  async (id, formData, thunkAPI) => {
+  async (formData) => {
     try {
-      const resp = await Axios.patch(`/users/${id}`, formData);
+      const resp = await Axios.patch(`/users/${loggedUser?.id}`, formData);
       return resp.data;
     } catch (error) {
       const message =
@@ -185,7 +178,6 @@ const userSlice = createSlice({
         state.token = action.payload.token;
         state.isSuccess = true;
         //reset issucces status
-
         localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", JSON.stringify(action.payload.token));
         localStorage.setItem("authenticated", JSON.stringify(true));
@@ -230,9 +222,7 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         //reset issucces status
-
         state.user = action.payload;
-        console.log(action.payload);
         localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(updateUser.rejected, (state, action) => {
