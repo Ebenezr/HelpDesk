@@ -1,5 +1,7 @@
+import { NavLink, useNavigate } from "react-router-dom";
+import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+
 import Footer_main from "../components/Navbar/Footer_main";
 import Navbar from "../components/Navbar/Navbar";
 import {
@@ -15,6 +17,8 @@ import {
 import { MultiSelect } from "react-multi-select-component";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "../API/axios";
+import { HiLightBulb } from "react-icons/hi";
+import { MdAccountCircle, MdHome } from "react-icons/md";
 
 export default function App() {
   const { isLoading, isSuccess } = useSelector((store) => store.questions);
@@ -126,52 +130,94 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <form className="ask-question" onSubmit={handleSubmit}>
-        <h2>Ask a Question </h2>
-        <div className="main-row">
-          <div className="section1">
-            <p className="title">Title</p>
-            <p className="desc">It's specific with your question</p>
-            <input
-              id="title"
-              required
-              autoFocus
-              placeholder="e.g how do I enable two step authentication"
-              className="inputs"
-              value={formData?.title}
-              onChange={handleChange}
-            />
-            <p className="title">Body</p>
-            <p className="desc">It's specific with your question</p>
-            <textarea
-              required
-              id="description"
-              rows={6}
-              className="inputs"
-              value={formData?.description}
-              onChange={handleChange}
-            />
-            <p className="title">Tags</p>
-            <p className="desc">
-              Add tags to describe what your question is about
-            </p>
-            <MultiSelect
-              options={quiz_tags}
-              value={selectedTags}
-              onChange={setTags}
-              labelledBy="Select"
-            />
-            {/* <input
+      <section className="main-section">
+        {/* side bar */}
+        <aside className="aside">
+          <NavLink
+            className="side__nav__links"
+            to="/questions"
+            activeclassname="active"
+          >
+            <BsFillPatchQuestionFill className="link__icons" />
+            <h3>Questions</h3>
+          </NavLink>
+          <NavLink
+            className="side__nav__links"
+            activeclassname="active"
+            to="/ask"
+          >
+            <HiLightBulb className="link__icons" />
+            <h3>Ask</h3>
+          </NavLink>
+          <NavLink
+            className="side__nav__links"
+            activeclassname="active"
+            to="/profile"
+          >
+            <MdAccountCircle className="link__icons" />
+            <h3>Profile</h3>
+          </NavLink>
+          <NavLink
+            className="side__nav__links"
+            activeclassname="active"
+            to="/home"
+          >
+            <MdHome className="link__icons" />
+            <h3>Home</h3>
+          </NavLink>
+        </aside>
+        <form className="main-section-content" onSubmit={handleSubmit}>
+          <h2>Ask a Question </h2>
+          <div className="main-row">
+            <div className="section1">
+              <p className="title">Title</p>
+              <p className="desc">It's specific with your question</p>
+              <input
+                id="title"
+                required
+                autoFocus
+                placeholder="e.g how do I enable two step authentication"
+                className="inputs"
+                value={formData?.title}
+                onChange={handleChange}
+              />
+              <p className="title">Body</p>
+              <p className="desc">It's specific with your question</p>
+              <textarea
+                required
+                id="description"
+                rows={6}
+                className="inputs"
+                value={formData?.description}
+                onChange={handleChange}
+              />
+              <p className="title">Tags</p>
+              <p className="desc">
+                Add tags to describe what your question is about
+              </p>
+              <MultiSelect
+                options={quiz_tags}
+                value={selectedTags}
+                onChange={setTags}
+                labelledBy="Select"
+              />
+              {/* <input
               className="inputs"
               placeholder="e.g (Two step authentication)"
             // /> */}
-            {status === true ? (
-              <div className="form__status active">Question Posted</div>
-            ) : status === false ? (
-              <div className="form__status">Failed Post question :(</div>
-            ) : null}
+              {status === true ? (
+                <div className="form__status active">Question Posted</div>
+              ) : status === false ? (
+                <div className="form__status">Failed Post question :(</div>
+              ) : null}
+            </div>
           </div>
-          <div className="section2">
+          <button className="btn pry-btn" type="submit">
+            {isLoading ? "Posting question..." : " Post question"}
+          </button>
+        </form>
+        <article className="articles">
+          <div className="accordion-wrapper">
             <div className="sec2-title">How To Draft your question</div>
             <div className="accordion">
               <Accordion type="single" defaultValue="item-1" collapsible>
@@ -206,11 +252,8 @@ export default function App() {
               </Accordion>
             </div>
           </div>
-        </div>
-        <button className="btn pry-btn" type="submit">
-          {isLoading ? "Posting question..." : " Post question"}
-        </button>
-      </form>
+        </article>
+      </section>
       <Footer_main />
     </>
   );

@@ -189,7 +189,7 @@ function Useraccount() {
                     onChange={handleChange}
                   ></input>
                 </span>
-                {isSuccess ? (
+                {isSuccess === true ? (
                   <div className="form__status active">Update Success</div>
                 ) : isError ? (
                   <div className="form__status">

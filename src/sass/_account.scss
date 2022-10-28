@@ -5,9 +5,13 @@
   .main-section-content {
     .user-account {
       display: grid;
-      grid-template-columns: 15% auto 18%;
+      grid-template-columns: 15% auto auto;
       align-items: center;
+
       gap: 0.5rem;
+      button {
+        justify-self: flex-end;
+      }
       span {
         h3 {
           font-size: 1.4rem;
