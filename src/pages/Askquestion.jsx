@@ -71,6 +71,15 @@ export default function App() {
     //if user isnt loged in redirect to login page
   }, [user]);
 
+  useEffect(() => {
+    const loggedUser = JSON.parse(localStorage.getItem("user"));
+    const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    setAcc(loggedUser);
+
+    //if user isnt loged in redirect to login page
+    !auth ? navigate("/") : null;
+  }, [user]);
+
   //hangle change event
   const handleChange = (event) => {
     const key = event.target.id;

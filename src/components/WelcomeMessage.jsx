@@ -55,7 +55,7 @@ function Welcome() {
       </p>
       <div className="buttons">
         <button className="btn ter-btn">EXPLORE</button>
-        <button className="btn sec-btn">EXPLORE</button>
+        <button className="btn sec-btn">LEARN MORE</button>
       </div>
     </div>
   );

@@ -65,6 +65,23 @@ const Solutions = () => {
   };
 
   //post a solution
+  const voteQuestion = async (id, vote) => {
+    try {
+      await Axios.patch(`/questions/${id}`, { votes: vote })
+        .then((res) => {
+          console.log(res.data);
+          dispatch(getQuestion(question?.id));
+        })
+        .then(() => {
+          const quiz = JSON.parse(localStorage.getItem("quiz") || "");
+          setQuiz(quiz);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //post a solution
   const postSoln = async (formData) => {
     try {
       await Axios.post(`/solutions`, formData)
@@ -137,16 +154,12 @@ const Solutions = () => {
             <div className="submenu">
               <TiArrowSortedUp
                 className="chevrons"
-                onClick={() => {
-                  dispatch(upvote(question.id));
-                }}
+                onClick={() => voteQuestion(question?.id, question?.vote + 1)}
               />
               <p>{question?.votes}</p>
               <TiArrowSortedDown
                 className="chevrons"
-                onClick={() => {
-                  dispatch(downvote(question?.id));
-                }}
+                onClick={() => voteQuestion(question?.id, question?.vote - 1)}
               />
               <BsFillBookmarkFill
                 className="chevrons bookmark"
