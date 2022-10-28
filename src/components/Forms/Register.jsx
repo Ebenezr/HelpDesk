@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Label } from "../radixUI/Label";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../features/users/userSlice";
 import { useNavigate } from "react-router-dom";
+import { reset } from "../../features/users/userSlice";
 
 function Register() {
   const navigate = useNavigate();
@@ -27,33 +27,37 @@ function Register() {
     setFormData({ ...formData, [key]: value });
   };
   //handle submision
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      dispatch(registerUser(formData)).unwrap();
+      const originalPromiseResults = await dispatch(registerUser(formData))
+        .unwrap()
+        .then(() => {
+          //navigate to homepage on success
+          setTimeout(() => {
+            setFormData({
+              first_name: "",
+              last_name: "",
+              username: "",
+              email: "",
+              password: "",
+              confirm_password: "",
+            });
+            navigate("/questions");
+          }, 1000);
+        })
+        .catch((err) => {});
+
+      return originalPromiseResults;
     } catch (err) {
-      console.log("Failed to post", err);
+      // console.log("Failed to post", err);
     } finally {
-      setFormData({
-        first_name: "",
-        last_name: "",
-        username: "",
-        email: "",
-        password: "",
-        confirm_password: "",
-      });
+      setTimeout(() => {
+        dispatch(reset());
+        //reset form inputs
+      }, 1000);
     }
   };
-
-  const [status, setStatus] = useState(null);
-  useEffect(() => {
-    isError ? setStatus(true) : null;
-    //reset issucces status
-    setTimeout(() => {
-      setStatus(null);
-      if (isSuccess) navigate("/questions");
-    }, 1500);
-  }, [user, navigate]);
 
   return (
     <form className="sign__up" onSubmit={handleSubmit}>
@@ -141,7 +145,7 @@ function Register() {
       </div>
       {isSuccess ? (
         <div className="form__status active">Account Created</div>
-      ) : isError === true && status === true ? (
+      ) : isError ? (
         <div className="form__status">
           Failed To Create account check on your details.
         </div>

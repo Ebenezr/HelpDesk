@@ -35,7 +35,6 @@ const Login = () => {
 
       return originalPromiseResults;
     } catch (err) {
-      console.log("Failed to login", err);
     } finally {
       //reset store states
       setTimeout(() => {
