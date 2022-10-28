@@ -53,9 +53,15 @@ function Useraccount() {
     setFormData({ ...formData, [key]: value });
   };
   const patchUser = async (formData) => {
-    await Axios.patch(`/users/${acc.id}`, formData).then((res) =>
-      localStorage.setItem("user", JSON.stringify(res?.data))
-    );
+    try {
+      await Axios.patch(`/users/${acc.id}`, formData).then((res) => {
+        localStorage.setItem("user", JSON.stringify(res?.data));
+        setAcc(res.data);
+        alert("Account updated");
+      });
+    } catch (err) {
+      alert("Task failed check on your details");
+    }
   };
 
   //handle submision
