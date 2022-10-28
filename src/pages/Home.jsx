@@ -15,9 +15,8 @@ import { HiLightBulb } from "react-icons/hi";
 
 function Home() {
   const navigate = useNavigate();
-  const { isLoading, allquestions, total, total_pages } = useSelector(
-    (store) => store.questions
-  );
+  const { isLoading, allquestions, total, total_pages } =
+    useSelector((store) => store.questions);
   const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();

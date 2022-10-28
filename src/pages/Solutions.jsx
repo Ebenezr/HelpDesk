@@ -55,19 +55,29 @@ const Solutions = () => {
 
   //bookmark a question
   const postBook = async (formData) => {
-    await Axios.post(`/bookmarks`, formData).then((res) => {});
+    try {
+      await Axios.post(`/bookmarks`, formData).then((res) => {
+        alert("Question Bookmaked!");
+      });
+    } catch (e) {
+      alert("Question already Bookmarked!");
+    }
   };
 
   //post a solution
   const postSoln = async (formData) => {
-    await Axios.post(`/solutions`, formData)
-      .then((res) => {
-        dispatch(getQuestion(question?.id));
-      })
-      .then(() => {
-        const quiz = JSON.parse(localStorage.getItem("quiz") || "");
-        setQuiz(quiz);
-      });
+    try {
+      await Axios.post(`/solutions`, formData)
+        .then((res) => {
+          dispatch(getQuestion(question?.id));
+        })
+        .then(() => {
+          const quiz = JSON.parse(localStorage.getItem("quiz") || "");
+          setQuiz(quiz);
+        });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   //post solution

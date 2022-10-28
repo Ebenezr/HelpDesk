@@ -23,6 +23,7 @@ export default function App() {
   const navigate = useNavigate();
   const [selectedTags, setTags] = useState([]);
   const [acc, setAcc] = useState({});
+  const [status, setStatus] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -81,7 +82,13 @@ export default function App() {
   const postQuiz = async (formData) => {
     await Axios.post(`/questions`, { ...formData, user_id: acc?.id }).then(
       (res) => {
-        navigate("/questions");
+        setStatus(true);
+        setTimeout(() => {
+          setStatus(null);
+          navigate("/questions");
+          if (isSuccess) navigate("/questions");
+        }, 1500);
+
         dispatch(getQuestions(page));
       }
     );
@@ -148,7 +155,12 @@ export default function App() {
             {/* <input
               className="inputs"
               placeholder="e.g (Two step authentication)"
-            /> */}
+            // /> */}
+            {status === true ? (
+              <div className="form__status active">Question Posted</div>
+            ) : status === false ? (
+              <div className="form__status">Failed Post question :(</div>
+            ) : null}
           </div>
           <div className="section2">
             <div className="sec2-title">How To Draft your question</div>
@@ -187,7 +199,7 @@ export default function App() {
           </div>
         </div>
         <button className="btn pry-btn" type="submit">
-          Post question
+          {isLoading ? "Posting question..." : " Post question"}
         </button>
       </form>
       <Footer_main />
