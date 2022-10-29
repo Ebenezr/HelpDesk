@@ -14,6 +14,7 @@ import { HiLightBulb } from "react-icons/hi";
 import ReactTimeAgo from "react-time-ago";
 import { upvote, downvote } from "../features/questions/questionSlice";
 import {
+  reset,
   getQuestions,
   getQuestion,
   postBookmark,
@@ -25,30 +26,26 @@ import Axios from "../API/axios";
 const Solutions = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [question, setQuiz] = useState({});
+  const [question, setQuiz] = useState({
+    created_at: new Date(),
+  });
   const [solution, setSolution] = useState("");
   const [acc, setAcc] = useState({});
   const { user } = useSelector((store) => store.user);
-  const { isLoading, currentQuestion } = useSelector(
+  const { isLoading, currentQuestion, isSuccess } = useSelector(
     (store) => store.questions
   );
   //get seleted question
   useEffect(() => {
-    const quiz = JSON.parse(localStorage.getItem("quiz") || "");
-    setQuiz(quiz);
-    // dispatch(getQuestion(quiz.id)).unwrap();
-  }, [dispatch]);
-  //get current selected question
-
-  //get current logged in user
-  useEffect(() => {
+    //get current logged in user
     const loggedUser = JSON.parse(localStorage.getItem("user"));
-
     setAcc(loggedUser);
+    //get current selected question
+    const quiz = JSON.parse(localStorage.getItem("quiz"));
+    setQuiz(quiz);
+  }, []);
 
-    //if user isnt loged in redirect to login page
-  }, [user]);
-
+  //get solution filed values
   const handleChange = (event) => {
     setSolution(event.target.value);
   };
@@ -56,44 +53,62 @@ const Solutions = () => {
   //bookmark a question
   const postBook = async (formData) => {
     try {
-      await Axios.post(`/bookmarks`, formData).then((res) => {
-        alert("Question Bookmaked!");
-      });
+      await dispatch(postBookmark(formData))
+        .unwrap()
+        .then(() => alert("Question Bookmaked!"));
     } catch (e) {
       alert("Question already Bookmarked!");
+    } finally {
+      //reset store states
+      setTimeout(() => {
+        dispatch(reset());
+      }, 2000);
     }
   };
 
-  //post a solution
-  const voteQuestion = async (id, vote) => {
-    try {
-      await Axios.patch(`/questions/${id}`, { votes: vote })
-        .then((res) => {
-          console.log(res.data);
-          dispatch(getQuestion(question?.id));
-        })
-        .then(() => {
-          const quiz = JSON.parse(localStorage.getItem("quiz") || "");
-          setQuiz(quiz);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // //post a solution
+  // const voteQuestion = async (id, vote) => {
+  //   try {
+  //     await Axios.patch(`/questions/${id}`, { votes: vote })
+  //       .then((res) => {
+  //         console.log(res.data);
+  //         dispatch(getQuestion(question?.id));
+  //       })
+  //       .then(() => {
+  //         const quiz = JSON.parse(localStorage.getItem("quiz") || "");
+  //         setQuiz(quiz);
+  //       });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   //post a solution
-  const postSoln = async (formData) => {
+  const postSoln = async () => {
     try {
-      await Axios.post(`/solutions`, formData)
-        .then((res) => {
-          dispatch(getQuestion(question?.id));
+      await dispatch(
+        postSolutions({
+          user_id: acc?.id,
+          question_id: question?.id,
+          votes: 0,
+          description: solution,
         })
-        .then(() => {
+      )
+        .unwrap()
+        .then((data) => {
+          //update question with posted solution
           const quiz = JSON.parse(localStorage.getItem("quiz") || "");
           setQuiz(quiz);
+          setSolution("");
+          alert("Solution has been posted");
         });
     } catch (err) {
-      console.log(err);
+      // console.error(err);
+    } finally {
+      //reset store states
+      setTimeout(() => {
+        dispatch(reset());
+      }, 1000);
     }
   };
 
@@ -142,11 +157,12 @@ const Solutions = () => {
             <h3>{question?.title}</h3>
             <small>
               Asked{" "}
-              {/* <ReactTimeAgo
+              <ReactTimeAgo
+                style={{ fontSize: "0.8rem" }}
                 className="time-ago"
-                date={Date.parse(question.created_at)}
+                date={Date.parse(question?.created_at)}
                 locale="en-US"
-              /> */}
+              />
             </small>
           </div>
           <div className="question">
@@ -161,23 +177,33 @@ const Solutions = () => {
                 className="chevrons"
                 onClick={() => voteQuestion(question?.id, question?.vote - 1)}
               />
-              <BsFillBookmarkFill
-                className="chevrons bookmark"
-                onClick={() => {
-                  postBook({ question_id: question?.id, user_id: acc?.id });
-                }}
-              />
+              {isSuccess ? (
+                <BsFillBookmarkFill
+                  className="chevrons bookmark"
+                  color="#f48225"
+                  onClick={() => {
+                    postBook({ question_id: question?.id, user_id: acc?.id });
+                  }}
+                />
+              ) : (
+                <BsFillBookmarkFill
+                  className="chevrons bookmark"
+                  onClick={() => {
+                    postBook({ question_id: question?.id, user_id: acc?.id });
+                  }}
+                />
+              )}
             </div>
             <div className="question-content">{question?.description}</div>
             <div className="user-card">
               <small>
                 asked{" "}
-                {/* <ReactTimeAgo
+                <ReactTimeAgo
                   style={{ fontSize: "0.8rem" }}
                   className="time-ago"
                   date={Date.parse(question?.created_at)}
                   locale="en-US"
-                /> */}
+                />{" "}
               </small>
               {/* image component */}
               <Avatar className="avatar">
@@ -237,7 +263,7 @@ const Solutions = () => {
               onChange={handleChange}
             ></textarea>
             <button className="btn pry-btn" type="submit">
-              Post your answer
+              {isLoading ? "Posting..." : "Post your answer"}
             </button>
             <small>
               Not the answer you're looking for? Browse other questions tagged

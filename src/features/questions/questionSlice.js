@@ -3,6 +3,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "../../API/axios";
 
+//current selected question
+const quiz = JSON.parse(localStorage.getItem("quiz"));
+
+//fetch all questions
 export const getQuestions = createAsyncThunk(
   "questions/getQuestions",
   async (page = 1, thunkAPI) => {
@@ -14,11 +18,12 @@ export const getQuestions = createAsyncThunk(
     }
   }
 );
+//fetch and update current seleceted question
 export const getQuestion = createAsyncThunk(
   "questions/getQuestion",
-  async (id, thunkAPI) => {
+  async (thunkAPI) => {
     try {
-      const resp = await Axios.get(`/questions/${id}`);
+      const resp = await Axios.get(`/questions/${quiz?.id}`);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);
@@ -26,6 +31,7 @@ export const getQuestion = createAsyncThunk(
   }
 );
 
+//serch through all question and return match
 export const searchQuestions = createAsyncThunk(
   "questions/searchQuestions",
   async (term, thunkAPI) => {
@@ -38,6 +44,7 @@ export const searchQuestions = createAsyncThunk(
   }
 );
 
+//post a question to db
 export const postQuestions = createAsyncThunk(
   "questions/addnewQuestion",
   async (formData, thunkAPI) => {
@@ -50,18 +57,19 @@ export const postQuestions = createAsyncThunk(
   }
 );
 
+//update seleted question
 export const patchQuestions = createAsyncThunk(
   "questions/patchQuestion",
-  async (id, formData) => {
+  async (formData) => {
     try {
-      const responce = await Axios.patch(`/questions/${id}`, formData);
+      const responce = await Axios.patch(`/questions/${quiz?.id}`, formData);
       return responce.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error?.message);
     }
   }
 );
-
+//bookmark a question
 export const postBookmark = createAsyncThunk(
   "questions/postBookmark",
   async (formData, thunkAPI) => {
@@ -73,7 +81,7 @@ export const postBookmark = createAsyncThunk(
     }
   }
 );
-
+//pos a solution to a question
 export const postSolutions = createAsyncThunk(
   "questions/postSolution",
   async (formData, thunkAPI) => {
@@ -103,6 +111,11 @@ const quetionsSlice = createSlice({
   name: "questions",
   initialState,
   reducers: {
+    reset: (state) => {
+      //resets states
+      state.isSuccess = false;
+      state.isError = false;
+    },
     upvote: (state, payload) => {
       const question = state.allquestions.find(
         (quiz) => quiz.id === payload.id
@@ -125,11 +138,8 @@ const quetionsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getQuestions.fulfilled, (state, action) => {
-        // console.log(action);
         state.isLoading = false;
         state.isSuccess = true;
-        //reset issucces status
-
         state.allquestions = action.payload.questions;
         state.total = action.payload.count;
       })
@@ -137,38 +147,27 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        //reset state
-
-        // initialState.error = action.error.message;
       })
       .addCase(getQuestion.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(getQuestion.fulfilled, (state, action) => {
-        // console.log(action);
         state.isLoading = false;
         state.isSuccess = true;
         state.currentQuestion = action.payload;
-        localStorage.setItem("quiz", JSON.stringify(action.payload));
-        //reset issucces status
+        //  localStorage.setItem("quiz", JSON.stringify(action.payload));
       })
       .addCase(getQuestion.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        //reset state
-
-        // initialState.error = action.error.message;
       })
       .addCase(searchQuestions.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(searchQuestions.fulfilled, (state, action) => {
-        // console.log(action);
         state.isLoading = false;
         state.isSuccess = true;
-        //reset issucces status
-
         state.allquestions = action.payload.questions;
         state.total = action.payload.count;
       })
@@ -176,9 +175,6 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        //reset state
-
-        // initialState.error = action.error.message;
       })
       .addCase(postBookmark.pending, (state, action) => {
         state.isLoading = true;
@@ -187,42 +183,28 @@ const quetionsSlice = createSlice({
         // console.log(action);
         state.isSuccess = true;
         state.isLoading = false;
-        //reset issucces status
-
-        //state.allquestions = action.payload.questions;
         state.total = action.payload.count;
       })
       .addCase(postBookmark.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        //reset state
-
-        // initialState.error = action.error.message;
       })
       .addCase(postSolutions.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(postSolutions.fulfilled, (state, action) => {
-        // console.log(action);
         state.isSuccess = true;
         state.isLoading = false;
-        //reset issucces status
-
-        //state.allquestions = action.payload.questions;
-        //state.total = action.payload.count;
+        localStorage.setItem("quiz", JSON.stringify(action.payload));
       })
       .addCase(postSolutions.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        //reset state
-
-        // initialState.error = action.error.message;
       });
   },
 });
 
-export const { upvote, downvote } = quetionsSlice.actions;
-
+export const { upvote, downvote, reset } = quetionsSlice.actions;
 export default quetionsSlice.reducer;

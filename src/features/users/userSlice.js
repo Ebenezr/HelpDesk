@@ -62,7 +62,7 @@ export const getUserBookmarks = createAsyncThunk(
   "user/getUserBookmarks",
   async (thunkAPI) => {
     try {
-      const resp = await Axios.get("/mybookmarks");
+      const resp = await Axios.get(`/mybookmarks/${loggedUser?.id}`);
       return resp.data;
     } catch (error) {
       const message =
