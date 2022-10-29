@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { reset } from "../../features/users/userSlice";
 
 function Register() {
+  const [status, setStatus] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, isSuccess, isError, user } = useSelector(
@@ -33,6 +34,7 @@ function Register() {
       const originalPromiseResults = await dispatch(registerUser(formData))
         .unwrap()
         .then(() => {
+          setStatus(true);
           //navigate to homepage on success
           setTimeout(() => {
             setFormData({
@@ -53,6 +55,7 @@ function Register() {
       // console.log("Failed to post", err);
     } finally {
       setTimeout(() => {
+        setStatus(null);
         dispatch(reset());
         //reset form inputs
       }, 1000);
@@ -143,9 +146,9 @@ function Register() {
           <span>terms of service</span>
         </p>
       </div>
-      {isSuccess ? (
+      {isSuccess && status ? (
         <div className="form__status active">Account Created</div>
-      ) : isError ? (
+      ) : isError && status === false ? (
         <div className="form__status">
           Failed To Create account check on your details.
         </div>

@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { reset } from "../../features/users/userSlice";
 
 const Login = () => {
+  const [status, setStatus] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, isSuccess, isError } = useSelector((store) => store.user);
@@ -26,18 +27,22 @@ const Login = () => {
       const originalPromiseResults = await dispatch(loginUser(formData))
         .unwrap()
         .then((originalPromiseResult) => {
+          setStatus(true);
           //navigate to homepage on success
           setTimeout(() => {
             navigate("/questions");
           }, 1000);
         })
-        .catch((err) => {});
-
+        .catch((err) => {
+          setStatus(false);
+        });
       return originalPromiseResults;
     } catch (err) {
+      setStatus(false);
     } finally {
       //reset store states
       setTimeout(() => {
+        setStatus(null);
         dispatch(reset());
         //reset form inputs
         setFormData({
@@ -90,9 +95,9 @@ const Login = () => {
           </NavLink>
         </p>
       </div>
-      {isSuccess ? (
+      {isSuccess && status ? (
         <div className="form__status active">Login Success</div>
-      ) : isError ? (
+      ) : isError && status === false ? (
         <div className="form__status">
           Failed To Login check you password or username
         </div>

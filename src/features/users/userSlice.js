@@ -80,7 +80,7 @@ export const getUserSolutions = createAsyncThunk(
   "user/getUserSolutions",
   async (thunkAPI) => {
     try {
-      const resp = await Axios.get("/mysolutions");
+      const resp = await Axios.get(`/mysolutions/${loggedUser?.id}`);
       return resp.data;
     } catch (error) {
       const message =
@@ -98,7 +98,7 @@ export const getUserQuestions = createAsyncThunk(
   "user/getUserQuestions",
   async (thunkAPI) => {
     try {
-      const resp = await Axios.get("/myquestions");
+      const resp = await Axios.get(`/myquestions/${loggedUser?.id}`);
       return resp.data;
     } catch (error) {
       const message =
@@ -260,7 +260,6 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         //reset issucces status
-
         state.solutions = action.payload;
       })
       .addCase(getUserSolutions.rejected, (state, action) => {

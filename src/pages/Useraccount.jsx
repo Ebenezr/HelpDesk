@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { updateUser, reset } from "../features/users/userSlice";
 
 function Useraccount() {
+  const [status, setStatus] = useState(null);
   const dispatch = useDispatch();
   const { isLoading, user, isSuccess, isError } = useSelector(
     (store) => store.user
@@ -61,14 +62,18 @@ function Useraccount() {
       const originalPromiseResults = await dispatch(updateUser(formData))
         .unwrap()
         .then((data) => {
+          setStatus(true);
           //navigate to homepage on success
         })
-        .catch((err) => {});
+        .catch((err) => {
+          setStatus(false);
+        });
       return originalPromiseResults;
     } catch (err) {
     } finally {
       //reset store states
       setTimeout(() => {
+        setStatus(null);
         dispatch(reset());
       }, 1000);
     }
@@ -189,9 +194,9 @@ function Useraccount() {
                     onChange={handleChange}
                   ></input>
                 </span>
-                {isSuccess === true ? (
+                {isSuccess === true && status ? (
                   <div className="form__status active">Update Success</div>
-                ) : isError ? (
+                ) : isError && status === false ? (
                   <div className="form__status">
                     Failed to update user infomation, Check missing details!
                   </div>

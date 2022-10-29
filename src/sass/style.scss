@@ -84,8 +84,10 @@ body {
   height: 1.5em;
   border-radius: 0.3rem;
   border: none;
-  background: $color-accent;
-  color: white;
+  background: transparent;
+  color: $color-info-dark;
+  border: solid 0.1rem $color-info-dark;
+  margin-right: 0.5em;
 }
 .link__icons {
   color: $color-dark;

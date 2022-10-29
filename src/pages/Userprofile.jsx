@@ -17,6 +17,7 @@ import {
   getUserSolutions,
   getUserTags,
 } from "../features/users/userSlice";
+import moment from "moment";
 
 function Userprofile() {
   const dispatch = useDispatch();
@@ -90,64 +91,90 @@ function Userprofile() {
             </button>
           </div>
           <article className="user-articles">
-            <div className="user-questions-wrapper">
-              <p>My Questions</p>
+            <div className="user-status-wrapper">
+              <p>
+                My Questions <span>{questions.length}</span>
+              </p>
               <div className="span-card">
                 {questions?.map((quiz) => (
-                  <span key={quiz?.id}>
-                    <button className="info-btn">{quiz?.votes}</button>
-                    <small
-                      onClick={() => {
-                        localStorage.setItem("quiz", JSON.stringify(quiz));
-                        navigate("/solutions");
-                      }}
-                    >
-                      {quiz?.title}
-                    </small>
+                  <span className="bullets-wrapper" key={quiz?.id}>
+                    <span className="text-btn">
+                      <button className="info-btn">{quiz?.votes}</button>
+
+                      <small
+                        onClick={() => {
+                          localStorage.setItem("quiz", JSON.stringify(quiz));
+                          navigate("/solutions");
+                        }}
+                      >
+                        {quiz?.title}
+                      </small>
+                    </span>
+                    <p>
+                      {moment(Date.parse(quiz?.created_at)).format(
+                        "MMMM Do, YYYY"
+                      )}
+                    </p>
                   </span>
                 ))}
               </div>
             </div>
-            <div className="user-solutions-wrapper">
-              <p>My Answers</p>
+            <div className="user-status-wrapper">
+              <p>
+                My Answers <span>{solutions.length}</span>
+              </p>
               <div className="span-card">
                 {solutions?.map((quiz) => (
-                  <span key={quiz?.id}>
-                    <button className="info-btn">{quiz?.votes}</button>
-                    <small>{quiz?.title}</small>
+                  <span className="bullets-wrapper" key={quiz?.id}>
+                    <span className="text-btn">
+                      <button className="info-btn">{quiz?.votes}</button>
+
+                      <small
+                        onClick={() => {
+                          localStorage.setItem("quiz", JSON.stringify(quiz));
+                          navigate("/solutions");
+                        }}
+                      >
+                        {quiz?.question?.title}
+                      </small>
+                    </span>
+                    <p>
+                      {moment(Date.parse(quiz?.question?.created_at)).format(
+                        "MMMM Do, YYYY"
+                      )}
+                    </p>
                   </span>
                 ))}
               </div>
             </div>
-            <div className="user-tags-wrapper">
-              <p>My Tags</p>
-              <div className="span-card">
-                <span className="tags-wrapper">
-                  {tags?.map((tag) => (
-                    <small key={tag?.id}>{tag?.name}</small>
-                  ))}
-                </span>
-              </div>
-            </div>
-            <div className="user-bookmarks-wrapper">
-              <p>My Booksmarks</p>
+            <div className="user-status-wrapper">
+              <p>
+                My Booksmarks <span>{bookmarks.length}</span>
+              </p>
               <div className="span-card">
                 {bookmarks?.map((book) => (
-                  <span key={book?.id}>
-                    <button className="info-btn">
-                      {book?.question?.votes}
-                    </button>
-                    <small
-                      onClick={() => {
-                        localStorage.setItem(
-                          "quiz",
-                          JSON.stringify(book?.question)
-                        );
-                        navigate("/solutions");
-                      }}
-                    >
-                      {book?.question?.title}
-                    </small>
+                  <span className="bullets-wrapper" key={book?.id}>
+                    <span className="text-btn">
+                      <button className="info-btn">
+                        {book?.question?.votes}
+                      </button>
+                      <small
+                        onClick={() => {
+                          localStorage.setItem(
+                            "quiz",
+                            JSON.stringify(book?.question)
+                          );
+                          navigate("/solutions");
+                        }}
+                      >
+                        {book?.question?.title}
+                      </small>
+                    </span>
+                    <p>
+                      {moment(Date.parse(book?.question?.created_at)).format(
+                        "MMMM Do, YYYY"
+                      )}
+                    </p>
                   </span>
                 ))}
               </div>

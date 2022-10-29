@@ -10,25 +10,24 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/radixUI/Accordion";
-import {
-  postQuestions,
-  getQuestions,
-} from "../features/questions/questionSlice";
-import { MultiSelect } from "react-multi-select-component";
+import { postQuestions } from "../features/questions/questionSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Axios from "../API/axios";
 import { HiLightBulb } from "react-icons/hi";
 import { MdAccountCircle, MdHome } from "react-icons/md";
-
+import Select from "react-select";
 export default function App() {
-  const { isLoading, isSuccess } = useSelector((store) => store.questions);
+  const { isLoading, isSuccess, isError } = useSelector(
+    (store) => store.questions
+  );
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedTags, setTags] = useState([]);
   const [acc, setAcc] = useState({});
   const [status, setStatus] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState();
   const [formData, setFormData] = useState({
+    user_id: 0,
     title: "",
     description: "",
     tag_list: [],
@@ -92,41 +91,43 @@ export default function App() {
     setFormData({ ...formData, [key]: value });
   };
 
-  const postQuiz = async (formData) => {
-    await Axios.post(`/questions`, { ...formData, user_id: acc?.id }).then(
-      (res) => {
-        setStatus(true);
-        setTimeout(() => {
-          setStatus(null);
-          navigate("/questions");
-          if (isSuccess) navigate("/questions");
-        }, 1500);
-
-        dispatch(getQuestions(page));
-      }
-    );
-  };
+  // Function triggered on selection
+  function handleSelect(data) {
+    setSelectedOptions(data);
+  }
 
   //handle submision
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const mappedOptions = selectedTags.map((option) => option.value);
-    setFormData({
-      ...formData,
-      tag_list: mappedOptions.slice(),
-    });
-
-    if (!(Array.isArray(mappedOptions) && !mappedOptions.length)) {
-      try {
-        postQuiz(formData);
-      } catch (err) {
-        console.log("Failed to post", err);
-      } finally {
-      }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const originalPromiseResults = await dispatch(postQuestions(formData))
+        .unwrap()
+        .then((originalPromiseResult) => {
+          setStatus(true);
+          //navigate to homepage on success
+          setTimeout(() => {
+            navigate("/questions");
+          }, 1000);
+        })
+        .catch((err) => {
+          setStatus(false);
+        });
+      return originalPromiseResults;
+    } catch (err) {
+      setStatus(false);
+    } finally {
+      //reset store states
+      setTimeout(() => {
+        setStatus(null);
+        dispatch(reset());
+        //reset form inputs
+        setFormData({
+          username: "",
+          password: "",
+        });
+      }, 1000);
     }
   };
-
   return (
     <>
       <Navbar />
@@ -195,19 +196,27 @@ export default function App() {
               <p className="desc">
                 Add tags to describe what your question is about
               </p>
-              <MultiSelect
+              <Select
                 options={quiz_tags}
-                value={selectedTags}
-                onChange={setTags}
-                labelledBy="Select"
+                placeholder="Select color"
+                value={selectedOptions}
+                onChange={handleSelect}
+                isSearchable={true}
+                isMulti
+                onBlur={() => {
+                  const mappedOptions = selectedOptions.map(
+                    (option) => option.value
+                  );
+                  setFormData({
+                    ...formData,
+                    tag_list: mappedOptions.slice(),
+                    user_id: acc?.id,
+                  });
+                }}
               />
-              {/* <input
-              className="inputs"
-              placeholder="e.g (Two step authentication)"
-            // /> */}
-              {status === true ? (
+              {isSuccess && status === true ? (
                 <div className="form__status active">Question Posted</div>
-              ) : status === false ? (
+              ) : isError && status === false ? (
                 <div className="form__status">Failed Post question :(</div>
               ) : null}
             </div>

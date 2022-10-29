@@ -178,17 +178,16 @@ const quetionsSlice = createSlice({
         state.message = action.payload;
       })
       .addCase(postBookmark.pending, (state, action) => {
-        state.isLoading = true;
+        //  state.isLoading = true;
       })
       .addCase(postBookmark.fulfilled, (state, action) => {
         // console.log(action);
-        state.isSuccess = true;
-        state.isLoading = false;
-        state.total = action.payload.count;
+        // state.isSuccess = true;
+        // state.isLoading = false;
       })
       .addCase(postBookmark.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
+        //state.isLoading = false;
+        //  state.isError = true;
         state.message = action.payload;
       })
       .addCase(postSolutions.pending, (state, action) => {
@@ -205,17 +204,29 @@ const quetionsSlice = createSlice({
         state.message = action.payload;
       })
       .addCase(patchQuestions.pending, (state, action) => {
-        state.isLoading = true;
+        //state.isLoading = true;
       })
       .addCase(patchQuestions.fulfilled, (state, action) => {
-        state.isSuccess = true;
-        state.isLoading = false;
+        //state.isSuccess = true;
+        //state.isLoading = false;
         localStorage.setItem("quiz", JSON.stringify(action.payload));
       })
       .addCase(patchQuestions.rejected, (state, action) => {
+        //state.isLoading = false;
+        //state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(postQuestions.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(postQuestions.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+      })
+      .addCase(postQuestions.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload;
+        state.message = action.payloaQuestions;
       });
   },
 });
