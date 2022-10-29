@@ -5,7 +5,12 @@ import {
   AvatarImage,
   AvatarLg,
 } from "../components/radixUI/avatar";
-import { MdEmail, MdAccountCircle, MdHome } from "react-icons/md";
+import {
+  MdEmail,
+  MdAccountCircle,
+  MdHome,
+  MdDeleteForever,
+} from "react-icons/md";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
@@ -18,6 +23,9 @@ import {
   getUserTags,
 } from "../features/users/userSlice";
 import moment from "moment";
+import { AiFillEdit } from "react-icons/ai";
+import Tooltip from "@mui/material/Tooltip";
+import Axios from "../API/axios";
 
 function Userprofile() {
   const dispatch = useDispatch();
@@ -38,6 +46,35 @@ function Userprofile() {
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;
   }, [user]);
+
+  //Delete a bookmark
+  const DeleteBookmark = async (id) => {
+    try {
+      await Axios.delete(`/bookmarks/${id}`).then((res) => {
+        dispatch(getUserBookmarks());
+      });
+    } catch (error) {}
+  };
+
+  //Delete user questions
+  const DeleteQuestion = async (id) => {
+    try {
+      await Axios.delete(`/questions/${id}`).then((res) => {
+        dispatch(getUserQuestions());
+        dispatch(getUserSolutions());
+      });
+    } catch (error) {}
+  };
+
+  //update seleted solution
+  const DeleteSolution = async (id) => {
+    try {
+      await Axios.delete(`/solutions/${id}`).then((res) => {
+        dispatch(getUserQuestions());
+        dispatch(getUserSolutions());
+      });
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -99,8 +136,22 @@ function Userprofile() {
                 {questions?.map((quiz) => (
                   <span className="bullets-wrapper" key={quiz?.id}>
                     <span className="text-btn">
+                      <Tooltip title="Delete">
+                        <button
+                          className="info-btn del"
+                          onClick={() => {
+                            DeleteQuestion(quiz?.id);
+                          }}
+                        >
+                          <MdDeleteForever color="#fff" />
+                        </button>
+                      </Tooltip>
+                      <Tooltip title="Edit">
+                        <button className="info-btn edit">
+                          <AiFillEdit color="#fff" />
+                        </button>
+                      </Tooltip>
                       <button className="info-btn">{quiz?.votes}</button>
-
                       <small
                         onClick={() => {
                           localStorage.setItem("quiz", JSON.stringify(quiz));
@@ -127,6 +178,21 @@ function Userprofile() {
                 {solutions?.map((quiz) => (
                   <span className="bullets-wrapper" key={quiz?.id}>
                     <span className="text-btn">
+                      <Tooltip title="Delete">
+                        <button
+                          className="info-btn del"
+                          onClick={() => {
+                            DeleteSolution(quiz?.id);
+                          }}
+                        >
+                          <MdDeleteForever color="#fff" />
+                        </button>
+                      </Tooltip>
+                      <Tooltip title="Edit">
+                        <button className="info-btn edit">
+                          <AiFillEdit color="#fff" />
+                        </button>
+                      </Tooltip>
                       <button className="info-btn">{quiz?.votes}</button>
 
                       <small
@@ -155,6 +221,16 @@ function Userprofile() {
                 {bookmarks?.map((book) => (
                   <span className="bullets-wrapper" key={book?.id}>
                     <span className="text-btn">
+                      <Tooltip title="Delete">
+                        <button
+                          className="info-btn del"
+                          onClick={() => {
+                            DeleteBookmark(book?.id);
+                          }}
+                        >
+                          <MdDeleteForever color="#fff" />
+                        </button>
+                      </Tooltip>
                       <button className="info-btn">
                         {book?.question?.votes}
                       </button>

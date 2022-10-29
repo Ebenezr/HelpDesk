@@ -12,8 +12,12 @@
     "@chakra-ui/react": "^2.3.6",
     "@coreui/coreui": "^4.2.2",
     "@coreui/react": "^4.4.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/material": "^5.10.11",
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-accordion": "^1.0.1",
     "@radix-ui/react-avatar": "^1.0.1",
@@ -37,6 +41,7 @@
     "react-router-dom": "^6.4.2",
     "react-select": "^5.5.7",
     "react-time-ago": "^7.2.1",
+    "react-tooltip": "^4.4.3",
     "sass": "^1.55.0"
   },
   "devDependencies": {

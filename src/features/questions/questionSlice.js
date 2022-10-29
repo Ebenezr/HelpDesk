@@ -209,7 +209,7 @@ const quetionsSlice = createSlice({
       .addCase(patchQuestions.fulfilled, (state, action) => {
         //state.isSuccess = true;
         //state.isLoading = false;
-        localStorage.setItem("quiz", JSON.stringify(action.payload));
+        //  localStorage.setItem("quiz", JSON.stringify(action.payload));
       })
       .addCase(patchQuestions.rejected, (state, action) => {
         //state.isLoading = false;

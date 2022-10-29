@@ -88,6 +88,14 @@ body {
   color: $color-info-dark;
   border: solid 0.1rem $color-info-dark;
   margin-right: 0.5em;
+  &.del {
+    background: $color-danger;
+    border: none;
+  }
+  &.edit {
+    background: $color-success;
+    border: none;
+  }
 }
 .link__icons {
   color: $color-dark;

@@ -12,7 +12,6 @@ import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
 import ReactTimeAgo from "react-time-ago";
-import { upvote, downvote } from "../features/questions/questionSlice";
 import {
   reset,
   getQuestions,
@@ -68,16 +67,15 @@ const Solutions = () => {
   };
 
   //post a solution
-  const voteQuestion = async (formData) => {
+  const voteQuestion = async (id, formData) => {
     try {
-      await dispatch(patchQuestions(formData))
-        .unwrap()
-        .then((data) => {
-          //update question with posted solution
-          const quiz = JSON.parse(localStorage.getItem("quiz") || "");
-          setQuiz(quiz);
-          setSolution("");
-        });
+      await Axios.patch(`/questions/${id}`, formData).then((res) => {
+        localStorage.setItem("quiz", JSON.stringify(res.data));
+        //update question with posted solution
+
+        setQuiz(res.data);
+        setSolution("");
+      });
     } catch (err) {
       // console.error(err);
     } finally {
@@ -192,7 +190,7 @@ const Solutions = () => {
               <TiArrowSortedUp
                 className="chevrons"
                 onClick={() =>
-                  voteQuestion({
+                  voteQuestion(question?.id, {
                     votes: question?.votes + 1,
                   })
                 }
@@ -201,7 +199,7 @@ const Solutions = () => {
               <TiArrowSortedDown
                 className="chevrons"
                 onClick={() =>
-                  voteQuestion({
+                  voteQuestion(question?.id, {
                     votes: question?.votes - 1,
                   })
                 }
