@@ -17,6 +17,7 @@ import {
   reset,
   getQuestions,
   getQuestion,
+  patchQuestions,
   postBookmark,
   postSolutions,
 } from "../features/questions/questionSlice";
@@ -66,22 +67,42 @@ const Solutions = () => {
     }
   };
 
-  // //post a solution
-  // const voteQuestion = async (id, vote) => {
-  //   try {
-  //     await Axios.patch(`/questions/${id}`, { votes: vote })
-  //       .then((res) => {
-  //         console.log(res.data);
-  //         dispatch(getQuestion(question?.id));
-  //       })
-  //       .then(() => {
-  //         const quiz = JSON.parse(localStorage.getItem("quiz") || "");
-  //         setQuiz(quiz);
-  //       });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  //post a solution
+  const voteQuestion = async (formData) => {
+    try {
+      await dispatch(patchQuestions(formData))
+        .unwrap()
+        .then((data) => {
+          //update question with posted solution
+          const quiz = JSON.parse(localStorage.getItem("quiz") || "");
+          setQuiz(quiz);
+          setSolution("");
+        });
+    } catch (err) {
+      // console.error(err);
+    } finally {
+      //reset store states
+      setTimeout(() => {
+        dispatch(reset());
+      }, 1000);
+    }
+  };
+
+  //update seleted solution
+  const voteSolution = async (id, formData) => {
+    try {
+      await Axios.patch(`/solutions/${id}`, formData)
+        .then((res) => {
+          localStorage.setItem("quiz", JSON.stringify(res.data));
+        })
+        .then(() => {
+          const quiz = JSON.parse(localStorage.getItem("quiz") || "");
+          setQuiz(quiz);
+        });
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  };
 
   //post a solution
   const postSoln = async () => {
@@ -170,12 +191,20 @@ const Solutions = () => {
             <div className="submenu">
               <TiArrowSortedUp
                 className="chevrons"
-                onClick={() => voteQuestion(question?.id, question?.vote + 1)}
+                onClick={() =>
+                  voteQuestion({
+                    votes: question?.votes + 1,
+                  })
+                }
               />
               <p>{question?.votes}</p>
               <TiArrowSortedDown
                 className="chevrons"
-                onClick={() => voteQuestion(question?.id, question?.vote - 1)}
+                onClick={() =>
+                  voteQuestion({
+                    votes: question?.votes - 1,
+                  })
+                }
               />
               {isSuccess ? (
                 <BsFillBookmarkFill
@@ -225,9 +254,23 @@ const Solutions = () => {
               <div className="question" key={soln.id}>
                 {/* submenu for solution votting */}
                 <div className="submenu">
-                  <TiArrowSortedUp className="chevrons" />
+                  <TiArrowSortedUp
+                    className="chevrons"
+                    onClick={() =>
+                      voteSolution(soln?.id, {
+                        votes: soln?.votes + 1,
+                      })
+                    }
+                  />
                   <p>{soln?.votes}</p>
-                  <TiArrowSortedDown className="chevrons" />
+                  <TiArrowSortedDown
+                    className="chevrons"
+                    onClick={() =>
+                      voteSolution(soln?.id, {
+                        votes: soln?.votes - 1,
+                      })
+                    }
+                  />
                   {/* <BsFillBookmarkFill className="chevrons bookmark" /> */}
                 </div>
                 <div className="question-content">{soln?.description}</div>

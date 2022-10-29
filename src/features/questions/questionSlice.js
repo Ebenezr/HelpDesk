@@ -69,6 +69,7 @@ export const patchQuestions = createAsyncThunk(
     }
   }
 );
+
 //bookmark a question
 export const postBookmark = createAsyncThunk(
   "questions/postBookmark",
@@ -199,6 +200,19 @@ const quetionsSlice = createSlice({
         localStorage.setItem("quiz", JSON.stringify(action.payload));
       })
       .addCase(postSolutions.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(patchQuestions.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(patchQuestions.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        localStorage.setItem("quiz", JSON.stringify(action.payload));
+      })
+      .addCase(patchQuestions.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
