@@ -63,6 +63,12 @@ body {
   color: white;
   font-weight: 600;
 }
+.pry-btn-var {
+  background: $color-primary-variant;
+  color: $color-primary;
+  font-weight: 600;
+  border: 0.1rem solid $color-primary;
+}
 .sec-btn {
   background: $color-accent-variant;
   color: $color-accent;

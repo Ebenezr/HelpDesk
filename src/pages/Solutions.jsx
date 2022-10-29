@@ -22,6 +22,9 @@ import {
 } from "../features/questions/questionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "../API/axios";
+import { Tooltip } from "@mui/material";
+import moment from "moment";
+import { motion } from "framer-motion";
 
 const Solutions = () => {
   const navigate = useNavigate();
@@ -30,6 +33,7 @@ const Solutions = () => {
     created_at: new Date(),
   });
   const [solution, setSolution] = useState("");
+  const [related, setRelated] = useState([]);
   const [acc, setAcc] = useState({});
   const { user } = useSelector((store) => store.user);
   const { isLoading, currentQuestion, isSuccess } = useSelector(
@@ -43,6 +47,11 @@ const Solutions = () => {
     //get current selected question
     const quiz = JSON.parse(localStorage.getItem("quiz"));
     setQuiz(quiz);
+
+    getRelated(quiz.tag_list);
+    // return () => {
+    //   localStorage.setItem("quiz", JSON.stringify({}));
+    // };
   }, []);
 
   //get solution filed values
@@ -85,6 +94,21 @@ const Solutions = () => {
       }, 1000);
     }
   };
+
+  //get related questions
+  async function getRelated(term) {
+    try {
+      await Axios.get(`/filter/${term}`).then((res) => {
+        console.log(res.data.questions);
+        //update question with posted solution
+        setRelated(res.data.questions);
+      });
+    } catch (err) {
+      // console.error(err);
+    } finally {
+      //reset store states
+    }
+  }
 
   //update seleted solution
   const voteSolution = async (id, formData) => {
@@ -289,7 +313,7 @@ const Solutions = () => {
                       {soln?.user?.last_name?.slice(0, 1)}
                     </AvatarFallback>
                   </Avatar>
-                  <p className="username">{question?.user?.username}</p>
+                  <p className="username">{soln?.user?.username}</p>
                 </div>
               </div>
             ))}
@@ -314,15 +338,44 @@ const Solutions = () => {
         </main>
         {/* articles sections */}
         <article className="articles">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             className="btn pry-btn"
-            onClick={() => {
-              navigate("/ask");
-            }}
+            onClick={() => navigate("/ask")}
           >
             Ask Question
-          </button>
-          <div className="related"></div>
+          </motion.button>
+          <div className="faqs">
+            <h2>Related Questions</h2>
+            <div className="span-card">
+              {related.length >= 1
+                ? related?.map((quiz) => (
+                    <span className="bullets-wrapper" key={quiz?.id}>
+                      <span className="text-btn">
+                        <Tooltip title="Votes">
+                          <button className="info-btn">{quiz?.votes}</button>
+                        </Tooltip>
+
+                        <small
+                          onClick={() => {
+                            localStorage.setItem("quiz", JSON.stringify(quiz));
+                            navigate("/solutions");
+                          }}
+                        >
+                          {quiz?.title}
+                        </small>
+                      </span>
+                      <p>
+                        {moment(Date.parse(quiz?.created_at)).format(
+                          "MMMM Do, YYYY"
+                        )}
+                      </p>
+                    </span>
+                  ))
+                : null}
+            </div>
+          </div>
         </article>
       </section>
       <Footer_main />

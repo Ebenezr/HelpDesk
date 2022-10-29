@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
 import { MdAccountCircle, MdHome } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuestions } from "../features/questions/questionSlice";
+import { getQuestions, getFAQS } from "../features/questions/questionSlice";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 TimeAgo.addDefaultLocale(en);
@@ -12,16 +12,20 @@ import { motion } from "framer-motion";
 import Searchbar from "../components/Navbar/Searchbar";
 import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
+import { Tooltip } from "@mui/material";
+import moment from "moment";
 
 function Home() {
   const navigate = useNavigate();
-  const { isLoading, allquestions, total, total_pages } =
-    useSelector((store) => store.questions);
+  const { isLoading, allquestions, total, total_pages, faqs } = useSelector(
+    (store) => store.questions
+  );
   const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getQuestions(page));
+    dispatch(getFAQS());
   }, [page, dispatch]);
 
   return (
@@ -151,7 +155,34 @@ function Home() {
           >
             Ask Question
           </motion.button>
-          <div className="related"></div>
+          <div className="faqs">
+            <h2>Frequesntly asked Questions</h2>
+            <div className="span-card">
+              {faqs?.map((quiz) => (
+                <span className="bullets-wrapper" key={quiz?.id}>
+                  <span className="text-btn">
+                    <Tooltip title="Votes">
+                      <button className="info-btn">{quiz?.votes}</button>
+                    </Tooltip>
+
+                    <small
+                      onClick={() => {
+                        localStorage.setItem("quiz", JSON.stringify(quiz));
+                        navigate("/solutions");
+                      }}
+                    >
+                      {quiz?.title}
+                    </small>
+                  </span>
+                  <p>
+                    {moment(Date.parse(quiz?.created_at)).format(
+                      "MMMM Do, YYYY"
+                    )}
+                  </p>
+                </span>
+              ))}
+            </div>
+          </div>
         </article>
       </section>
       <Footer_main />

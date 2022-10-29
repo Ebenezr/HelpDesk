@@ -111,23 +111,6 @@ export const getUserQuestions = createAsyncThunk(
     }
   }
 );
-export const getUserTags = createAsyncThunk(
-  "user/getUserTags",
-  async (thunkAPI) => {
-    try {
-      const resp = await Axios.get("/mytags");
-      return resp.data;
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
 
 const initialState = {
   user: {},
@@ -136,7 +119,6 @@ const initialState = {
   bookmarks: [],
   questions: [],
   solutions: [],
-  tags: [],
   token: "",
   isLoading: false,
   isSuccess: false,
@@ -160,7 +142,7 @@ const userSlice = createSlice({
       state.bookmarks = [];
       state.questions = [];
       state.solutions = [];
-      state.tags = [];
+
       localStorage.setItem("user", JSON.stringify({}));
       localStorage.setItem("token", JSON.stringify(""));
       localStorage.setItem("authenticated", JSON.stringify(false));
@@ -282,25 +264,6 @@ const userSlice = createSlice({
         state.questions = action.payload;
       })
       .addCase(getUserQuestions.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.user = null;
-        state.message = action.payload;
-
-        // initialState.error = action.error.message;
-      })
-      .addCase(getUserTags.pending, (state, action) => {
-        //user mod
-        state.isLoading = true;
-      })
-      .addCase(getUserTags.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        //reset issucces status
-
-        state.tags = action.payload;
-      })
-      .addCase(getUserTags.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;

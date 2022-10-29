@@ -119,6 +119,61 @@
   //articles sections
   .articles {
     padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    button {
+      width: 40%;
+    }
+    .faqs {
+      h2 {
+        font-weight: 500;
+        color: $color-info-dark;
+        font-size: 1.3rem;
+      }
+      .span-card {
+        border: solid $color-info-dark 0.2rem;
+        border-radius: 0.3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        max-height: 15rem;
+        overflow-y: auto;
+        padding: 0.8rem;
+
+        .tags-wrapper {
+          display: flex;
+          flex-direction: column;
+        }
+        .info-btn {
+          max-width: 3rem;
+          max-height: 2rem;
+        }
+        .bullets-wrapper {
+          padding: 0.5rem 0;
+          border-bottom: 0.1rem solid $color-info-dark;
+          display: flex;
+          justify-content: space-between;
+          flex-direction: row;
+          .text-btn {
+            display: flex;
+            gap: 0.2rem;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: flex-start;
+
+            small {
+              color: $color-primary;
+              font-size: 0.9rem;
+              cursor: pointer;
+            }
+          }
+        }
+        p {
+          font-size: 0.7rem;
+        }
+      }
+    }
   }
 }
 

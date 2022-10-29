@@ -18,6 +18,32 @@ export const getQuestions = createAsyncThunk(
     }
   }
 );
+
+//fetch faqs
+export const getFAQS = createAsyncThunk(
+  "questions/getFAQS",
+  async (thunkAPI) => {
+    try {
+      const resp = await Axios.get(`/faqs`);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
+
+// //fetch faqs
+// export const getRelated = createAsyncThunk(
+//   "questions/getFAQS",
+//   async (thunkAPI) => {
+//     try {
+//       const resp = await Axios.get(`/faqs`);
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error?.message);
+//     }
+//   }
+// );
 //fetch and update current seleceted question
 export const getQuestion = createAsyncThunk(
   "questions/getQuestion",
@@ -100,6 +126,7 @@ const initialState = {
   total_pages: 0,
   per_page: 0,
   allquestions: [],
+  faqs: [],
   total: 0,
   isLoading: false,
   isSuccess: false,
@@ -145,6 +172,19 @@ const quetionsSlice = createSlice({
         state.total = action.payload.count;
       })
       .addCase(getQuestions.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(getFAQS.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getFAQS.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.faqs = action.payload;
+      })
+      .addCase(getFAQS.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

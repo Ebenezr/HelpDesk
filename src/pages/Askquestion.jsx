@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HiLightBulb } from "react-icons/hi";
 import { MdAccountCircle, MdHome } from "react-icons/md";
 import Select from "react-select";
+import Axios from "../API/axios";
 export default function App() {
   const { isLoading, isSuccess, isError } = useSelector(
     (store) => store.questions
@@ -23,6 +24,7 @@ export default function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedTags, setTags] = useState([]);
+  const [question, setQuestion] = useState({});
   const [acc, setAcc] = useState({});
   const [status, setStatus] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState();
@@ -66,22 +68,17 @@ export default function App() {
       label: "student-support",
     },
   ];
-  useEffect(() => {
-    const loggedUser = JSON.parse(localStorage.getItem("user"));
-
-    setAcc(loggedUser);
-
-    //if user isnt loged in redirect to login page
-  }, [user]);
 
   useEffect(() => {
+    const quiz = JSON.parse(localStorage.getItem("quiz"));
     const loggedUser = JSON.parse(localStorage.getItem("user"));
     const auth = JSON.parse(localStorage.getItem("authenticated") || "");
     setAcc(loggedUser);
-
+    setFormData(quiz);
+    setQuestion(quiz);
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;
-  }, [user]);
+  }, []);
 
   //hangle change event
   const handleChange = (event) => {
@@ -96,9 +93,35 @@ export default function App() {
     setSelectedOptions(data);
   }
 
+  //update seleted solution
+  const UpdateQuestion = async (id, formData) => {
+    try {
+      await Axios.patch(`/questions/${id}`, formData).then((res) => {
+        setStatus(true);
+        //navigate to homepage on success
+        setTimeout(() => {
+          navigate("/questions");
+        }, 1000);
+      });
+    } catch (error) {
+      setStatus(false);
+    } finally {
+      //reset store states
+      setTimeout(() => {
+        setStatus(null);
+        //reset form inputs
+        setFormData({
+          user_id: 0,
+          title: "",
+          description: "",
+          tag_list: [],
+        });
+      }, 1000);
+    }
+  };
+
   //handle submision
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     try {
       const originalPromiseResults = await dispatch(postQuestions(formData))
         .unwrap()
@@ -122,8 +145,10 @@ export default function App() {
         dispatch(reset());
         //reset form inputs
         setFormData({
-          username: "",
-          password: "",
+          user_id: 0,
+          title: "",
+          description: "",
+          tag_list: [],
         });
       }, 1000);
     }
@@ -167,7 +192,7 @@ export default function App() {
             <h3>Home</h3>
           </NavLink>
         </aside>
-        <form className="main-section-content" onSubmit={handleSubmit}>
+        <div className="main-section-content">
           <h2>Ask a Question </h2>
           <div className="main-row">
             <div className="section1">
@@ -198,7 +223,7 @@ export default function App() {
               </p>
               <Select
                 options={quiz_tags}
-                placeholder="Select color"
+                placeholder="Select Tags"
                 value={selectedOptions}
                 onChange={handleSelect}
                 isSearchable={true}
@@ -221,10 +246,16 @@ export default function App() {
               ) : null}
             </div>
           </div>
-          <button className="btn pry-btn" type="submit">
+          <button className="btn pry-btn" type="submit" onClick={handleSubmit}>
             {isLoading ? "Posting question..." : " Post question"}
           </button>
-        </form>
+          <button
+            className="btn pry-btn-var"
+            onClick={() => UpdateQuestion(question?.id, formData)}
+          >
+            {isLoading ? "Updating question..." : " Update question"}
+          </button>
+        </div>
         <article className="articles">
           <div className="accordion-wrapper">
             <div className="sec2-title">How To Draft your question</div>

@@ -20,7 +20,6 @@ import {
   getUserBookmarks,
   getUserQuestions,
   getUserSolutions,
-  getUserTags,
 } from "../features/users/userSlice";
 import moment from "moment";
 import { AiFillEdit } from "react-icons/ai";
@@ -39,7 +38,6 @@ function Userprofile() {
     dispatch(getUserBookmarks());
     dispatch(getUserSolutions());
     dispatch(getUserQuestions());
-    dispatch(getUserTags());
     const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
     const auth = JSON.parse(localStorage.getItem("authenticated") || "");
     setAcc(loggedUser);
@@ -147,11 +145,20 @@ function Userprofile() {
                         </button>
                       </Tooltip>
                       <Tooltip title="Edit">
-                        <button className="info-btn edit">
+                        <button
+                          className="info-btn edit"
+                          onClick={() => {
+                            localStorage.setItem("quiz", JSON.stringify(quiz));
+                            navigate("/ask");
+                          }}
+                        >
                           <AiFillEdit color="#fff" />
                         </button>
                       </Tooltip>
-                      <button className="info-btn">{quiz?.votes}</button>
+                      <Tooltip title="Votes">
+                        <button className="info-btn">{quiz?.votes}</button>
+                      </Tooltip>
+
                       <small
                         onClick={() => {
                           localStorage.setItem("quiz", JSON.stringify(quiz));
@@ -188,12 +195,20 @@ function Userprofile() {
                           <MdDeleteForever color="#fff" />
                         </button>
                       </Tooltip>
-                      <Tooltip title="Edit">
-                        <button className="info-btn edit">
+                      {/* <Tooltip title="Edit">
+                        <button
+                          className="info-btn edit"
+                          onClick={() => {
+                            //localStorage.setItem("quiz", JSON.stringify(quiz));
+                            navigate("/solutions");
+                          }}
+                        >
                           <AiFillEdit color="#fff" />
                         </button>
+                      </Tooltip> */}
+                      <Tooltip title="Votes">
+                        <button className="info-btn">{quiz?.votes}</button>
                       </Tooltip>
-                      <button className="info-btn">{quiz?.votes}</button>
 
                       <small
                         onClick={() => {
@@ -231,9 +246,11 @@ function Userprofile() {
                           <MdDeleteForever color="#fff" />
                         </button>
                       </Tooltip>
-                      <button className="info-btn">
-                        {book?.question?.votes}
-                      </button>
+                      <Tooltip title="Votes">
+                        <button className="info-btn">
+                          {book?.question?.votes}
+                        </button>
+                      </Tooltip>
                       <small
                         onClick={() => {
                           localStorage.setItem(
