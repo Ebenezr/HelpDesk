@@ -22,6 +22,27 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+//logged user info
+
+export const resetUserPass = createAsyncThunk(
+  "user/resetUserPass",
+  async (formData, thunkAPI) => {
+    const { email } = formData;
+    try {
+      const resp = await Axios.patch(`/passwordreset/email=${email}`, formData);
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (formData, thunkAPI) => {
@@ -264,6 +285,23 @@ const userSlice = createSlice({
         state.questions = action.payload;
       })
       .addCase(getUserQuestions.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+
+        // initialState.error = action.error.message;
+      })
+      .addCase(resetUserPass.pending, (state, action) => {
+        //user mod
+        state.isLoading = true;
+      })
+      .addCase(resetUserPass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        //reset issucces status
+      })
+      .addCase(resetUserPass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;

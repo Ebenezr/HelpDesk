@@ -52,7 +52,7 @@ function Belt() {
         You can ask your question/ post on our community by providing all the
         required details
       </p>
-      <form className="landing-form">
+      {/* <form className="landing-form">
         <input
           className="search-input"
           type="text"
@@ -62,7 +62,7 @@ function Belt() {
         <button className="btn sec-btn" type="submit">
           SEARCH
         </button>
-      </form>
+      </form> */}
     </div>
   );
 }

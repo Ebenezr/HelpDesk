@@ -1,35 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../features/users/userSlice";
-import { useNavigate } from "react-router-dom";
+import { resetUserPass } from "../../features/users/userSlice";
+import { NavLink, useNavigate } from "react-router-dom";
 import { reset } from "../../features/users/userSlice";
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
-function Register() {
-  const [status, setStatus] = useState(null);
-  const [passwordType, setPasswordType] = useState("password");
+const Resetpassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, isSuccess, isError, user } = useSelector(
     (store) => store.user
   );
+  const [status, setStatus] = useState(null);
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    username: "",
     email: "",
     password: "",
     confirm_password: "",
   });
-
-  //show/hide password
-  const togglePassword = () => {
-    if (passwordType === "password") {
-      setPasswordType("text");
-      return;
-    }
-    setPasswordType("password");
-  };
 
   //hangle change event
   const handleChange = (event) => {
@@ -38,25 +24,23 @@ function Register() {
 
     setFormData({ ...formData, [key]: value });
   };
+
   //handle submision
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const originalPromiseResults = await dispatch(registerUser(formData))
+      const originalPromiseResults = await dispatch(resetUserPass(formData))
         .unwrap()
         .then(() => {
           setStatus(true);
           //navigate to homepage on success
           setTimeout(() => {
             setFormData({
-              first_name: "",
-              last_name: "",
-              username: "",
               email: "",
               password: "",
               confirm_password: "",
             });
-            navigate("/questions");
+            navigate("/home/login");
           }, 1000);
         })
         .catch((err) => {});
@@ -72,44 +56,10 @@ function Register() {
       }, 1000);
     }
   };
-
   return (
     <form className="sign__up" onSubmit={handleSubmit}>
-      <h1>Join Our Community</h1>
+      <h1>Reset your Password</h1>
       <div className="formBody">
-        <span className="input_group">
-          <input
-            required
-            type="text"
-            id="last_name"
-            className="inputs"
-            placeholder="First Name"
-            value={formData?.last_name}
-            onChange={handleChange}
-          ></input>
-        </span>
-        <span className="input_group">
-          <input
-            required
-            type="text"
-            id="first_name"
-            className="inputs"
-            placeholder="Last Name"
-            value={formData?.first_name}
-            onChange={handleChange}
-          ></input>
-        </span>
-        <span className="input_group">
-          <input
-            required
-            type="text"
-            id="username"
-            className="inputs"
-            placeholder="User Name"
-            value={formData?.username}
-            onChange={handleChange}
-          ></input>
-        </span>
         <span className="input_group">
           <input
             required
@@ -125,54 +75,39 @@ function Register() {
           <input
             required
             autoComplete="new-password"
-            type={passwordType}
+            type="password"
             id="password"
             className="inputs"
             placeholder="Password"
             value={formData?.password}
             onChange={handleChange}
-          />
-          {passwordType === "password" ? (
-            <button onClick={togglePassword} type="button">
-              <AiFillEyeInvisible className="form--icons" />
-            </button>
-          ) : (
-            <button onClick={togglePassword} type="button">
-              <AiFillEye className="form--icons" />
-            </button>
-          )}
+          ></input>
         </span>
         <span className="input_group">
           <input
             required
             autoComplete="new-password"
-            type={passwordType}
+            type="password"
             id="confirm_password"
             className="inputs"
             placeholder="Password Confirmation"
             value={formData?.confirm_password}
             onChange={handleChange}
-          />{" "}
-          {passwordType === "password" ? (
-            <button onClick={togglePassword} type="button">
-              <AiFillEyeInvisible className="form--icons" />
-            </button>
-          ) : (
-            <button onClick={togglePassword} type="button">
-              <AiFillEye className="form--icons" />
-            </button>
-          )}
+          />
         </span>
       </div>
       <div className="signup__footer">
         <button className="btn pry-btn" type="submit">
-          {isLoading ? "SIGNING YOU UP..." : " PROCEED"}
+          {isLoading ? "Requeesting server..." : " PROCEED"}
         </button>
       </div>
       <div className="sign-up-terms">
         <p>
-          By proceeding you agree to the privacy policy and <br></br>
-          <span>terms of service</span>
+          <p>
+            <NavLink className="span" to="/home/login">
+              return back to login
+            </NavLink>
+          </p>
         </p>
       </div>
       {isSuccess && status ? (
@@ -184,6 +119,6 @@ function Register() {
       ) : null}
     </form>
   );
-}
+};
 
-export default Register;
+export default Resetpassword;

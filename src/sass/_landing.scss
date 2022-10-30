@@ -28,10 +28,32 @@
       .formBody {
         width: 100%;
         display: flex;
+
         flex-direction: column;
         justify-content: stretch;
-        gap: 0.5rem;
+        gap: 1rem;
         .input_group {
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          button {
+            position: absolute;
+            right: 2%;
+            top: 0;
+            grid-area: icon;
+            background: transparent;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            border: none;
+            .form--icons {
+              font-size: 1.5rem;
+              display: grid;
+              color: $color-info-dark;
+              cursor: pointer;
+            }
+          }
           .inputs {
             width: 100%;
             border: 0.1rem solid $color-info-dark;

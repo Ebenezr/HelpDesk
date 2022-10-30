@@ -99,7 +99,8 @@ const Solutions = () => {
   async function getRelated(term) {
     try {
       await Axios.get(`/filter/${term}`).then((res) => {
-        console.log(res.data.questions);
+        // let arr = res.data.questions;
+        // let newarr = arr.filter(array);
         //update question with posted solution
         setRelated(res.data.questions);
       });

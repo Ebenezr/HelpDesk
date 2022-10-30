@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/users/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import { reset } from "../../features/users/userSlice";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 const Login = () => {
   const [status, setStatus] = useState(null);
+  const [passwordType, setPasswordType] = useState("password");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading, isSuccess, isError } = useSelector((store) => store.user);
@@ -13,6 +15,15 @@ const Login = () => {
     username: "",
     password: "",
   });
+
+  //show/hide password
+  const togglePassword = () => {
+    if (passwordType === "password") {
+      setPasswordType("text");
+      return;
+    }
+    setPasswordType("password");
+  };
 
   //hangle change event
   const handleChange = (event) => {
@@ -73,13 +84,22 @@ const Login = () => {
           <input
             required
             autoComplete="new-password"
-            type="password"
+            type={passwordType}
             id="password"
             className="inputs"
             placeholder="Password"
             value={formData?.password}
             onChange={handleChange}
           ></input>
+          {passwordType === "password" ? (
+            <button onClick={togglePassword} type="button">
+              <AiFillEyeInvisible className="form--icons" />
+            </button>
+          ) : (
+            <button onClick={togglePassword} type="button">
+              <AiFillEye className="form--icons" />
+            </button>
+          )}
         </span>
       </div>
       <div className="signup__footer">
@@ -94,6 +114,11 @@ const Login = () => {
             Sign up
           </NavLink>
         </p>
+        {/* <p>
+          <NavLink className="span" to="/home/resetpassword">
+            forgot password
+          </NavLink>
+        </p> */}
       </div>
       {isSuccess && status ? (
         <div className="form__status active">Login Success</div>
