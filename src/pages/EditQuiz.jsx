@@ -1,7 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
 import { useEffect, useState } from "react";
-
 import Footer_main from "../components/Navbar/Footer_main";
 import Navbar from "../components/Navbar/Navbar";
 import {
@@ -10,20 +9,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/radixUI/Accordion";
-import { postQuestions } from "../features/questions/questionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { HiLightBulb } from "react-icons/hi";
 import { MdAccountCircle, MdHome } from "react-icons/md";
 import Select from "react-select";
 import Axios from "../API/axios";
-export default function App() {
+
+const EditQuiz = () => {
   const { isLoading, isSuccess, isError } = useSelector(
     (store) => store.questions
   );
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [selectedTags, setTags] = useState([]);
   const [question, setQuestion] = useState({});
   const [acc, setAcc] = useState({});
   const [status, setStatus] = useState(null);
@@ -78,6 +76,7 @@ export default function App() {
     const loggedUser = JSON.parse(localStorage.getItem("user"));
     const auth = JSON.parse(localStorage.getItem("authenticated") || "");
     setAcc(loggedUser);
+    setFormData(quiz);
     setQuestion(quiz);
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;
@@ -112,40 +111,6 @@ export default function App() {
       //reset store states
       setTimeout(() => {
         setStatus(null);
-        //reset form inputs
-        setFormData({
-          user_id: 0,
-          title: "",
-          description: "",
-          tag_list: [],
-        });
-      }, 1000);
-    }
-  };
-
-  //handle submision
-  const handleSubmit = async () => {
-    try {
-      const originalPromiseResults = await dispatch(postQuestions(formData))
-        .unwrap()
-        .then((originalPromiseResult) => {
-          setStatus(true);
-          //navigate to homepage on success
-          setTimeout(() => {
-            navigate("/questions");
-          }, 1000);
-        })
-        .catch((err) => {
-          setStatus(false);
-        });
-      return originalPromiseResults;
-    } catch (err) {
-      setStatus(false);
-    } finally {
-      //reset store states
-      setTimeout(() => {
-        setStatus(null);
-        dispatch(reset());
         //reset form inputs
         setFormData({
           user_id: 0,
@@ -243,14 +208,17 @@ export default function App() {
                 }}
               />
               {isSuccess && status === true ? (
-                <div className="form__status active">Question Posted</div>
+                <div className="form__status active">Question Updated</div>
               ) : isError && status === false ? (
-                <div className="form__status">Failed Post question :(</div>
+                <div className="form__status">Failed Update question :(</div>
               ) : null}
             </div>
           </div>
-          <button className="btn pry-btn" type="submit" onClick={handleSubmit}>
-            {isLoading ? "Posting question..." : " Post question"}
+          <button
+            className="btn pry-btn-var"
+            onClick={() => UpdateQuestion(question?.id, formData)}
+          >
+            {isLoading ? "Updating question..." : " Update question"}
           </button>
         </div>
         <article className="articles">
@@ -294,4 +262,6 @@ export default function App() {
       <Footer_main />
     </>
   );
-}
+};
+
+export default EditQuiz;

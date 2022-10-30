@@ -149,7 +149,7 @@ function Userprofile() {
                           className="info-btn edit"
                           onClick={() => {
                             localStorage.setItem("quiz", JSON.stringify(quiz));
-                            navigate("/ask");
+                            navigate("/editquestion");
                           }}
                         >
                           <AiFillEdit color="#fff" />
@@ -195,6 +195,7 @@ function Userprofile() {
                           <MdDeleteForever color="#fff" />
                         </button>
                       </Tooltip>
+                      //TODO
                       {/* <Tooltip title="Edit">
                         <button
                           className="info-btn edit"
@@ -209,7 +210,6 @@ function Userprofile() {
                       <Tooltip title="Votes">
                         <button className="info-btn">{quiz?.votes}</button>
                       </Tooltip>
-
                       <small
                         onClick={() => {
                           localStorage.setItem("quiz", JSON.stringify(quiz));

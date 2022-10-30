@@ -22,7 +22,8 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-//logged user info
+//TODO
+//RESET USER PASSWORD
 
 export const resetUserPass = createAsyncThunk(
   "user/resetUserPass",
@@ -63,7 +64,7 @@ export const registerUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",
-  async (formData) => {
+  async (formData, thunkAPI) => {
     try {
       const resp = await Axios.patch(`/users/${loggedUser?.id}`, formData);
       return resp.data;
@@ -250,7 +251,6 @@ const userSlice = createSlice({
       .addCase(getUserBookmarks.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.user = null;
         state.message = action.payload;
 
         // initialState.error = action.error.message;
@@ -268,7 +268,7 @@ const userSlice = createSlice({
       .addCase(getUserSolutions.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.user = null;
+
         state.message = action.payload;
 
         // initialState.error = action.error.message;
@@ -287,7 +287,6 @@ const userSlice = createSlice({
       .addCase(getUserQuestions.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.user = null;
         state.message = action.payload;
 
         // initialState.error = action.error.message;

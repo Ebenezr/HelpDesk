@@ -14,6 +14,7 @@ import Footer_main from "../components/Navbar/Footer_main";
 import { HiLightBulb } from "react-icons/hi";
 import { Tooltip } from "@mui/material";
 import moment from "moment";
+import Pagination from "@mui/material/Pagination";
 
 function Home() {
   const navigate = useNavigate();
@@ -27,6 +28,10 @@ function Home() {
     dispatch(getQuestions(page));
     dispatch(getFAQS());
   }, [page, dispatch]);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   return (
     <>
@@ -121,7 +126,13 @@ function Home() {
             </div>
           )}
           <div className="pagination">
-            <motion.button
+            <Pagination
+              count={total / 3}
+              page={page}
+              onChange={handleChangePage}
+            />
+
+            {/* <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               className="btn"
@@ -142,7 +153,7 @@ function Home() {
               }}
             >
               Next
-            </motion.button>
+            </motion.button> */}
           </div>
         </main>
         {/* articles sections */}

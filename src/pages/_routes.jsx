@@ -8,6 +8,7 @@ import Askquestion from "./Askquestion";
 import Login from "../components/Forms/Login";
 import Register from "../components/Forms/Register";
 import Resetpassword from "../components/Forms/Resetpassword";
+import EditQuiz from "./EditQuiz";
 
 const Routing = () => (
   <Routes>
@@ -27,7 +28,8 @@ const Routing = () => (
     <Route path="/solutions" element={<Solutions />} />
     <Route path="/profile" element={<Userprofile />} />
     <Route path="/myaccount" element={<Useraccount />} />
-    <Route path="/ask" element={<Askquestion />} />
+    <Route path="/ask" element={<Askquestion />} />\{" "}
+    <Route path="/editquestion" element={<EditQuiz />} />
   </Routes>
 );
 export default Routing;

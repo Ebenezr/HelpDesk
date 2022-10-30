@@ -99,10 +99,10 @@ const Solutions = () => {
   async function getRelated(term) {
     try {
       await Axios.get(`/filter/${term}`).then((res) => {
-        // let arr = res.data.questions;
-        // let newarr = arr.filter(array);
+        let arr = res.data.questions;
+        let newarr = arr.filter((array) => array.id !== question.id);
         //update question with posted solution
-        setRelated(res.data.questions);
+        setRelated(newarr);
       });
     } catch (err) {
       // console.error(err);
@@ -350,31 +350,33 @@ const Solutions = () => {
           <div className="faqs">
             <h2>Related Questions</h2>
             <div className="span-card">
-              {related.length >= 1
-                ? related?.map((quiz) => (
-                    <span className="bullets-wrapper" key={quiz?.id}>
-                      <span className="text-btn">
-                        <Tooltip title="Votes">
-                          <button className="info-btn">{quiz?.votes}</button>
-                        </Tooltip>
+              {related.length >= 1 ? (
+                related?.map((quiz) => (
+                  <span className="bullets-wrapper" key={quiz?.id}>
+                    <span className="text-btn">
+                      <Tooltip title="Votes">
+                        <button className="info-btn">{quiz?.votes}</button>
+                      </Tooltip>
 
-                        <small
-                          onClick={() => {
-                            localStorage.setItem("quiz", JSON.stringify(quiz));
-                            navigate("/solutions");
-                          }}
-                        >
-                          {quiz?.title}
-                        </small>
-                      </span>
-                      <p>
-                        {moment(Date.parse(quiz?.created_at)).format(
-                          "MMMM Do, YYYY"
-                        )}
-                      </p>
+                      <small
+                        onClick={() => {
+                          localStorage.setItem("quiz", JSON.stringify(quiz));
+                          navigate("/solutions");
+                        }}
+                      >
+                        {quiz?.title}
+                      </small>
                     </span>
-                  ))
-                : null}
+                    <p>
+                      {moment(Date.parse(quiz?.created_at)).format(
+                        "MMMM Do, YYYY"
+                      )}
+                    </p>
+                  </span>
+                ))
+              ) : (
+                <small>No matches found</small>
+              )}
             </div>
           </div>
         </article>
