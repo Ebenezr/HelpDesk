@@ -38,44 +38,30 @@
         }
       }
     }
-    .nav__bar_btn {
-      //display: none;
-    }
   }
 }
 
 @media (max-width: $breakpoint-mobile) {
-  .nav-bar {
-    width: 100%;
-    padding: 0.5rem 0.5rem;
-
-    width: 100%;
-    display: flex;
-    align-items: center;
-    div {
+  .nav-bar-wrapper {
+    width: 100vw;
+    .nav-bar {
+      height: 100%;
       width: 100%;
-      display: flex;
-      justify-content: space-around;
-      gap: 0.5rem;
-
-      .nav-link {
-        text-decoration: none;
-        color: $color-dark;
-        font-weight: 400;
-      }
-
-      a {
-        color: $color-primary;
-        font-weight: 600;
-        font-size: 1.1rem;
+      .logo {
+        font-size: 1.5rem;
         span {
-          color: $color-accent;
-          font-size: 1.1rem;
+          font-size: 1.5rem;
         }
       }
-    }
-    button {
-      display: none;
+      .nav__links_wrapper {
+        width: auto;
+        .nav-link {
+          font-size: 1rem;
+        }
+      }
+      .nav__bar_btn {
+        display: none;
+      }
     }
   }
 }
