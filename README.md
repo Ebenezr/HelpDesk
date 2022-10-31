@@ -11,9 +11,25 @@
 
 ## Project Description
 
+---
+
 ## Screen shots
 
-![image](https://user-images.githubusercontent.com/37300065/198547930-fa1c4f07-d015-42b3-ad1e-721f12c906fb.png)
+### landing page
+
+#### ![image](https://user-images.githubusercontent.com/37300065/199033287-084eee6c-b3f1-472a-823b-d8ba7119a0ef.png)
+
+### home page
+
+#### ![image](https://user-images.githubusercontent.com/37300065/199033785-0395dbb1-efcb-49a3-af9d-acfc4d43f3dd.png)
+
+### ask question page
+
+![image](https://user-images.githubusercontent.com/37300065/199034124-9edd18eb-8c71-448c-9e67-d9eb47d2784c.png)
+
+### profiles page
+
+![image](https://user-images.githubusercontent.com/37300065/199034553-cc249837-ced9-43ae-b4ab-1c65ec12b7da.png)
 
 ## Table of content
 
@@ -29,13 +45,49 @@
 
 ## Technologies
 
+--- Ruby on Rails
+
+--- HTML and CSS
+
+--- JavaScript (React)
+
+--- PostgreSQL
+
+--- Heroku (deployment)
+
+--- Git and GitHub (version control)
+
+--- Minitest (testing)
+
+--- Jest (testing)
+
 ---
 
 ### Features
 
+--- The features of a HelpDesk web application that allows students to post questions and provide solutions to other questions are as follows:
+
+-- The application allows students to post questions and provide solutions to other questions in a forum-like setting.
+
+-- The application includes a search function that allows students to search for specific questions or topics.
+
+-- The application allows students to up-vote or down-vote questions and solutions, providing a way for the community to rate the usefulness of questions and solutions.
+
+-- The application allows students to comment on questions and solutions, providing a way for the community to provide feedback.
+
 ---
 
 ### description
+
+--- The HelpDesk web application is a great way for students to get help with their studies.
+
+-- By posting questions and providing solutions to other questions, students can help each other out and learn from each other.
+
+-- This application is a great resource for students who are struggling with a particular subject.
+
+-- By being able to see what other students are asking, they can get a better understanding of the material.
+
+-- Additionally, by providing solutions to other students' questions, they can deepen their own understanding of the subject matter.
 
 ---
 
@@ -45,13 +97,26 @@
 
 ### Requirements
 
+--- the following are the requirements for the project
+
+-- Ruby 2.3.3 or later.
+
+-- Rails 5.0 or later.
+
+-- PostgreSQL 9.5 or later.
+
+-- npm
+
+-- node
+
 ---
 
 ### Dependencies
 
 - rails
 - ruby
-- ***
+- node
+- npm
 
 ### setup
 
@@ -88,8 +153,6 @@ run front end
 ```shell
 npm run dev
 ```
-
----
 
 ---
 
@@ -149,7 +212,19 @@ rails s
 
 ## How to use the project
 
----
+--- To use the project follow the steps below:
+
+-- First sign up to the application.
+
+-- Then you can post a question.
+
+-- You can also give a solution to a question.
+
+-- You can also comment on a question.
+
+-- You can also up-vote or down-vote a question.
+
+## -- You can also search for a question.
 
 ### Contributing to project
 
@@ -166,6 +241,8 @@ rails s
 ---
 
 ## Copyright
+
+--- This project is licensed under the MIT License - see the LICENSE.md file for details.
 
 ---
 
