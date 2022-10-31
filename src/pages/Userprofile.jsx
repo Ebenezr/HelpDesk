@@ -39,7 +39,7 @@ function Userprofile() {
     dispatch(getUserSolutions());
     dispatch(getUserQuestions());
     const loggedUser = JSON.parse(
-      localStorage.getItem("user") || "{}" || undefined || null
+      localStorage.getItem("user") || "" || undefined || null
     );
     const auth = JSON.parse(
       localStorage.getItem("authenticated") || "" || undefined || null
