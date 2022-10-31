@@ -75,7 +75,7 @@ const EditQuiz = () => {
     const quiz = JSON.parse(localStorage.getItem("quiz") || "{}");
     const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
     const auth = JSON.parse(
-      localStorage.getItem("authenticated")||'');
+      localStorage.getItem("authenticated")||''||false);
     setAcc(loggedUser);
     setFormData(quiz);
     setQuestion(quiz);
