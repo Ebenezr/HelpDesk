@@ -3,9 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "../../API/axios";
 
 //logged user info
-const loggedUser = JSON.parse(
-  localStorage.getItem("user") || undefined || null
-);
+const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (formData, thunkAPI) => {

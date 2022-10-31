@@ -74,9 +74,11 @@ export default function App() {
   ];
 
   useEffect(() => {
-    const quiz = JSON.parse(localStorage.getItem("quiz"));
-    const loggedUser = JSON.parse(localStorage.getItem("user"));
-    const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    const quiz = JSON.parse(localStorage.getItem("quiz") || "{}");
+    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    const auth = JSON.parse(
+      localStorage.getItem("authenticated") || "" || false
+    );
     setAcc(loggedUser);
     setQuestion(quiz);
     //if user isnt loged in redirect to login page

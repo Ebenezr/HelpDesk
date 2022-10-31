@@ -38,12 +38,9 @@ function Userprofile() {
     dispatch(getUserBookmarks());
     dispatch(getUserSolutions());
     dispatch(getUserQuestions());
-    const loggedUser = JSON.parse(
-      localStorage.getItem("user") || "" || undefined || null
-    );
+    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
     const auth = JSON.parse(
-      localStorage.getItem("authenticated") || "" || undefined || null
-    );
+      localStorage.getItem("authenticated")||''||false);
     setAcc(loggedUser);
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;

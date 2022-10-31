@@ -15,7 +15,7 @@ function Searchbar() {
   const [acc, setAcc] = useState({});
   const [authenticated, setAuth] = useState({});
   useEffect(() => {
-    const auth = JSON.parse(localStorage.getItem("authenticated") || "" ||undefined || null);
+    const auth = JSON.parse(localStorage.getItem("authenticated") || "" ||undefined);
     const loggedUser = JSON.parse(
       localStorage.getItem("user") || "{}" || undefined || null
     );

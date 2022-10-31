@@ -44,11 +44,10 @@ const Solutions = () => {
   useEffect(() => {
     //get current logged in user
     const loggedUser = JSON.parse(
-      localStorage.getItem("user") || undefined || null
-    );
+      localStorage.getItem("user"));
     setAcc(loggedUser);
     //get current selected question
-    const quiz = JSON.parse(localStorage.getItem("quiz") || undefined || null);
+    const quiz = JSON.parse(localStorage.getItem("quiz"));
     setQuiz(quiz);
 
     getRelated(quiz.tag_list);
@@ -179,7 +178,6 @@ const Solutions = () => {
   };
   return (
     <>
-     
       <Searchbar />
       <section className="main-section">
         {/* side bar */}
