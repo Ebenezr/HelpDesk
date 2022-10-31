@@ -64,8 +64,9 @@ export const registerUser = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (formData, thunkAPI) => {
+    const { id } = formData;
     try {
-      const resp = await Axios.patch(`/users/${loggedUser?.id}`, formData);
+      const resp = await Axios.patch(`/users/${id}`, formData);
       return resp.data;
     } catch (error) {
       const message =
@@ -79,11 +80,12 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+//get current user bookmarks
 export const getUserBookmarks = createAsyncThunk(
   "user/getUserBookmarks",
-  async (thunkAPI) => {
+  async ({ id, thunkAPI }) => {
     try {
-      const resp = await Axios.get(`/mybookmarks/${loggedUser?.id}`);
+      const resp = await Axios.get(`/mybookmarks/${id}`);
       return resp.data;
     } catch (error) {
       const message =
@@ -96,12 +98,30 @@ export const getUserBookmarks = createAsyncThunk(
     }
   }
 );
-
+//Delete a bookmark
+export const DeleteBookmark = createAsyncThunk(
+  "user/DeleteBookmark",
+  async ({ id, thunkAPI }) => {
+    try {
+      const resp = await Axios.get(`/bookmarks/${id}`);
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+//get currentusers solutions
 export const getUserSolutions = createAsyncThunk(
   "user/getUserSolutions",
-  async (thunkAPI) => {
+  async ({ id, thunkAPI }) => {
     try {
-      const resp = await Axios.get(`/mysolutions/${loggedUser?.id}`);
+      const resp = await Axios.get(`/mysolutions/${id}`);
       return resp.data;
     } catch (error) {
       const message =
@@ -114,12 +134,48 @@ export const getUserSolutions = createAsyncThunk(
     }
   }
 );
-
+//update seleted solution
+export const DeleteSolution = createAsyncThunk(
+  "user/DeleteSolution",
+  async ({ id, thunkAPI }) => {
+    try {
+      const resp = await Axios.get(`/solutions/${id}`);
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+//get current user questions
 export const getUserQuestions = createAsyncThunk(
   "user/getUserQuestions",
-  async (thunkAPI) => {
+  async ({ id, thunkAPI }) => {
     try {
-      const resp = await Axios.get(`/myquestions/${loggedUser?.id}`);
+      const resp = await Axios.get(`/myquestions/${id}`);
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+//Delete user questions
+export const DeleteQuestion = createAsyncThunk(
+  "user/DeleteQuestion",
+  async ({ id, thunkAPI }) => {
+    try {
+      const resp = await Axios.get(`/questions/${id}`);
       return resp.data;
     } catch (error) {
       const message =
@@ -145,6 +201,7 @@ const initialState = {
   isSuccess: false,
   isError: false,
   message: "",
+  authenticated: null,
 };
 
 //logins user
@@ -163,7 +220,8 @@ const userSlice = createSlice({
       state.bookmarks = [];
       state.questions = [];
       state.solutions = [];
-
+      state.authenticated = null;
+      state.token = "";
       localStorage.setItem("user", JSON.stringify({}));
       localStorage.setItem("token", JSON.stringify(""));
       localStorage.setItem("authenticated", JSON.stringify(false));
@@ -180,6 +238,8 @@ const userSlice = createSlice({
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isSuccess = true;
+        state.authenticated = true;
+
         //reset issucces status
         localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", JSON.stringify(action.payload.token));
@@ -200,9 +260,9 @@ const userSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
-        console.log(action.payload);
         state.isLoading = false;
         state.isSuccess = true;
+        state.authenticated = true;
         //reset issucces status
 
         localStorage.setItem("user", JSON.stringify(action.payload.user));
@@ -291,21 +351,56 @@ const userSlice = createSlice({
         // initialState.error = action.error.message;
       })
       .addCase(resetUserPass.pending, (state, action) => {
-        //user mod
         state.isLoading = true;
       })
       .addCase(resetUserPass.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        //reset issucces status
       })
       .addCase(resetUserPass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;
         state.message = action.payload;
-
-        // initialState.error = action.error.message;
+      })
+      .addCase(DeleteBookmark.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(DeleteBookmark.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(DeleteBookmark.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+      })
+      .addCase(DeleteSolution.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(DeleteSolution.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(DeleteSolution.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+      })
+      .addCase(DeleteQuestion.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(DeleteQuestion.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(DeleteQuestion.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
       });
   },
 });

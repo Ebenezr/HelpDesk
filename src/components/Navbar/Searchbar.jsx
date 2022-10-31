@@ -15,7 +15,9 @@ function Searchbar() {
   const [acc, setAcc] = useState({});
   const [authenticated, setAuth] = useState({});
   useEffect(() => {
-    const auth = JSON.parse(localStorage.getItem("authenticated") || "" ||false);
+    const auth = JSON.parse(
+      localStorage.getItem("authenticated") || "" || false
+    );
     const loggedUser = JSON.parse(
       localStorage.getItem("user") || "{}" || undefined || null
     );
@@ -24,7 +26,7 @@ function Searchbar() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(acc);
+  // console.log(acc);
 
   //search questions
   const handleSearch = (event) => {

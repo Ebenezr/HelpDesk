@@ -21,7 +21,7 @@ function Useraccount() {
   const { isLoading, user, isSuccess, isError } = useSelector(
     (store) => store.user
   );
-  const [acc, setAcc] = useState({});
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first_name: "",
@@ -31,11 +31,10 @@ function Useraccount() {
   });
 
   useEffect(() => {
-    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
     const auth = JSON.parse(
       localStorage.getItem("authenticated") || "" || false
     );
-    setAcc(loggedUser);
+
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;
   }, [user]);
@@ -43,10 +42,10 @@ function Useraccount() {
   //get loggedin user info
   const getUserData = () => {
     setFormData({
-      first_name: acc?.first_name,
-      last_name: acc?.last_name,
-      username: acc?.username,
-      email: acc?.email,
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      username: user?.username,
+      email: user?.email,
     });
   };
   //hangle change event
@@ -61,7 +60,9 @@ function Useraccount() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const originalPromiseResults = await dispatch(updateUser(formData))
+      const originalPromiseResults = await dispatch(
+        updateUser({ id: user?.id, formData: formData })
+      )
         .unwrap()
         .then((data) => {
           setStatus(true);
@@ -114,14 +115,14 @@ function Useraccount() {
               <AvatarImage src=" " alt="Avatar" />
               {/* if image isnt available revert to user initials */}
               <AvatarFallbackLg>
-                {acc?.first_name?.slice(0, 1)}
-                {acc?.last_name?.slice(0, 1)}
+                {user?.first_name?.slice(0, 1)}
+                {user?.last_name?.slice(0, 1)}
               </AvatarFallbackLg>
             </AvatarLg>
             <span>
-              <h3>{acc?.username}</h3>
+              <h3>{user?.username}</h3>
               <small>
-                <MdEmail /> {acc?.email}
+                <MdEmail /> {user?.email}
               </small>
             </span>
             <button className="btn sec-btn" onClick={getUserData}>
@@ -139,8 +140,8 @@ function Useraccount() {
                     <AvatarImage src=" " alt="Avatar" />
                     {/* if image isnt available revert to user initials */}
                     <AvatarFallbackLg>
-                      {acc?.first_name?.slice(0, 1)}
-                      {acc?.last_name?.slice(0, 1)}
+                      {user?.first_name?.slice(0, 1)}
+                      {user?.last_name?.slice(0, 1)}
                     </AvatarFallbackLg>
                   </AvatarLg>
                 </span>
@@ -152,7 +153,7 @@ function Useraccount() {
                     type="text"
                     id="username"
                     className="inputs"
-                    placeholder={acc?.username}
+                    placeholder={user?.username}
                     value={formData?.username}
                     onChange={handleChange}
                   ></input>
@@ -165,7 +166,7 @@ function Useraccount() {
                     type="email"
                     id="email"
                     className="inputs"
-                    placeholder={acc?.email}
+                    placeholder={user?.email}
                     value={formData?.email}
                     onChange={handleChange}
                   ></input>
@@ -178,7 +179,7 @@ function Useraccount() {
                     type="text"
                     id="first_name"
                     className="inputs"
-                    placeholder={acc?.first_name}
+                    placeholder={user?.first_name}
                     value={formData?.first_name}
                     onChange={handleChange}
                   ></input>
@@ -191,7 +192,7 @@ function Useraccount() {
                     type="text"
                     id="last_name"
                     className="inputs"
-                    placeholder={acc?.last_name}
+                    placeholder={user?.last_name}
                     value={formData?.last_name}
                     onChange={handleChange}
                   ></input>

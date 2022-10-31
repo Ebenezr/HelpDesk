@@ -20,6 +20,9 @@ import {
   getUserBookmarks,
   getUserQuestions,
   getUserSolutions,
+  DeleteBookmark,
+  DeleteSolution,
+  DeleteQuestion,
 } from "../features/users/userSlice";
 import moment from "moment";
 import { AiFillEdit } from "react-icons/ai";
@@ -28,49 +31,51 @@ import Axios from "../API/axios";
 
 function Userprofile() {
   const dispatch = useDispatch();
-  const { isLoading, bookmarks, solutions, questions, tags, user } =
-    useSelector((store) => store.user);
-  const [acc, setAcc] = useState({});
+  const {
+    isLoading,
+    bookmarks,
+    solutions,
+    questions,
+    tags,
+    user,
+    authenticated,
+  } = useSelector((store) => store.user);
   const navigate = useNavigate();
 
   useEffect(() => {
     //fetch logedin user's info
-    dispatch(getUserBookmarks());
-    dispatch(getUserSolutions());
-    dispatch(getUserQuestions());
-    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
-    const auth = JSON.parse(
-      localStorage.getItem("authenticated")||''||false);
-    setAcc(loggedUser);
+    dispatch(getUserBookmarks({ id: user?.id }));
+    dispatch(getUserSolutions({ id: user?.id }));
+    dispatch(getUserQuestions({ id: user?.id }));
     //if user isnt loged in redirect to login page
-    !auth ? navigate("/") : null;
+    !authenticated ? navigate("/") : null;
   }, [user]);
 
   //Delete a bookmark
-  const DeleteBookmark = async (id) => {
+  const handleDeleteBookmark = async (Id) => {
     try {
-      await Axios.delete(`/bookmarks/${id}`).then((res) => {
-        dispatch(getUserBookmarks());
+      await dispatch(DeleteBookmark({ id: Id })).then((res) => {
+        dispatch(getUserBookmarks({ id: user?.id }));
       });
     } catch (error) {}
   };
 
   //Delete user questions
-  const DeleteQuestion = async (id) => {
+  const handleDeleteQuestion = async (Id) => {
     try {
-      await Axios.delete(`/questions/${id}`).then((res) => {
-        dispatch(getUserQuestions());
-        dispatch(getUserSolutions());
+      await dispatch(DeleteQuestion({ id: Id })).then((res) => {
+        dispatch(getUserQuestions({ id: user?.id }));
+        dispatch(getUserSolutions({ id: user?.id }));
       });
     } catch (error) {}
   };
 
   //update seleted solution
-  const DeleteSolution = async (id) => {
+  const handleDeleteSolution = async (Id) => {
     try {
-      await Axios.delete(`/solutions/${id}`).then((res) => {
-        dispatch(getUserQuestions());
-        dispatch(getUserSolutions());
+      await dispatch(DeleteSolution({ id: Id })).then((res) => {
+        dispatch(getUserQuestions({ id: user?.id }));
+        dispatch(getUserSolutions({ id: user?.id }));
       });
     } catch (error) {}
   };
@@ -109,14 +114,14 @@ function Userprofile() {
               <AvatarImage src=" " alt="Avatar" />
               {/* if image isnt available revert to user initials */}
               <AvatarFallbackLg>
-                {acc?.first_name?.slice(0, 1)}
-                {acc?.last_name?.slice(0, 1)}
+                {user?.first_name?.slice(0, 1)}
+                {user?.last_name?.slice(0, 1)}
               </AvatarFallbackLg>
             </AvatarLg>
             <span>
-              <h3>{acc?.username}</h3>
+              <h3>{user?.username}</h3>
               <small>
-                <MdEmail /> {acc?.email}
+                <MdEmail /> {user?.email}
               </small>
             </span>
             <button
@@ -139,7 +144,7 @@ function Userprofile() {
                         <button
                           className="info-btn del"
                           onClick={() => {
-                            DeleteQuestion(quiz?.id);
+                            handleDeleteQuestion(quiz?.id);
                           }}
                         >
                           <MdDeleteForever color="#fff" />
@@ -190,7 +195,7 @@ function Userprofile() {
                         <button
                           className="info-btn del"
                           onClick={() => {
-                            DeleteSolution(quiz?.id);
+                            handleDeleteSolution(quiz?.id);
                           }}
                         >
                           <MdDeleteForever color="#fff" />
@@ -241,7 +246,7 @@ function Userprofile() {
                         <button
                           className="info-btn del"
                           onClick={() => {
-                            DeleteBookmark(book?.id);
+                            handleDeleteBookmark(book?.id);
                           }}
                         >
                           <MdDeleteForever color="#fff" />
