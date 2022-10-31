@@ -195,7 +195,7 @@ function Userprofile() {
                           <MdDeleteForever color="#fff" />
                         </button>
                       </Tooltip>
-                      //TODO
+
                       {/* <Tooltip title="Edit">
                         <button
                           className="info-btn edit"

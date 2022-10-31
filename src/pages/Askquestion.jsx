@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/radixUI/Accordion";
-import { postQuestions } from "../features/questions/questionSlice";
+import { postQuestions, reset } from "../features/questions/questionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { HiLightBulb } from "react-icons/hi";
 import { MdAccountCircle, MdHome } from "react-icons/md";

@@ -112,12 +112,12 @@
         font-size: 1.3rem;
       }
       .span-card {
-        border: solid $color-info-dark 0.2rem;
+        border: solid $color-info-dark 0.1rem;
         border-radius: 0.3rem;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-        max-height: 15rem;
+        max-height: 20rem;
         overflow-y: auto;
         padding: 0.8rem;
 

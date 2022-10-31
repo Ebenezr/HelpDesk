@@ -61,28 +61,33 @@ function Navbar() {
   }, []);
   const navigate = useNavigate();
   return (
-    <nav className="nav-bar">
-      <div>
-        <a className="logo">
+    <nav className="nav-bar-wrapper mobile-nav-disp">
+      <div className="nav-bar">
+        <NavLink to="/home" className="logo">
           HELP<span>DESK</span>
-        </a>
-        <NavLink to="/questions" className="nav-link">
-          HOME
         </NavLink>
-        <NavLink to="/ask" className="nav-link">
-          ASK
-        </NavLink>
-        <NavLink to="/questions" className="nav-link">
-          QUESTIONS
-        </NavLink>
-        <NavLink to="/profile" className="nav-link">
-          FAQS
-        </NavLink>
-      </div>
+        <div className="nav__links_wrapper">
+          <NavLink to="/questions" className="nav-link">
+            HOME
+          </NavLink>
+          <NavLink to="/ask" className="nav-link">
+            ASK
+          </NavLink>
+          <NavLink to="/questions" className="nav-link">
+            QUESTIONS
+          </NavLink>
+          <NavLink to="/profile" className="nav-link">
+            PROFILE
+          </NavLink>
+        </div>
 
-      <button style={styles.button} onClick={() => navigate("login")}>
-        {authenticated ? "Log out" : "Log in"}
-      </button>
+        <button
+          onClick={() => navigate("login")}
+          className="nav__bar_btn btn ter-btn"
+        >
+          {authenticated ? "Log out" : "Log in"}
+        </button>
+      </div>
     </nav>
   );
 }

@@ -25,6 +25,7 @@ import Axios from "../API/axios";
 import { Tooltip } from "@mui/material";
 import moment from "moment";
 import { motion } from "framer-motion";
+import Navbar from "../components/Navbar/Navbar";
 
 const Solutions = () => {
   const navigate = useNavigate();
@@ -100,7 +101,13 @@ const Solutions = () => {
     try {
       await Axios.get(`/filter/${term}`).then((res) => {
         let arr = res.data.questions;
-        let newarr = arr.filter((array) => array.id !== question.id);
+        let newarr = [];
+        console.log("before filter");
+        console.log(question.id);
+        console.log(arr);
+        newarr = arr.filter((item) => item.id !== question.id);
+        console.log("after filter");
+        console.log(newarr);
         //update question with posted solution
         setRelated(newarr);
       });
@@ -170,6 +177,7 @@ const Solutions = () => {
   };
   return (
     <>
+     
       <Searchbar />
       <section className="main-section">
         {/* side bar */}

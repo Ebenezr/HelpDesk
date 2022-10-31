@@ -114,11 +114,11 @@ const Login = () => {
             Sign up
           </NavLink>
         </p>
-        {/* <p>
+        <p>
           <NavLink className="span" to="/home/resetpassword">
             forgot password
           </NavLink>
-        </p> */}
+        </p>
       </div>
       {isSuccess && status ? (
         <div className="form__status active">Login Success</div>

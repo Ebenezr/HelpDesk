@@ -15,6 +15,7 @@ import { HiLightBulb } from "react-icons/hi";
 import { Tooltip } from "@mui/material";
 import moment from "moment";
 import Pagination from "@mui/material/Pagination";
+import Navbar from "../components/Navbar/Navbar";
 
 function Home() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ function Home() {
 
   return (
     <>
+      <Navbar  />
       <Searchbar />
       <section className="main-section">
         {/* side bar */}
@@ -127,7 +129,7 @@ function Home() {
           )}
           <div className="pagination">
             <Pagination
-              count={total / 3}
+              count={Math.floor(total / 3)}
               page={page}
               onChange={handleChangePage}
             />

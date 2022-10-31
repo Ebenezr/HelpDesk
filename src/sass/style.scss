@@ -31,6 +31,18 @@ body {
 #root {
   height: 100%;
   width: 100%;
+  .mobile-nav-disp {
+    display: none;
+  }
+}
+@media (max-width: $breakpoint-mobile) {
+  #root {
+    height: auto;
+    width: 100%;
+    .mobile-nav-disp {
+      display: block;
+    }
+  }
 }
 
 .submenu {
@@ -56,12 +68,16 @@ body {
   border-radius: 0.3rem;
   border: none;
   cursor: pointer;
+  box-shadow: inset 0 1px 0 0 hsla(0, 0%, 100%, 0.4);
 }
 
 .pry-btn {
   background: $color-primary;
   color: white;
   font-weight: 600;
+  &:hover {
+    background: $color-primary-hover;
+  }
 }
 .pry-btn-var {
   background: $color-primary-variant;
@@ -80,6 +96,9 @@ body {
   color: white;
   font-weight: 500;
   border: solid $color-accent 0.1rem;
+  &:hover {
+    background: $color-accent-hover;
+  }
 }
 .log-out-btn {
   background: $color-accent;
