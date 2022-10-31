@@ -53,7 +53,9 @@ function Navbar() {
   const [authenticated, setAuth] = useState(null);
   const [acc, setAcc] = useState({});
   useEffect(() => {
-    const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    const auth = JSON.parse(
+      localStorage.getItem("authenticated") || "" || false
+    );
     // const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
     //setAcc(loggedUser);
     setAuth(auth);
