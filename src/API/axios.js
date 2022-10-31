@@ -11,7 +11,7 @@ try {
   axios.defaults.headers.common = {
     Authorization: `bearer ${
       localStorage.getItem("token")
-        ? JSON.parse(localStorage.getItem("token") || undefined)
+        ? JSON.parse(localStorage.getItem("token") || undefined || null)
         : null
     }`,
   };

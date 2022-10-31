@@ -3,7 +3,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "../../API/axios";
 
 //logged user info
-const loggedUser = JSON.parse(localStorage.getItem("user"));
+const loggedUser = JSON.parse(
+  localStorage.getItem("user") || undefined || null
+);
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (formData, thunkAPI) => {
@@ -22,7 +24,6 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-//TODO
 //RESET USER PASSWORD
 
 export const resetUserPass = createAsyncThunk(

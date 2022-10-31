@@ -31,8 +31,10 @@ function Useraccount() {
   });
 
   useEffect(() => {
-    const loggedUser = JSON.parse(localStorage.getItem("user"));
-    const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    const loggedUser = JSON.parse(
+      localStorage.getItem("user") || undefined || null
+    );
+    const auth = JSON.parse(localStorage.getItem("authenticated") || ""||undefined || null);
     setAcc(loggedUser);
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;

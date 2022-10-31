@@ -72,9 +72,13 @@ const EditQuiz = () => {
   ];
 
   useEffect(() => {
-    const quiz = JSON.parse(localStorage.getItem("quiz"));
-    const loggedUser = JSON.parse(localStorage.getItem("user"));
-    const auth = JSON.parse(localStorage.getItem("authenticated") || "");
+    const quiz = JSON.parse(localStorage.getItem("quiz") || undefined || null);
+    const loggedUser = JSON.parse(
+      localStorage.getItem("user") || undefined || null
+    );
+    const auth = JSON.parse(
+      localStorage.getItem("authenticated") || "" || undefined || null
+    );
     setAcc(loggedUser);
     setFormData(quiz);
     setQuestion(quiz);

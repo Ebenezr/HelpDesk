@@ -4,7 +4,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Axios from "../../API/axios";
 
 //current selected question
-const quiz = JSON.parse(localStorage.getItem("quiz"));
+const quiz = JSON.parse(
+  localStorage.getItem("quiz") || "" || undefined || null
+);
 
 //fetch all questions
 export const getQuestions = createAsyncThunk(

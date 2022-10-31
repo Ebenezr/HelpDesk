@@ -43,10 +43,12 @@ const Solutions = () => {
   //get seleted question
   useEffect(() => {
     //get current logged in user
-    const loggedUser = JSON.parse(localStorage.getItem("user"));
+    const loggedUser = JSON.parse(
+      localStorage.getItem("user") || undefined || null
+    );
     setAcc(loggedUser);
     //get current selected question
-    const quiz = JSON.parse(localStorage.getItem("quiz"));
+    const quiz = JSON.parse(localStorage.getItem("quiz") || undefined || null);
     setQuiz(quiz);
 
     getRelated(quiz.tag_list);
