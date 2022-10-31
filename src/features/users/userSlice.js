@@ -103,7 +103,7 @@ export const DeleteBookmark = createAsyncThunk(
   "user/DeleteBookmark",
   async ({ id, thunkAPI }) => {
     try {
-      const resp = await Axios.get(`/bookmarks/${id}`);
+      const resp = await Axios.delete(`/bookmarks/${id}`);
       return resp.data;
     } catch (error) {
       const message =
@@ -139,7 +139,7 @@ export const DeleteSolution = createAsyncThunk(
   "user/DeleteSolution",
   async ({ id, thunkAPI }) => {
     try {
-      const resp = await Axios.get(`/solutions/${id}`);
+      const resp = await Axios.delete(`/solutions/${id}`);
       return resp.data;
     } catch (error) {
       const message =
@@ -175,7 +175,7 @@ export const DeleteQuestion = createAsyncThunk(
   "user/DeleteQuestion",
   async ({ id, thunkAPI }) => {
     try {
-      const resp = await Axios.get(`/questions/${id}`);
+      const resp = await Axios.delete(`/questions/${id}`);
       return resp.data;
     } catch (error) {
       const message =
