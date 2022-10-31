@@ -36,7 +36,7 @@ function Home() {
 
   return (
     <>
-      <Navbar  />
+      {/* <Navbar  /> */}
       <Searchbar />
       <section className="main-section">
         {/* side bar */}

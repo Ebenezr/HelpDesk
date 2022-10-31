@@ -31,19 +31,16 @@ body {
 #root {
   height: 100%;
   width: 100%;
-  .mobile-nav-disp {
-    display: none;
-  }
 }
-@media (max-width: $breakpoint-mobile) {
-  #root {
-    height: auto;
-    width: 100%;
-    .mobile-nav-disp {
-      display: block;
-    }
-  }
-}
+// @media (max-width: $breakpoint-mobile) {
+//   #root {
+//     height: auto;
+//     width: 100%;
+//     .mobile-nav-disp {
+//       display: block;
+//     }
+//   }
+// }
 
 .submenu {
   width: 3rem;
