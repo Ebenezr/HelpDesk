@@ -208,7 +208,7 @@ function Userprofile() {
                         <button
                           className="info-btn edit"
                           onClick={() => {
-                            //localStorage.setItem("quiz", JSON.stringify(quiz));
+                         
                             navigate("/solutions");
                           }}
                         >

@@ -4,29 +4,15 @@ import { MdNotifications } from "react-icons/md";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../radixUI/avatar";
 import { logOut } from "../../features/users/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { searchQuestions } from "../../features/questions/questionSlice";
 import debounce from "lodash.debounce";
-import DropdownMenuDemo from "./DropDown";
 
 function Searchbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [acc, setAcc] = useState({});
-  const [authenticated, setAuth] = useState({});
-  useEffect(() => {
-    const auth = JSON.parse(
-      localStorage.getItem("authenticated") || "" || false
-    );
-    const loggedUser = JSON.parse(
-      localStorage.getItem("user") || "{}" || undefined || null
-    );
-    setAcc(loggedUser);
-    setAuth(auth);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  // console.log(acc);
+  const { isLoading, user, authenticated } = useSelector((store) => store.user);
 
   //search questions
   const handleSearch = (event) => {
@@ -62,8 +48,8 @@ function Searchbar() {
           <AvatarImage src=" " alt="Avatar" />
           {/* if image isnt available revert to user initials */}
           <AvatarFallback>
-            {acc?.first_name?.slice(0, 1)}
-            {acc?.last_name?.slice(0, 1)}
+            {!isLoading && user?.first_name?.slice(0, 1)}
+            {!isLoading && user?.last_name?.slice(0, 1)}
           </AvatarFallback>
         </Avatar>
       </NavLink>

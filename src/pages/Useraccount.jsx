@@ -18,7 +18,7 @@ import { updateUser, reset } from "../features/users/userSlice";
 function Useraccount() {
   const [status, setStatus] = useState(null);
   const dispatch = useDispatch();
-  const { isLoading, user, isSuccess, isError } = useSelector(
+  const { isLoading, user, isSuccess, isError, authenticated } = useSelector(
     (store) => store.user
   );
 
@@ -31,12 +31,8 @@ function Useraccount() {
   });
 
   useEffect(() => {
-    const auth = JSON.parse(
-      localStorage.getItem("authenticated") || "" || false
-    );
-
     //if user isnt loged in redirect to login page
-    !auth ? navigate("/") : null;
+    !authenticated ? navigate("/") : null;
   }, [user]);
 
   //get loggedin user info

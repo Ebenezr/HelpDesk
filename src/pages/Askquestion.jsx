@@ -16,16 +16,15 @@ import { HiLightBulb } from "react-icons/hi";
 import { MdAccountCircle, MdHome } from "react-icons/md";
 import Select from "react-select";
 import Axios from "../API/axios";
+
 export default function App() {
   const { isLoading, isSuccess, isError } = useSelector(
     (store) => store.questions
   );
-  const { user } = useSelector((store) => store.user);
+  const { currentQuestion } = useSelector((store) => store.questions);
+  const { user, authenticated } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [selectedTags, setTags] = useState([]);
-  const [question, setQuestion] = useState({});
-  const [acc, setAcc] = useState({});
   const [status, setStatus] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState();
   const [formData, setFormData] = useState({
@@ -71,18 +70,27 @@ export default function App() {
       value: "java-script",
       label: "java-script",
     },
+    {
+      value: "type-script",
+      label: "type-script",
+    },
+    {
+      value: "Student-Laptop",
+      label: "Student-Laptop",
+    },
+    {
+      value: "Ubuntu",
+      label: "Ubuntu",
+    },
+    {
+      value: "Windows-WSL",
+      label: "Windows-WSL",
+    },
   ];
 
   useEffect(() => {
-    const quiz = JSON.parse(localStorage.getItem("quiz") || "{}");
-    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
-    const auth = JSON.parse(
-      localStorage.getItem("authenticated") || "" || false
-    );
-    setAcc(loggedUser);
-    setQuestion(quiz);
     //if user isnt loged in redirect to login page
-    !auth ? navigate("/") : null;
+    !authenticated ? navigate("/") : null;
   }, []);
 
   //hangle change event
@@ -240,7 +248,7 @@ export default function App() {
                   setFormData({
                     ...formData,
                     tag_list: mappedOptions.slice(),
-                    user_id: acc?.id,
+                    user_id: user?.id,
                   });
                 }}
               />

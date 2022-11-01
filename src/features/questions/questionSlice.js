@@ -222,7 +222,7 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.currentQuestion = action.payload;
-        //  localStorage.setItem("quiz", JSON.stringify(action.payload));
+      
       })
       .addCase(getQuestion.rejected, (state, action) => {
         state.isLoading = false;
@@ -262,7 +262,7 @@ const quetionsSlice = createSlice({
       .addCase(postSolutions.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        localStorage.setItem("quiz", JSON.stringify(action.payload));
+       
       })
       .addCase(postSolutions.rejected, (state, action) => {
         state.isLoading = false;
@@ -275,7 +275,7 @@ const quetionsSlice = createSlice({
       .addCase(patchQuestions.fulfilled, (state, action) => {
         //state.isSuccess = true;
         //state.isLoading = false;
-        //  localStorage.setItem("quiz", JSON.stringify(action.payload));
+     
       })
       .addCase(patchQuestions.rejected, (state, action) => {
         //state.isLoading = false;

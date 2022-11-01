@@ -339,8 +339,9 @@ const Solutions = () => {
 
                       <small
                         onClick={() => {
-                          localStorage.setItem("quiz", JSON.stringify(quiz));
-                          navigate("/solutions");
+                          dispatch(set_current_quiz(quiz));
+                    
+                          // navigate("/solutions");
                         }}
                       >
                         {quiz?.title}

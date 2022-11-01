@@ -221,9 +221,7 @@ const userSlice = createSlice({
       state.solutions = [];
       state.authenticated = null;
       state.token = "";
-      localStorage.setItem("user", JSON.stringify({}));
       localStorage.setItem("token", JSON.stringify(""));
-      localStorage.setItem("authenticated", JSON.stringify(false));
     },
   },
 
@@ -238,19 +236,13 @@ const userSlice = createSlice({
         state.token = action.payload.token;
         state.isSuccess = true;
         state.authenticated = true;
-
-        //reset issucces status
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", JSON.stringify(action.payload.token));
-        localStorage.setItem("authenticated", JSON.stringify(true));
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;
         state.message = action.payload;
-
-        // initialState.error = action.error.message;
       })
       .addCase(registerUser.pending, (state, action) => {
         //user registration
@@ -262,19 +254,13 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.authenticated = true;
-        //reset issucces status
-
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
         localStorage.setItem("token", JSON.stringify(action.payload.token));
-        localStorage.setItem("authenticated", JSON.stringify(true));
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;
         state.message = action.payload;
-
-        // initialState.error = action.error.message;
       })
       .addCase(updateUser.pending, (state, action) => {
         //user mod
@@ -285,15 +271,12 @@ const userSlice = createSlice({
         state.isSuccess = true;
         //reset issucces status
         state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;
         state.message = action.payload;
-
-        // initialState.error = action.error.message;
       })
       .addCase(getUserBookmarks.pending, (state, action) => {
         //user mod
@@ -302,16 +285,12 @@ const userSlice = createSlice({
       .addCase(getUserBookmarks.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        //reset issucces status
-
         state.bookmarks = action.payload;
       })
       .addCase(getUserBookmarks.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-
-        // initialState.error = action.error.message;
       })
       .addCase(getUserSolutions.pending, (state, action) => {
         //user mod
@@ -320,16 +299,12 @@ const userSlice = createSlice({
       .addCase(getUserSolutions.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        //reset issucces status
         state.solutions = action.payload;
       })
       .addCase(getUserSolutions.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-
         state.message = action.payload;
-
-        // initialState.error = action.error.message;
       })
       .addCase(getUserQuestions.pending, (state, action) => {
         //user mod
@@ -338,16 +313,12 @@ const userSlice = createSlice({
       .addCase(getUserQuestions.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        //reset issucces status
-
         state.questions = action.payload;
       })
       .addCase(getUserQuestions.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-
-        // initialState.error = action.error.message;
       })
       .addCase(resetUserPass.pending, (state, action) => {
         state.isLoading = true;

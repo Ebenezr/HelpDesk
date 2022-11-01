@@ -19,7 +19,7 @@ const EditQuiz = () => {
   const { isLoading, isSuccess, isError, currentQuestion } = useSelector(
     (store) => store.questions
   );
-  const { user } = useSelector((store) => store.user);
+  const { user, authenticated } = useSelector((store) => store.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,17 +68,28 @@ const EditQuiz = () => {
       value: "java-script",
       label: "java-script",
     },
+    {
+      value: "type-script",
+      label: "type-script",
+    },
+    {
+      value: "Student-Laptop",
+      label: "Student-Laptop",
+    },
+    {
+      value: "Ubuntu",
+      label: "Ubuntu",
+    },
+    {
+      value: "Windows-WSL",
+      label: "Windows-WSL",
+    },
   ];
 
   useEffect(() => {
-    const auth = JSON.parse(
-      localStorage.getItem("authenticated") || "" || false
-    );
-
     setFormData(currentQuestion);
-
     //if user isnt loged in redirect to login page
-    !auth ? navigate("/") : null;
+    !authenticated ? navigate("/") : null;
   }, []);
 
   //hangle change event
