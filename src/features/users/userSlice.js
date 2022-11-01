@@ -63,8 +63,7 @@ export const registerUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",
-  async (formData, thunkAPI) => {
-    const { id } = formData;
+  async ({ id, formData, thunkAPI }) => {
     try {
       const resp = await Axios.patch(`/users/${id}`, formData);
       return resp.data;

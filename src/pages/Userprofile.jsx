@@ -24,6 +24,7 @@ import {
   DeleteSolution,
   DeleteQuestion,
 } from "../features/users/userSlice";
+import { set_current_quiz } from "../features/questions/questionSlice";
 import moment from "moment";
 import { AiFillEdit } from "react-icons/ai";
 import Tooltip from "@mui/material/Tooltip";
@@ -154,7 +155,7 @@ function Userprofile() {
                         <button
                           className="info-btn edit"
                           onClick={() => {
-                            localStorage.setItem("quiz", JSON.stringify(quiz));
+                            dispatch(set_current_quiz(quiz));
                             navigate("/editquestion");
                           }}
                         >
@@ -167,7 +168,8 @@ function Userprofile() {
 
                       <small
                         onClick={() => {
-                          localStorage.setItem("quiz", JSON.stringify(quiz));
+                          dispatch(set_current_quiz(quiz));
+
                           navigate("/solutions");
                         }}
                       >
@@ -218,7 +220,7 @@ function Userprofile() {
                       </Tooltip>
                       <small
                         onClick={() => {
-                          localStorage.setItem("quiz", JSON.stringify(quiz));
+                          dispatch(set_current_quiz(quiz));
                           navigate("/solutions");
                         }}
                       >
@@ -259,10 +261,7 @@ function Userprofile() {
                       </Tooltip>
                       <small
                         onClick={() => {
-                          localStorage.setItem(
-                            "quiz",
-                            JSON.stringify(book?.question)
-                          );
+                          dispatch(set_current_quiz(book?.question));
                           navigate("/solutions");
                         }}
                       >

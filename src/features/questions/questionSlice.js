@@ -108,7 +108,7 @@ export const postBookmark = createAsyncThunk(
     }
   }
 );
-//pos a solution to a question
+//post a solution to a question
 export const postSolutions = createAsyncThunk(
   "questions/postSolution",
   async (formData, thunkAPI) => {
@@ -120,6 +120,31 @@ export const postSolutions = createAsyncThunk(
     }
   }
 );
+//get related questions(By tag)
+export const getRelated = createAsyncThunk(
+  "questions/getRelated",
+  async ({ term, thunkAPI }) => {
+    try {
+      const responce = await Axios.get(`/filter/${term}`);
+      return responce.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
+//vote for a solution
+export const voteSolution = createAsyncThunk(
+  "questions/voteSolution",
+  async ({ id, formData, thunkAPI }) => {
+    try {
+      const responce = await Axios.patch(`/solutions/${id}`, formData);
+      return responce.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
+
 //initialstate values
 const initialState = {
   page: 0,
@@ -127,6 +152,7 @@ const initialState = {
   per_page: 0,
   allquestions: [],
   faqs: [],
+  related: [],
   total: 0,
   isLoading: false,
   isSuccess: false,
@@ -156,8 +182,8 @@ const quetionsSlice = createSlice({
       );
       question.votes = question.votes - 1;
     },
-    get_current_quiz: (state, { payload }) => {
-      currentQuestion: payload;
+    set_current_quiz: (state, { payload }) => {
+      state.currentQuestion = payload;
     },
   },
   extraReducers(builder) {
@@ -267,9 +293,36 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payloaQuestions;
+      })
+      .addCase(getRelated.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getRelated.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        state.related = action.payload.questions;
+      })
+      .addCase(getRelated.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payloaQuestions;
+      })
+      .addCase(voteSolution.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(voteSolution.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        // state.currentQuestion = action.payload;
+      })
+      .addCase(voteSolution.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        //state.message = action.payloaQuestions;
       });
   },
 });
 
-export const { upvote, downvote, reset } = quetionsSlice.actions;
+export const { upvote, downvote, reset, set_current_quiz } =
+  quetionsSlice.actions;
 export default quetionsSlice.reducer;

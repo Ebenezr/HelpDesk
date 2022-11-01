@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
 import { MdAccountCircle, MdHome } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuestions, getFAQS } from "../features/questions/questionSlice";
+import {
+  getQuestions,
+  getFAQS,
+  set_current_quiz,
+} from "../features/questions/questionSlice";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 TimeAgo.addDefaultLocale(en);
@@ -19,17 +23,18 @@ import Navbar from "../components/Navbar/Navbar";
 
 function Home() {
   const navigate = useNavigate();
-  const { isLoading, allquestions, total, total_pages, faqs } = useSelector(
+  const { isLoading, allquestions, total, faqs } = useSelector(
     (store) => store.questions
   );
   const [page, setPage] = useState(1);
-
   const dispatch = useDispatch();
+  //fetch all questions and faqs
   useEffect(() => {
     dispatch(getQuestions(page));
     dispatch(getFAQS());
   }, [page, dispatch]);
 
+  //pagination next page funtion
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -91,7 +96,7 @@ function Home() {
                 <div className="question-title">
                   <p
                     onClick={() => {
-                      localStorage.setItem("quiz", JSON.stringify(question));
+                      dispatch(set_current_quiz(question));
                       navigate("/solutions");
                     }}
                   >
@@ -180,7 +185,7 @@ function Home() {
 
                     <small
                       onClick={() => {
-                        localStorage.setItem("quiz", JSON.stringify(quiz));
+                        dispatch(set_current_quiz(quiz));
                         navigate("/solutions");
                       }}
                     >

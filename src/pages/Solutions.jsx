@@ -14,11 +14,14 @@ import { HiLightBulb } from "react-icons/hi";
 import ReactTimeAgo from "react-time-ago";
 import {
   reset,
+  getRelated,
+  voteSolution,
   getQuestions,
   getQuestion,
   patchQuestions,
   postBookmark,
   postSolutions,
+  set_current_quiz,
 } from "../features/questions/questionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "../API/axios";
@@ -30,30 +33,18 @@ import Navbar from "../components/Navbar/Navbar";
 const Solutions = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [question, setQuiz] = useState({
-    created_at: new Date(),
-  });
+  // const [question, setQuiz] = useState({
+  //   created_at: new Date(),
+  // });
   const [solution, setSolution] = useState("");
-  const [related, setRelated] = useState([]);
-  const [acc, setAcc] = useState({});
+  // const [related, setRelated] = useState([]);
   const { user } = useSelector((store) => store.user);
-  const { isLoading, currentQuestion, isSuccess } = useSelector(
+  const { isLoading, currentQuestion, isSuccess, related } = useSelector(
     (store) => store.questions
   );
   //get seleted question
   useEffect(() => {
-    //get current logged in user
-    const loggedUser = JSON.parse(
-      localStorage.getItem("user"));
-    setAcc(loggedUser);
-    //get current selected question
-    const quiz = JSON.parse(localStorage.getItem("quiz"));
-    setQuiz(quiz);
-
-    getRelated(quiz.tag_list);
-    // return () => {
-    //   localStorage.setItem("quiz", JSON.stringify({}));
-    // };
+    dispatch(getRelated({ term: currentQuestion.tag_list }));
   }, []);
 
   //get solution filed values
@@ -81,10 +72,7 @@ const Solutions = () => {
   const voteQuestion = async (id, formData) => {
     try {
       await Axios.patch(`/questions/${id}`, formData).then((res) => {
-        localStorage.setItem("quiz", JSON.stringify(res.data));
-        //update question with posted solution
-
-        setQuiz(res.data);
+        dispatch(set_current_quiz(res.data));
         setSolution("");
       });
     } catch (err) {
@@ -97,42 +85,18 @@ const Solutions = () => {
     }
   };
 
-  //get related questions
-  async function getRelated(term) {
-    try {
-      await Axios.get(`/filter/${term}`).then((res) => {
-        let arr = res.data.questions;
-        let newarr = [];
-        console.log("before filter");
-        console.log(question.id);
-        console.log(arr);
-        newarr = arr.filter((item) => item.id !== question.id);
-        console.log("after filter");
-        console.log(newarr);
-        //update question with posted solution
-        setRelated(newarr);
-      });
-    } catch (err) {
-      // console.error(err);
-    } finally {
-      //reset store states
-    }
-  }
+  //todo write filter funtion for related questions
+  //       let arr = [];
+  //       let newarr = [];
+  //       newarr = arr.filter((item) => item.id !== currentQuestion.id);
 
   //update seleted solution
   const voteSolution = async (id, formData) => {
     try {
-      await Axios.patch(`/solutions/${id}`, formData)
-        .then((res) => {
-          localStorage.setItem("quiz", JSON.stringify(res.data));
-        })
-        .then(() => {
-          const quiz = JSON.parse(localStorage.getItem("quiz") || "");
-          setQuiz(quiz);
-        });
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error?.message);
-    }
+      await Axios.patch(`/solutions/${id}`, formData).then((res) => {
+        dispatch(set_current_quiz(res.data));
+      });
+    } catch (error) {}
   };
 
   //post a solution
@@ -140,8 +104,8 @@ const Solutions = () => {
     try {
       await dispatch(
         postSolutions({
-          user_id: acc?.id,
-          question_id: question?.id,
+          user_id: user?.id,
+          question_id: currentQuestion?.id,
           votes: 0,
           description: solution,
         })
@@ -149,8 +113,7 @@ const Solutions = () => {
         .unwrap()
         .then((data) => {
           //update question with posted solution
-          const quiz = JSON.parse(localStorage.getItem("quiz") || "");
-          setQuiz(quiz);
+          dispatch(set_current_quiz(data));
           setSolution("");
           alert("Solution has been posted");
         });
@@ -169,10 +132,10 @@ const Solutions = () => {
     e.preventDefault();
     try {
       postSoln({
-        user_id: acc?.id,
+        user_id: user?.id,
         votes: 0,
         description: solution,
-        question_id: question.id,
+        question_id: currentQuestion?.id,
       });
     } catch (e) {}
   };
@@ -206,13 +169,13 @@ const Solutions = () => {
         {/* main content area  */}
         <main className="main-section-content">
           <div className="section-header">
-            <h3>{question?.title}</h3>
+            <h3>{currentQuestion?.title}</h3>
             <small>
               Asked{" "}
               <ReactTimeAgo
                 style={{ fontSize: "0.8rem" }}
                 className="time-ago"
-                date={Date.parse(question?.created_at)}
+                date={Date.parse(currentQuestion?.created_at)}
                 locale="en-US"
               />
             </small>
@@ -223,17 +186,17 @@ const Solutions = () => {
               <TiArrowSortedUp
                 className="chevrons"
                 onClick={() =>
-                  voteQuestion(question?.id, {
-                    votes: question?.votes + 1,
+                  voteQuestion(currentQuestion?.id, {
+                    votes: currentQuestion?.votes + 1,
                   })
                 }
               />
-              <p>{question?.votes}</p>
+              <p>{currentQuestion?.votes}</p>
               <TiArrowSortedDown
                 className="chevrons"
                 onClick={() =>
-                  voteQuestion(question?.id, {
-                    votes: question?.votes - 1,
+                  voteQuestion(currentQuestion?.id, {
+                    votes: currentQuestion?.votes - 1,
                   })
                 }
               />
@@ -242,26 +205,34 @@ const Solutions = () => {
                   className="chevrons bookmark"
                   color="#f48225"
                   onClick={() => {
-                    postBook({ question_id: question?.id, user_id: acc?.id });
+                    postBook({
+                      question_id: currentQuestion?.id,
+                      user_id: user?.id,
+                    });
                   }}
                 />
               ) : (
                 <BsFillBookmarkFill
                   className="chevrons bookmark"
                   onClick={() => {
-                    postBook({ question_id: question?.id, user_id: acc?.id });
+                    postBook({
+                      question_id: currentQuestion?.id,
+                      user_id: user?.id,
+                    });
                   }}
                 />
               )}
             </div>
-            <div className="question-content">{question?.description}</div>
+            <div className="question-content">
+              {currentQuestion?.description}
+            </div>
             <div className="user-card">
               <small>
                 asked{" "}
                 <ReactTimeAgo
                   style={{ fontSize: "0.8rem" }}
                   className="time-ago"
-                  date={Date.parse(question?.created_at)}
+                  date={Date.parse(currentQuestion?.created_at)}
                   locale="en-US"
                 />{" "}
               </small>
@@ -270,18 +241,18 @@ const Solutions = () => {
                 <AvatarImage src=" " alt="Avatar" />
                 {/* if image isnt available revert to user initials */}
                 <AvatarFallback>
-                  {question?.user?.first_name?.slice(0, 1)}
-                  {question?.user?.last_name?.slice(0, 1)}
+                  {currentQuestion?.user?.first_name?.slice(0, 1)}
+                  {currentQuestion?.user?.last_name?.slice(0, 1)}
                 </AvatarFallback>
               </Avatar>
-              <p className="username">{question?.user?.username}</p>
+              <p className="username">{currentQuestion?.user?.username}</p>
             </div>
           </div>
           <div className="solutions-wrapper">
             <h2 className="article-title">
-              {question?.solution?.length} Answers
+              {currentQuestion?.solution?.length} Answers
             </h2>
-            {question?.solutions?.map((soln) => (
+            {currentQuestion?.solutions?.map((soln) => (
               <div className="question" key={soln.id}>
                 {/* submenu for solution votting */}
                 <div className="submenu">
@@ -358,7 +329,7 @@ const Solutions = () => {
           <div className="faqs">
             <h2>Related Questions</h2>
             <div className="span-card">
-              {related.length >= 1 ? (
+              {related.length > 0 ? (
                 related?.map((quiz) => (
                   <span className="bullets-wrapper" key={quiz?.id}>
                     <span className="text-btn">
