@@ -5,6 +5,7 @@ import { MdAccountCircle, MdHome } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getQuestions,
+  tagsFilter,
   getFAQS,
   set_current_quiz,
 } from "../features/questions/questionSlice";
@@ -20,6 +21,9 @@ import { Tooltip } from "@mui/material";
 import moment from "moment";
 import Pagination from "@mui/material/Pagination";
 import Navbar from "../components/Navbar/Navbar";
+import { useMemo } from "react";
+import debounce from "lodash.debounce";
+import { CiSearch } from "react-icons/ci";
 
 function Home() {
   const navigate = useNavigate();
@@ -38,6 +42,24 @@ function Home() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+  //filter questions
+  const handleSearch = (event) => {
+    if (event.target.value !== "") {
+      dispatch(tagsFilter({ term: event.target.value }));
+    } else {
+      dispatch(getQuestions(page));
+    }
+  };
+
+  const debouncedResults = useMemo(() => {
+    return debounce(handleSearch, 300);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
 
   return (
     <>
@@ -84,6 +106,15 @@ function Home() {
           <div className="section-header">
             <h3>All Questions</h3>
             <small>{total} questions</small>
+            <div className="filter">
+              <CiSearch className="search__icon" />
+              <input
+                type="search"
+                className="tag-filter"
+                placeholder="Filter by tag name"
+                onChange={debouncedResults}
+              ></input>
+            </div>
           </div>
           {!isLoading ? (
             allquestions?.map((question) => (

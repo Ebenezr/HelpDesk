@@ -132,6 +132,18 @@ export const getRelated = createAsyncThunk(
     }
   }
 );
+//get related questions(By tag)
+export const tagsFilter = createAsyncThunk(
+  "questions/tagsFilter",
+  async ({ term, thunkAPI }) => {
+    try {
+      const responce = await Axios.get(`/filter/${term}`);
+      return responce.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
 //vote for a solution
 export const voteSolution = createAsyncThunk(
   "questions/voteSolution",
@@ -222,7 +234,6 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.currentQuestion = action.payload;
-      
       })
       .addCase(getQuestion.rejected, (state, action) => {
         state.isLoading = false;
@@ -262,7 +273,6 @@ const quetionsSlice = createSlice({
       .addCase(postSolutions.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-       
       })
       .addCase(postSolutions.rejected, (state, action) => {
         state.isLoading = false;
@@ -275,7 +285,6 @@ const quetionsSlice = createSlice({
       .addCase(patchQuestions.fulfilled, (state, action) => {
         //state.isSuccess = true;
         //state.isLoading = false;
-     
       })
       .addCase(patchQuestions.rejected, (state, action) => {
         //state.isLoading = false;
@@ -303,6 +312,19 @@ const quetionsSlice = createSlice({
         state.related = action.payload.questions;
       })
       .addCase(getRelated.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payloaQuestions;
+      })
+      .addCase(tagsFilter.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(tagsFilter.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        state.allquestions = action.payload.questions;
+      })
+      .addCase(tagsFilter.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payloaQuestions;

@@ -6,6 +6,23 @@
         font-weight: 500;
         font-size: 2rem;
       }
+      .filter {
+        position: relative;
+        display: flex;
+        align-items: center;
+        .tag-filter {
+          padding: 0.5rem 1.5rem;
+          border-radius: 0.3rem;
+          border: solid $color-info-dark 0.1rem;
+          outline: $color-primary;
+        }
+        .search__icon {
+          font-size: 1.2rem;
+          color: $color-dark;
+          position: absolute;
+          left: 0.2rem;
+        }
+      }
     }
     .article-title {
       font-weight: 500;

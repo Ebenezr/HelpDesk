@@ -26,6 +26,12 @@
     border-radius: 1rem;
     width: 50%;
     outline: none;
+    .search__icon {
+      font-size: 1.2rem;
+      color: $color-dark;
+      position: absolute;
+      left: 0.2rem;
+    }
   }
   .nav__icons {
     color: $color-dark;

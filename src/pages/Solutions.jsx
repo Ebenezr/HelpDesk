@@ -38,7 +38,7 @@ const Solutions = () => {
   // });
   const [solution, setSolution] = useState("");
   // const [related, setRelated] = useState([]);
-  const { user } = useSelector((store) => store.user);
+  const { user, authenticated } = useSelector((store) => store.user);
   const { isLoading, currentQuestion, isSuccess, related } = useSelector(
     (store) => store.questions
   );
@@ -54,6 +54,9 @@ const Solutions = () => {
 
   //bookmark a question
   const postBook = async (formData) => {
+    if (!authenticated) {
+      return alert("You must create an account first!");
+    }
     try {
       await dispatch(postBookmark(formData))
         .unwrap()
@@ -70,6 +73,9 @@ const Solutions = () => {
 
   //post a solution
   const voteQuestion = async (id, formData) => {
+    if (!authenticated) {
+      return alert("You must be logged in to vote!");
+    }
     try {
       await Axios.patch(`/questions/${id}`, formData).then((res) => {
         dispatch(set_current_quiz(res.data));
@@ -92,6 +98,9 @@ const Solutions = () => {
 
   //update seleted solution
   const voteSolution = async (id, formData) => {
+    if (!authenticated) {
+      return alert("You must be logged in to vote!");
+    }
     try {
       await Axios.patch(`/solutions/${id}`, formData).then((res) => {
         dispatch(set_current_quiz(res.data));
@@ -101,6 +110,9 @@ const Solutions = () => {
 
   //post a solution
   const postSoln = async () => {
+    if (!authenticated) {
+      return alert("You must be logged in to post a solution!");
+    }
     try {
       await dispatch(
         postSolutions({
@@ -250,7 +262,7 @@ const Solutions = () => {
           </div>
           <div className="solutions-wrapper">
             <h2 className="article-title">
-              {currentQuestion?.solution?.length} Answers
+              {currentQuestion?.solutions?.length} Answers
             </h2>
             {currentQuestion?.solutions?.map((soln) => (
               <div className="question" key={soln.id}>
@@ -289,11 +301,11 @@ const Solutions = () => {
                   <Avatar className="avatar">
                     <AvatarImage src=" " alt="Pedro Duarte" />
                     <AvatarFallback>
-                      {soln?.user?.first_name?.slice(0, 1)}
-                      {soln?.user?.last_name?.slice(0, 1)}
+                      {soln?.first_name?.slice(0, 1)}
+                      {soln?.last_name?.slice(0, 1)}
                     </AvatarFallback>
                   </Avatar>
-                  <p className="username">{soln?.user?.username}</p>
+                  <p className="username">{soln?.username}</p>
                 </div>
               </div>
             ))}
@@ -340,7 +352,7 @@ const Solutions = () => {
                       <small
                         onClick={() => {
                           dispatch(set_current_quiz(quiz));
-                    
+
                           // navigate("/solutions");
                         }}
                       >
