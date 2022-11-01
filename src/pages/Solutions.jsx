@@ -154,7 +154,10 @@ const Solutions = () => {
   return (
     <>
       <Searchbar />
-      <section className="main-section">
+      <section
+        className="main-section"
+       
+      >
         {/* side bar */}
         <aside className="aside">
           <NavLink className="side__nav__links" to="/questions">

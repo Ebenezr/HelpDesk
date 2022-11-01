@@ -48,7 +48,7 @@ const StyledMenu = styled(NavigationMenuPrimitive.Root, {
   position: "relative",
   display: "flex",
   justifyContent: "center",
-  width: "30%",
+  width: "100vw",
   zIndex: 1,
 });
 
@@ -191,6 +191,7 @@ const NavigationMenuLink = StyledLink;
 const NavigationMenuContent = StyledContent;
 const NavigationMenuViewport = StyledViewport;
 const NavigationMenuIndicator = StyledIndicatorWithArrow;
+
 // Your app...
 const ContentList = styled("ul", {
   display: "grid",
@@ -316,32 +317,87 @@ const ViewportPosition = styled("div", {
   perspective: "2000px",
 });
 
-function DropdownMenu() {
+export const NavigationMenuDemo = () => {
   return (
-    <>
-      <NavigationMenu>
+    <NavigationMenu>
+      <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Overview</NavigationMenuTrigger>
+          <NavigationMenuTrigger>Learn</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ContentList layout="two">
-              <ContentListItem title="Questions" href="/questions">
-                View all the Questions
+            <ContentList layout="one">
+              <ContentListItemCallout />
+              <ContentListItem href="https://stitches.dev/" title="Stitches">
+                CSS-in-JS with best-in-class developer experience.
               </ContentListItem>
-              <ContentListItem title="Profile" href="/profile">
-                View your account stats
+              <ContentListItem href="/colors" title="Colors">
+                Beautiful, thought-out palettes with auto dark mode.
               </ContentListItem>
-              <ContentListItem title="Account" href="/myaccount">
-                Want to work on your account?
-              </ContentListItem>
-              <ContentListItem title="Ask Question" href="/ask">
-                Post your own question
+              <ContentListItem href="https://icons.radix-ui.com/" title="Icons">
+                A crisp set of 15x15 icons, balanced and consistent.
               </ContentListItem>
             </ContentList>
           </NavigationMenuContent>
         </NavigationMenuItem>
-      </NavigationMenu>
-    </>
-  );
-}
 
-export default DropdownMenu;
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Overview</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ContentList layout="two">
+              <ContentListItem
+                title="Introduction"
+                href="/docs/primitives/overview/introduction"
+              >
+                Build high-quality, accessible design systems and web apps.
+              </ContentListItem>
+              <ContentListItem
+                title="Getting started"
+                href="/docs/primitives/overview/getting-started"
+              >
+                A quick tutorial to get you up and running with Radix
+                Primitives.
+              </ContentListItem>
+              <ContentListItem
+                title="Styling"
+                href="/docs/primitives/overview/styling"
+              >
+                Unstyled and compatible with any styling solution.
+              </ContentListItem>
+              <ContentListItem
+                title="Animation"
+                href="/docs/primitives/overview/animation"
+              >
+                Use CSS keyframes or any animation library of your choice.
+              </ContentListItem>
+              <ContentListItem
+                title="Accessibility"
+                href="/docs/primitives/overview/accessibility"
+              >
+                Tested in a range of browsers and assistive technologies.
+              </ContentListItem>
+              <ContentListItem
+                title="Releases"
+                href="/docs/primitives/overview/releases"
+              >
+                Radix Primitives releases and their changelogs.
+              </ContentListItem>
+            </ContentList>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <NavigationMenuLink href="https://github.com/radix-ui">
+            Github
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+
+        <NavigationMenuIndicator />
+      </NavigationMenuList>
+
+      <ViewportPosition>
+        <NavigationMenuViewport />
+      </ViewportPosition>
+    </NavigationMenu>
+  );
+};
+
+export default NavigationMenuDemo;

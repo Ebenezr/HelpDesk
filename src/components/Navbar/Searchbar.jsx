@@ -1,16 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { BsFillBookmarkFill } from "react-icons/bs";
-import { MdNotifications } from "react-icons/md";
+import { MdMenu, MdNotifications } from "react-icons/md";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../radixUI/avatar";
 import { logOut } from "../../features/users/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { searchQuestions } from "../../features/questions/questionSlice";
 import debounce from "lodash.debounce";
+import DropdownMenu from "./DropDown";
 
 function Searchbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [openmenu, setOpenmenu] = useState(null);
 
   const { isLoading, user, authenticated } = useSelector((store) => store.user);
 
@@ -31,6 +33,33 @@ function Searchbar() {
 
   return (
     <nav className="searchbar">
+      <button className="mobile-menu" onClick={() => setOpenmenu(!openmenu)}>
+        <MdMenu className="menu" />
+      </button>
+      {openmenu ? (
+        <div
+          className="sm-nav"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <NavLink to="/questions" className="nav-link">
+            HOME
+          </NavLink>
+          <NavLink to="/ask" className="nav-link">
+            ASK
+          </NavLink>
+          <NavLink to="/questions" className="nav-link">
+            QUESTIONS
+          </NavLink>
+          <NavLink to="/profile" className="nav-link">
+            PROFILE
+          </NavLink>
+          <p className="nav-link" onClick={() => setOpenmenu(!openmenu)}>
+            Close Menu
+          </p>
+        </div>
+      ) : null}
       <NavLink to="/" className="logo">
         HELP<span>DESK</span>
       </NavLink>

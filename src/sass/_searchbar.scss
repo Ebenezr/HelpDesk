@@ -8,6 +8,12 @@
   justify-content: center;
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 
+  .mobile-menu {
+    display: none;
+  }
+  .sm-nav {
+    display: none;
+  }
   //   background: green;
   .logo {
     font-size: 2rem;
@@ -40,6 +46,44 @@
 }
 @media (max-width: $breakpoint-mobile) {
   .searchbar {
+    position: relative;
+    .mobile-menu {
+      display: block;
+      background: transparent;
+      border: none;
+      outline: none;
+      .menu {
+        font-size: 2rem;
+        color: $color-dark;
+      }
+    }
+    .sm-nav {
+      position: absolute;
+      width: 50%;
+      border-radius: 0.5rem;
+      top: 100%;
+      left: 10%;
+      z-index: 11;
+      display: block;
+      display: flex;
+      padding: 1rem;
+      background: $color-primary;
+      flex-direction: column;
+      gap: 1rem;
+      p {
+        cursor: pointer;
+        color: $color-danger;
+      }
+      .nav-link {
+        color: white;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+          color: $color-accent;
+        }
+      }
+    }
     height: 8%;
     .logo {
       font-size: 1rem;
