@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { BsFillBookmarkFill, BsFillPatchQuestionFill } from "react-icons/bs";
+import { BsFillPatchQuestionFill } from "react-icons/bs";
 import { MdAccountCircle, MdHome } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import {
