@@ -25,10 +25,10 @@ import {
 } from "../features/questions/questionSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "../API/axios";
-import { Tooltip } from "@mui/material";
 import moment from "moment";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar/Navbar";
+import Tooltip from "@mui/material/Tooltip";
 
 const Solutions = () => {
   const navigate = useNavigate();
@@ -154,10 +154,7 @@ const Solutions = () => {
   return (
     <>
       <Searchbar />
-      <section
-        className="main-section"
-       
-      >
+      <section className="main-section">
         {/* side bar */}
         <aside className="aside">
           <NavLink className="side__nav__links" to="/questions">
@@ -198,44 +195,52 @@ const Solutions = () => {
           <div className="question">
             {/* submenu for question votting and bookmarking */}
             <div className="submenu">
-              <TiArrowSortedUp
-                className="chevrons"
-                onClick={() =>
-                  voteQuestion(currentQuestion?.id, {
-                    votes: currentQuestion?.votes + 1,
-                  })
-                }
-              />
+              <Tooltip title="Upvote question">
+                <TiArrowSortedUp
+                  className="chevrons"
+                  onClick={() =>
+                    voteQuestion(currentQuestion?.id, {
+                      votes: currentQuestion?.votes + 1,
+                    })
+                  }
+                />
+              </Tooltip>
               <p>{currentQuestion?.votes}</p>
-              <TiArrowSortedDown
-                className="chevrons"
-                onClick={() =>
-                  voteQuestion(currentQuestion?.id, {
-                    votes: currentQuestion?.votes - 1,
-                  })
-                }
-              />
+              <Tooltip title="Downvote question">
+                <TiArrowSortedDown
+                  className="chevrons"
+                  onClick={() =>
+                    voteQuestion(currentQuestion?.id, {
+                      votes: currentQuestion?.votes - 1,
+                    })
+                  }
+                />
+              </Tooltip>
               {isSuccess ? (
-                <BsFillBookmarkFill
-                  className="chevrons bookmark"
-                  color="#f48225"
-                  onClick={() => {
-                    postBook({
-                      question_id: currentQuestion?.id,
-                      user_id: user?.id,
-                    });
-                  }}
-                />
+                <Tooltip title="Bookmark question">
+                  <BsFillBookmarkFill
+                    className="chevrons bookmark"
+                    color="#f48225"
+                    onClick={() => {
+                      postBook({
+                        question_id: currentQuestion?.id,
+                        user_id: user?.id,
+                      });
+                    }}
+                  />
+                </Tooltip>
               ) : (
-                <BsFillBookmarkFill
-                  className="chevrons bookmark"
-                  onClick={() => {
-                    postBook({
-                      question_id: currentQuestion?.id,
-                      user_id: user?.id,
-                    });
-                  }}
-                />
+                <Tooltip title="Bookmark question">
+                  <BsFillBookmarkFill
+                    className="chevrons bookmark"
+                    onClick={() => {
+                      postBook({
+                        question_id: currentQuestion?.id,
+                        user_id: user?.id,
+                      });
+                    }}
+                  />
+                </Tooltip>
               )}
             </div>
             <div className="question-content">
@@ -271,23 +276,27 @@ const Solutions = () => {
               <div className="question" key={soln.id}>
                 {/* submenu for solution votting */}
                 <div className="submenu">
-                  <TiArrowSortedUp
-                    className="chevrons"
-                    onClick={() =>
-                      voteSolution(soln?.id, {
-                        votes: soln?.votes + 1,
-                      })
-                    }
-                  />
+                  <Tooltip title="Upnvote solution">
+                    <TiArrowSortedUp
+                      className="chevrons"
+                      onClick={() =>
+                        voteSolution(soln?.id, {
+                          votes: soln?.votes + 1,
+                        })
+                      }
+                    />
+                  </Tooltip>
                   <p>{soln?.votes}</p>
-                  <TiArrowSortedDown
-                    className="chevrons"
-                    onClick={() =>
-                      voteSolution(soln?.id, {
-                        votes: soln?.votes - 1,
-                      })
-                    }
-                  />
+                  <Tooltip title="Downvote solution">
+                    <TiArrowSortedDown
+                      className="chevrons"
+                      onClick={() =>
+                        voteSolution(soln?.id, {
+                          votes: soln?.votes - 1,
+                        })
+                      }
+                    />
+                  </Tooltip>
                   {/* <BsFillBookmarkFill className="chevrons bookmark" /> */}
                 </div>
                 <div className="question-content">{soln?.description}</div>

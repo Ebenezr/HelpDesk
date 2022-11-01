@@ -28,7 +28,6 @@ import { set_current_quiz } from "../features/questions/questionSlice";
 import moment from "moment";
 import { AiFillEdit } from "react-icons/ai";
 import Tooltip from "@mui/material/Tooltip";
-import Axios from "../API/axios";
 
 function Userprofile() {
   const dispatch = useDispatch();

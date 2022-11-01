@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchQuestions } from "../../features/questions/questionSlice";
 import debounce from "lodash.debounce";
 import DropdownMenu from "./DropDown";
-
 function Searchbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
