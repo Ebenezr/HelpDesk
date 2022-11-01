@@ -9,6 +9,7 @@ import Login from "../components/Forms/Login";
 import Register from "../components/Forms/Register";
 import Resetpassword from "../components/Forms/Resetpassword";
 import EditQuiz from "./EditQuiz";
+import Forgotpassword from "../components/Forms/Forgotpassword";
 
 const Routing = () => (
   <Routes>
@@ -16,6 +17,7 @@ const Routing = () => (
       <Route path="///" element={<Login />} />
       <Route path="register" element={<Register />} />
       <Route path="resetpassword" element={<Resetpassword />} />
+      <Route path="forgotpassword" element={<Forgotpassword />} />
       <Route path="login" element={<Login />} />
     </Route>
     <Route path="/home" element={<Landing />}>
@@ -23,6 +25,7 @@ const Routing = () => (
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
       <Route path="resetpassword" element={<Resetpassword />} />
+      <Route path="forgotpassword" element={<Forgotpassword />} />
     </Route>
     <Route path="/questions" element={<Home />} />
     <Route path="/solutions" element={<Solutions />} />

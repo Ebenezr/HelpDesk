@@ -1,22 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetUserPass } from "../../features/users/userSlice";
+import { resetPass } from "../../features/users/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import { reset } from "../../features/users/userSlice";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 const Resetpassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, isSuccess, isError, user } = useSelector(
+  const [passwordType, setPasswordType] = useState("password");
+  const { isLoading, isSuccess, isError, password_reset_token } = useSelector(
     (store) => store.user
   );
   const [status, setStatus] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirm_password: "",
+    password_confirmation: "",
+    token: "",
   });
 
+  //show/hide password
+  const togglePassword = () => {
+    if (passwordType === "password") {
+      setPasswordType("text");
+      return;
+    }
+    setPasswordType("password");
+  };
   //hangle change event
   const handleChange = (event) => {
     const key = event.target.id;
@@ -29,21 +40,31 @@ const Resetpassword = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const originalPromiseResults = await dispatch(resetUserPass(formData))
+      const originalPromiseResults = await dispatch(
+        resetPass({ ...formData, token: password_reset_token })
+      )
         .unwrap()
-        .then(() => {
+        .then((data) => {
+          console.log(data);
           setStatus(true);
           //navigate to homepage on success
           setTimeout(() => {
             setFormData({
-              email: "",
               password: "",
-              confirm_password: "",
+              password_confirmation: "",
             });
             navigate("/home/login");
           }, 1000);
         })
-        .catch((err) => {});
+        .catch((err) => {
+          setTimeout(() => {
+            setFormData({
+              password: "",
+              password_confirmation: "",
+            });
+            navigate("/home/forgotpassword");
+          }, 1000);
+        });
 
       return originalPromiseResults;
     } catch (err) {
@@ -66,7 +87,7 @@ const Resetpassword = () => {
             type="email"
             id="email"
             className="inputs"
-            placeholder="Email"
+            placeholder="Enter your Email"
             value={formData?.email}
             onChange={handleChange}
           ></input>
@@ -75,25 +96,43 @@ const Resetpassword = () => {
           <input
             required
             autoComplete="new-password"
-            type="password"
+            type={passwordType}
             id="password"
             className="inputs"
             placeholder="Password"
             value={formData?.password}
             onChange={handleChange}
           ></input>
+          {passwordType === "password" ? (
+            <button onClick={togglePassword} type="button">
+              <AiFillEyeInvisible className="form--icons" />
+            </button>
+          ) : (
+            <button onClick={togglePassword} type="button">
+              <AiFillEye className="form--icons" />
+            </button>
+          )}
         </span>
         <span className="input_group">
           <input
             required
             autoComplete="new-password"
-            type="password"
-            id="confirm_password"
+            type={passwordType}
+            id="password_confirmation"
             className="inputs"
             placeholder="Password Confirmation"
-            value={formData?.confirm_password}
+            value={formData?.password_confirmation}
             onChange={handleChange}
-          />
+          ></input>
+          {passwordType === "password" ? (
+            <button onClick={togglePassword} type="button">
+              <AiFillEyeInvisible className="form--icons" />
+            </button>
+          ) : (
+            <button onClick={togglePassword} type="button">
+              <AiFillEye className="form--icons" />
+            </button>
+          )}
         </span>
       </div>
       <div className="signup__footer">
@@ -103,19 +142,15 @@ const Resetpassword = () => {
       </div>
       <div className="sign-up-terms">
         <p>
-          <p>
-            <NavLink className="span" to="/home/login">
-              return back to login
-            </NavLink>
-          </p>
+          <NavLink className="span" to="/home/login">
+            return back to login
+          </NavLink>
         </p>
       </div>
       {isSuccess && status ? (
-        <div className="form__status active">Account Created</div>
+        <div className="form__status active">Password reset success</div>
       ) : isError && status === false ? (
-        <div className="form__status">
-          Failed To Create account check on your details.
-        </div>
+        <div className="form__status">Failed To reset password try again</div>
       ) : null}
     </form>
   );

@@ -115,7 +115,7 @@ const Login = () => {
           </NavLink>
         </p>
         <p>
-          <NavLink className="span" to="/home/resetpassword">
+          <NavLink className="span" to="/home/forgotpassword">
             forgot password
           </NavLink>
         </p>

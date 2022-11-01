@@ -23,13 +23,30 @@ export const loginUser = createAsyncThunk(
 );
 
 //RESET USER PASSWORD
-
-export const resetUserPass = createAsyncThunk(
+//generate token if email is found
+export const forgotPass = createAsyncThunk(
+  "user/forgotUserPass",
+  async (formData, thunkAPI) => {
+    try {
+      const resp = await Axios.post(`/password/forgot`, formData);
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+//generate token if email is found
+export const resetPass = createAsyncThunk(
   "user/resetUserPass",
   async (formData, thunkAPI) => {
-    const { email } = formData;
     try {
-      const resp = await Axios.patch(`/passwordreset/email=${email}`, formData);
+      const resp = await Axios.post(`/password/reset`, formData);
       return resp.data;
     } catch (error) {
       const message =
@@ -201,6 +218,7 @@ const initialState = {
   isError: false,
   message: "",
   authenticated: null,
+  password_reset_token: "",
 };
 
 //logins user
@@ -221,6 +239,7 @@ const userSlice = createSlice({
       state.solutions = [];
       state.authenticated = null;
       state.token = "";
+
       localStorage.setItem("token", JSON.stringify(""));
     },
   },
@@ -320,14 +339,28 @@ const userSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(resetUserPass.pending, (state, action) => {
+      .addCase(forgotPass.pending, (state, action) => {
         state.isLoading = true;
       })
-      .addCase(resetUserPass.fulfilled, (state, action) => {
+      .addCase(forgotPass.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.password_reset_token = action.payload.token;
+      })
+      .addCase(forgotPass.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+      })
+      .addCase(resetPass.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPass.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
       })
-      .addCase(resetUserPass.rejected, (state, action) => {
+      .addCase(resetPass.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;
