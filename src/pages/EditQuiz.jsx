@@ -16,14 +16,13 @@ import Select from "react-select";
 import Axios from "../API/axios";
 
 const EditQuiz = () => {
-  const { isLoading, isSuccess, isError } = useSelector(
+  const { isLoading, isSuccess, isError, currentQuestion } = useSelector(
     (store) => store.questions
   );
   const { user } = useSelector((store) => store.user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [question, setQuestion] = useState({});
-  const [acc, setAcc] = useState({});
   const [status, setStatus] = useState(null);
   const [selectedOptions, setSelectedOptions] = useState();
   const [formData, setFormData] = useState({
@@ -72,13 +71,12 @@ const EditQuiz = () => {
   ];
 
   useEffect(() => {
-    const quiz = JSON.parse(localStorage.getItem("quiz") || "{}");
-    const loggedUser = JSON.parse(localStorage.getItem("user") || "{}");
     const auth = JSON.parse(
-      localStorage.getItem("authenticated")||''||false);
-    setAcc(loggedUser);
-    setFormData(quiz);
-    setQuestion(quiz);
+      localStorage.getItem("authenticated") || "" || false
+    );
+
+    setFormData(currentQuestion);
+
     //if user isnt loged in redirect to login page
     !auth ? navigate("/") : null;
   }, []);
@@ -90,6 +88,11 @@ const EditQuiz = () => {
 
     setFormData({ ...formData, [key]: value });
   };
+
+  function myFunction(item, index, arr) {
+    // arr[index] = item * 10;
+    return item;
+  }
 
   // Function triggered on selection
   function handleSelect(data) {
@@ -191,6 +194,7 @@ const EditQuiz = () => {
                 Add tags to describe what your question is about
               </p>
               <Select
+                defaultValue={[currentQuestion?.tag_list.forEach(myFunction)]}
                 options={quiz_tags}
                 placeholder="Select Tags"
                 value={selectedOptions}
@@ -204,7 +208,7 @@ const EditQuiz = () => {
                   setFormData({
                     ...formData,
                     tag_list: mappedOptions.slice(),
-                    user_id: acc?.id,
+                    user_id: user?.id,
                   });
                 }}
               />
@@ -217,7 +221,7 @@ const EditQuiz = () => {
           </div>
           <button
             className="btn pry-btn-var"
-            onClick={() => UpdateQuestion(question?.id, formData)}
+            onClick={() => UpdateQuestion(currentQuestion?.id, formData)}
           >
             {isLoading ? "Updating question..." : " Update question"}
           </button>

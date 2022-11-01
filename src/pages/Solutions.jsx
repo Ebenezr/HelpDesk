@@ -44,7 +44,7 @@ const Solutions = () => {
   );
   //get seleted question
   useEffect(() => {
-    dispatch(getRelated({ term: currentQuestion.tag_list }));
+    dispatch(getRelated({ term: currentQuestion?.tag_list }));
   }, []);
 
   //get solution filed values
