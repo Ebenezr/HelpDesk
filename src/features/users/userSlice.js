@@ -41,6 +41,26 @@ export const forgotPass = createAsyncThunk(
     }
   }
 );
+
+//gets user notifications
+export const userNotifications = createAsyncThunk(
+  "user/userNotifications",
+  async ({ id, thunkAPI }) => {
+    try {
+      const resp = await Axios.get(`/mynotifications/${id}`);
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 //generate token if email is found
 export const resetPass = createAsyncThunk(
   "user/resetUserPass",
@@ -132,6 +152,25 @@ export const DeleteBookmark = createAsyncThunk(
     }
   }
 );
+//Delete a notification
+export const DeleteNotification = createAsyncThunk(
+  "user/DeleteNotification",
+  async ({ id, thunkAPI }) => {
+    try {
+      const resp = await Axios.delete(`/solution_notifications/${id}`);
+      return resp.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 //get currentusers solutions
 export const getUserSolutions = createAsyncThunk(
   "user/getUserSolutions",
@@ -212,6 +251,8 @@ const initialState = {
   bookmarks: [],
   questions: [],
   solutions: [],
+  notifications: [],
+  noti_count: 0,
   token: "",
   isLoading: false,
   isSuccess: false,
@@ -237,6 +278,8 @@ const userSlice = createSlice({
       state.bookmarks = [];
       state.questions = [];
       state.solutions = [];
+      state.notifications = [];
+      state.noti_count = 0;
       state.authenticated = null;
       state.token = "";
 
@@ -400,6 +443,21 @@ const userSlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(DeleteQuestion.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.user = null;
+        state.message = action.payload;
+      })
+      .addCase(userNotifications.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(userNotifications.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.noti_count = action.payload.count;
+        state.notifications = action.payload.notification;
+      })
+      .addCase(userNotifications.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.user = null;

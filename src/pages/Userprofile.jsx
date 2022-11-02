@@ -17,12 +17,14 @@ import { HiLightBulb } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  userNotifications,
   getUserBookmarks,
   getUserQuestions,
   getUserSolutions,
   DeleteBookmark,
   DeleteSolution,
   DeleteQuestion,
+  DeleteNotification,
 } from "../features/users/userSlice";
 import { set_current_quiz } from "../features/questions/questionSlice";
 import moment from "moment";
@@ -36,6 +38,8 @@ function Userprofile() {
     bookmarks,
     solutions,
     questions,
+    notifications,
+    noti_count,
     tags,
     user,
     authenticated,
@@ -44,6 +48,7 @@ function Userprofile() {
 
   useEffect(() => {
     //fetch logedin user's info
+    dispatch(userNotifications({ id: user?.id }));
     dispatch(getUserBookmarks({ id: user?.id }));
     dispatch(getUserSolutions({ id: user?.id }));
     dispatch(getUserQuestions({ id: user?.id }));
@@ -56,6 +61,15 @@ function Userprofile() {
     try {
       await dispatch(DeleteBookmark({ id: Id })).then((res) => {
         dispatch(getUserBookmarks({ id: user?.id }));
+      });
+    } catch (error) {}
+  };
+
+  //Delete a Notification
+  const handleDeleteNotification = async (Id) => {
+    try {
+      await dispatch(DeleteNotification({ id: Id })).then((res) => {
+        dispatch(userNotifications({ id: user?.id }));
       });
     } catch (error) {}
   };
@@ -248,6 +262,47 @@ function Userprofile() {
                           className="info-btn del"
                           onClick={() => {
                             handleDeleteBookmark(book?.id);
+                          }}
+                        >
+                          <MdDeleteForever color="#fff" />
+                        </button>
+                      </Tooltip>
+                      <Tooltip title="Votes">
+                        <button className="info-btn">
+                          {book?.question?.votes}
+                        </button>
+                      </Tooltip>
+                      <small
+                        onClick={() => {
+                          dispatch(set_current_quiz(book?.question));
+                          navigate("/solutions");
+                        }}
+                      >
+                        {book?.question?.title}
+                      </small>
+                    </span>
+                    <p>
+                      {moment(Date.parse(book?.question?.created_at)).format(
+                        "MMMM Do, YYYY"
+                      )}
+                    </p>
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="user-status-wrapper">
+              <p>
+                My Notifications <span>{noti_count}</span>
+              </p>
+              <div className="span-card">
+                {notifications?.map((book) => (
+                  <span className="bullets-wrapper" key={book?.id}>
+                    <span className="text-btn">
+                      <Tooltip title="Delete">
+                        <button
+                          className="info-btn del"
+                          onClick={() => {
+                            handleDeleteNotification(book?.id);
                           }}
                         >
                           <MdDeleteForever color="#fff" />

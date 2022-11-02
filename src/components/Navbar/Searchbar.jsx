@@ -3,7 +3,7 @@ import { BsFillBookmarkFill } from "react-icons/bs";
 import { MdMenu, MdNotifications } from "react-icons/md";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../radixUI/avatar";
-import { logOut } from "../../features/users/userSlice";
+import { userNotifications, logOut } from "../../features/users/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { searchQuestions } from "../../features/questions/questionSlice";
 import debounce from "lodash.debounce";
@@ -13,7 +13,9 @@ function Searchbar() {
   const dispatch = useDispatch();
   const [openmenu, setOpenmenu] = useState(null);
 
-  const { isLoading, user, authenticated } = useSelector((store) => store.user);
+  const { noti_count, isLoading, user, authenticated } = useSelector(
+    (store) => store.user
+  );
 
   //search questions
   const handleSearch = (event) => {
@@ -83,7 +85,14 @@ function Searchbar() {
       </NavLink>
 
       <NavLink to="profile">
-        <MdNotifications className="nav__icons" />
+        {noti_count > 0 ? (
+          <span className="notification_icon">
+            <MdNotifications className="nav__icons " color="#0a95ff" />
+            <small>{noti_count}</small>
+          </span>
+        ) : (
+          <MdNotifications className="nav__icons" />
+        )}
       </NavLink>
       <button
         className=" btn log-out-btn"
