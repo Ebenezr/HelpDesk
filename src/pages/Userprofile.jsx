@@ -26,7 +26,10 @@ import {
   DeleteQuestion,
   DeleteNotification,
 } from "../features/users/userSlice";
-import { set_current_quiz } from "../features/questions/questionSlice";
+import {
+  set_current_quiz,
+  set_current_soln,
+} from "../features/questions/questionSlice";
 import moment from "moment";
 import { AiFillEdit } from "react-icons/ai";
 import Tooltip from "@mui/material/Tooltip";
@@ -203,45 +206,45 @@ function Userprofile() {
                 My Answers <span>{solutions.length}</span>
               </p>
               <div className="span-card">
-                {solutions?.map((quiz) => (
-                  <span className="bullets-wrapper" key={quiz?.id}>
+                {solutions?.map((soln) => (
+                  <span className="bullets-wrapper" key={soln?.id}>
                     <span className="text-btn">
                       <Tooltip title="Delete">
                         <button
                           className="info-btn del"
                           onClick={() => {
-                            handleDeleteSolution(quiz?.id);
+                            handleDeleteSolution(soln?.id);
                           }}
                         >
                           <MdDeleteForever color="#fff" />
                         </button>
                       </Tooltip>
 
-                      {/* <Tooltip title="Edit">
+                      <Tooltip title="Edit">
                         <button
                           className="info-btn edit"
                           onClick={() => {
-                         
-                            navigate("/solutions");
+                            dispatch(set_current_soln(soln));
+                            navigate("/editsolutions");
                           }}
                         >
                           <AiFillEdit color="#fff" />
                         </button>
-                      </Tooltip> */}
+                      </Tooltip>
                       <Tooltip title="Votes">
-                        <button className="info-btn">{quiz?.votes}</button>
+                        <button className="info-btn">{soln?.votes}</button>
                       </Tooltip>
                       <small
                         onClick={() => {
-                          dispatch(set_current_quiz(quiz));
+                          dispatch(set_current_quiz(soln));
                           navigate("/solutions");
                         }}
                       >
-                        {quiz?.question?.title}
+                        {soln?.question?.title}
                       </small>
                     </span>
                     <p>
-                      {moment(Date.parse(quiz?.question?.created_at)).format(
+                      {moment(Date.parse(soln?.question?.created_at)).format(
                         "MMMM Do, YYYY"
                       )}
                     </p>

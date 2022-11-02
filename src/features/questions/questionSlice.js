@@ -86,7 +86,7 @@ export const postQuestions = createAsyncThunk(
 //update seleted question
 export const patchQuestions = createAsyncThunk(
   "questions/patchQuestion",
-  async (formData) => {
+  async (formData, thunkAPI) => {
     try {
       const responce = await Axios.patch(`/questions/${quiz?.id}`, formData);
       return responce.data;
@@ -96,6 +96,20 @@ export const patchQuestions = createAsyncThunk(
   }
 );
 
+//update seleted question
+export const patchSolution = createAsyncThunk(
+  "questions/patchSolution",
+  async ({ id, description, thunkAPI }) => {
+    try {
+      const responce = await Axios.patch(`/solutions/${id}`, {
+        description: description,
+      });
+      return responce.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
 //bookmark a question
 export const postBookmark = createAsyncThunk(
   "questions/postBookmark",
@@ -171,6 +185,7 @@ const initialState = {
   isError: false,
   error: null,
   currentQuestion: {},
+  currentSolution: {},
 };
 
 const quetionsSlice = createSlice({
@@ -196,6 +211,9 @@ const quetionsSlice = createSlice({
     },
     set_current_quiz: (state, { payload }) => {
       state.currentQuestion = payload;
+    },
+    set_current_soln: (state, { payload }) => {
+      state.currentSolution = payload;
     },
   },
   extraReducers(builder) {
@@ -341,10 +359,23 @@ const quetionsSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         //state.message = action.payloaQuestions;
+      })
+      .addCase(patchSolution.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(patchSolution.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        // state.currentQuestion = action.payload;
+      })
+      .addCase(patchSolution.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        //state.message = action.payloaQuestions;
       });
   },
 });
 
-export const { upvote, downvote, reset, set_current_quiz } =
+export const { upvote, downvote, reset, set_current_quiz, set_current_soln } =
   quetionsSlice.actions;
 export default quetionsSlice.reducer;
