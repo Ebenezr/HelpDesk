@@ -339,6 +339,7 @@ const Solutions = () => {
               onChange={handleChange}
             ></textarea>
             <LoadingButton
+              style={{ backgroundColor: "#0a95ff", color: "#fff" }}
               size="large"
               type="submit"
               //onClick={handleClick}

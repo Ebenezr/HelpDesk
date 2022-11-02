@@ -270,7 +270,7 @@ export default function App() {
             loadingPosition="start"
             startIcon={<SendIcon />}
             loading={isLoading}
-            variant="outlined"
+            variant="contained"
           >
             Post your Question
           </LoadingButton>

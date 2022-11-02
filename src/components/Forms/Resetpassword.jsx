@@ -147,7 +147,7 @@ const Resetpassword = () => {
           loadingPosition="start"
           // startIcon={<SaveIcon />}
           loading={isLoading}
-          variant="outlined"
+          variant="contained"
         >
           REset password
         </LoadingButton>

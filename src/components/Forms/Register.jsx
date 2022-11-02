@@ -176,7 +176,7 @@ function Register() {
           loadingPosition="start"
           // startIcon={<SaveIcon />}
           loading={isLoading}
-          variant="outlined"
+          variant="contained"
         >
           SIGN UP
         </LoadingButton>

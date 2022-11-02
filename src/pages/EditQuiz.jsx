@@ -248,7 +248,7 @@ const EditQuiz = () => {
             loadingPosition="start"
             startIcon={<SaveIcon />}
             loading={isLoading}
-            variant="outlined"
+            variant="contained"
           >
             Update Question
           </LoadingButton>

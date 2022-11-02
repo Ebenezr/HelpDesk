@@ -79,7 +79,7 @@ const Forgotpassword = () => {
           loadingPosition="start"
           // startIcon={<SaveIcon />}
           loading={isLoading}
-          variant="outlined"
+          variant="contained"
         >
           Find Account
         </LoadingButton>
