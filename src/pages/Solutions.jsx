@@ -29,6 +29,10 @@ import moment from "moment";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar/Navbar";
 import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Solutions = () => {
   const navigate = useNavigate();
@@ -196,52 +200,46 @@ const Solutions = () => {
             {/* submenu for question votting and bookmarking */}
             <div className="submenu">
               <Tooltip title="Upvote question">
-                <TiArrowSortedUp
-                  className="chevrons"
+                <IconButton
+                  size="large"
+                  aria-label="upvote"
                   onClick={() =>
                     voteQuestion(currentQuestion?.id, {
                       votes: currentQuestion?.votes + 1,
                     })
                   }
-                />
+                >
+                  <ExpandLessIcon />
+                </IconButton>
               </Tooltip>
               <p>{currentQuestion?.votes}</p>
               <Tooltip title="Downvote question">
-                <TiArrowSortedDown
-                  className="chevrons"
+                <IconButton
+                  size="large"
+                  aria-label="downvote"
                   onClick={() =>
                     voteQuestion(currentQuestion?.id, {
                       votes: currentQuestion?.votes - 1,
                     })
                   }
-                />
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
               </Tooltip>
-              {isSuccess ? (
-                <Tooltip title="Bookmark question">
-                  <BsFillBookmarkFill
-                    className="chevrons bookmark"
-                    color="#f48225"
-                    onClick={() => {
-                      postBook({
-                        question_id: currentQuestion?.id,
-                        user_id: user?.id,
-                      });
-                    }}
-                  />
-                </Tooltip>
-              ) : (
-                <Tooltip title="Bookmark question">
-                  <BsFillBookmarkFill
-                    className="chevrons bookmark"
-                    onClick={() => {
-                      postBook({
-                        question_id: currentQuestion?.id,
-                        user_id: user?.id,
-                      });
-                    }}
-                  />
-                </Tooltip>
-              )}
+              <Tooltip title="Bookmark question">
+                <IconButton
+                  aria-label="bookmark"
+                  size="large"
+                  onClick={() => {
+                    postBook({
+                      question_id: currentQuestion?.id,
+                      user_id: user?.id,
+                    });
+                  }}
+                >
+                  <BookmarkIcon />
+                </IconButton>
+              </Tooltip>
             </div>
             <div className="question-content">
               {currentQuestion?.description}
@@ -277,25 +275,31 @@ const Solutions = () => {
                 {/* submenu for solution votting */}
                 <div className="submenu">
                   <Tooltip title="Upnvote solution">
-                    <TiArrowSortedUp
-                      className="chevrons"
+                    <IconButton
+                      size="large"
+                      aria-label="upvote"
                       onClick={() =>
                         voteSolution(soln?.id, {
                           votes: soln?.votes + 1,
                         })
                       }
-                    />
+                    >
+                      <ExpandLessIcon />
+                    </IconButton>
                   </Tooltip>
                   <p>{soln?.votes}</p>
                   <Tooltip title="Downvote solution">
-                    <TiArrowSortedDown
-                      className="chevrons"
+                    <IconButton
+                      size="large"
+                      aria-label="downvote"
                       onClick={() =>
                         voteSolution(soln?.id, {
                           votes: soln?.votes - 1,
                         })
                       }
-                    />
+                    >
+                      <ExpandMoreIcon />
+                    </IconButton>
                   </Tooltip>
                   {/* <BsFillBookmarkFill className="chevrons bookmark" /> */}
                 </div>

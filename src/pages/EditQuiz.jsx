@@ -100,9 +100,16 @@ const EditQuiz = () => {
     setFormData({ ...formData, [key]: value });
   };
 
-  function myFunction(item, index, arr) {
-    // arr[index] = item * 10;
-    return item;
+  //takes in questions tag list array then maps to a value,object array to dispaly on react select
+  //input ['item1', 'item2]
+  //output [{value:0,label:'item1'}]
+  function myFunction(arr) {
+    const new_tags_list = [];
+    arr.map((tag, index) => {
+      let list = { value: index, label: tag };
+      new_tags_list.push(list);
+    });
+    return new_tags_list;
   }
 
   // Function triggered on selection
@@ -205,7 +212,7 @@ const EditQuiz = () => {
                 Add tags to describe what your question is about
               </p>
               <Select
-                defaultValue={[currentQuestion?.tag_list.forEach(myFunction)]}
+                defaultValue={myFunction(currentQuestion?.tag_list)}
                 options={quiz_tags}
                 placeholder="Select Tags"
                 value={selectedOptions}
