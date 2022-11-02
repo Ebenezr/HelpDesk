@@ -4,7 +4,9 @@ import { loginUser } from "../../features/users/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import { reset } from "../../features/users/userSlice";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
-
+import LoadingButton from "@mui/lab/LoadingButton";
+import SaveIcon from "@mui/icons-material/Save";
+import SendIcon from "@mui/icons-material/Send";
 const Login = () => {
   const [status, setStatus] = useState(null);
   const [passwordType, setPasswordType] = useState("password");
@@ -103,9 +105,20 @@ const Login = () => {
         </span>
       </div>
       <div className="signup__footer">
-        <button className="btn pry-btn" type="submit">
+        <LoadingButton
+          size="large"
+          type="submit"
+          //onClick={handleClick}
+          loadingPosition="start"
+          // startIcon={<SaveIcon />}
+          loading={isLoading}
+          variant="outlined"
+        >
+          LOGIN
+        </LoadingButton>
+        {/* <button className="btn pry-btn" type="submit">
           {isLoading ? "LOGING YOU IN..." : "LOGIN"}
-        </button>
+        </button> */}
       </div>
       <div className="sign-up-terms">
         <p>

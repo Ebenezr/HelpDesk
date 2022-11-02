@@ -4,6 +4,9 @@ import { registerUser } from "../../features/users/userSlice";
 import { useNavigate } from "react-router-dom";
 import { reset } from "../../features/users/userSlice";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SaveIcon from "@mui/icons-material/Save";
+import SendIcon from "@mui/icons-material/Send";
 
 function Register() {
   const [status, setStatus] = useState(null);
@@ -165,9 +168,20 @@ function Register() {
         </span>
       </div>
       <div className="signup__footer">
-        <button className="btn pry-btn" type="submit">
+        <LoadingButton
+          size="large"
+          type="submit"
+          //onClick={handleClick}
+          loadingPosition="start"
+          // startIcon={<SaveIcon />}
+          loading={isLoading}
+          variant="outlined"
+        >
+          SIGN UP
+        </LoadingButton>
+        {/* <button className="btn pry-btn" type="submit">
           {isLoading ? "SIGNING YOU UP..." : " PROCEED"}
-        </button>
+        </button> */}
       </div>
       <div className="sign-up-terms">
         <p>

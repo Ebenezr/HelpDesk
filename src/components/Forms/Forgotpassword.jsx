@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { forgotPass } from "../../features/users/userSlice";
 import { NavLink, useNavigate } from "react-router-dom";
 import { reset } from "../../features/users/userSlice";
-
+import LoadingButton from "@mui/lab/LoadingButton";
+import SaveIcon from "@mui/icons-material/Save";
+import SendIcon from "@mui/icons-material/Send";
 const Forgotpassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -69,9 +71,20 @@ const Forgotpassword = () => {
         </span>
       </div>
       <div className="signup__footer">
-        <button className="btn pry-btn" type="submit">
+        <LoadingButton
+          size="large"
+          type="submit"
+          //onClick={handleClick}
+          loadingPosition="start"
+          // startIcon={<SaveIcon />}
+          loading={isLoading}
+          variant="outlined"
+        >
+          Find Account
+        </LoadingButton>
+        {/* <button className="btn pry-btn" type="submit">
           {isLoading ? "Requeesting server..." : " PROCEED"}
-        </button>
+        </button> */}
       </div>
       <div className="sign-up-terms">
         <p>
