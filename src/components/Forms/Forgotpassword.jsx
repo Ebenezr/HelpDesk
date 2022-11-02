@@ -72,6 +72,7 @@ const Forgotpassword = () => {
       </div>
       <div className="signup__footer">
         <LoadingButton
+          style={{ backgroundColor: "#0a95ff", color: "#fff" }}
           size="large"
           type="submit"
           //onClick={handleClick}

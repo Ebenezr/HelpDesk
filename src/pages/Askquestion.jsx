@@ -263,6 +263,7 @@ export default function App() {
             </div>
           </div>
           <LoadingButton
+            style={{ backgroundColor: "#0a95ff", color: "#fff" }}
             size="large"
             type="submit"
             onClick={handleSubmit}

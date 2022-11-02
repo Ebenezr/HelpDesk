@@ -241,6 +241,7 @@ const EditQuiz = () => {
             </div>
           </div>
           <LoadingButton
+            style={{ backgroundColor: "#0a95ff", color: "#fff" }}
             size="large"
             type="submit"
             onClick={() => UpdateQuestion(currentQuestion?.id, formData)}
