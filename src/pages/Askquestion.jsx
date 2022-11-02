@@ -16,6 +16,9 @@ import { HiLightBulb } from "react-icons/hi";
 import { MdAccountCircle, MdHome } from "react-icons/md";
 import Select from "react-select";
 import Axios from "../API/axios";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SaveIcon from "@mui/icons-material/Save";
+import SendIcon from "@mui/icons-material/Send";
 
 export default function App() {
   const { isLoading, isSuccess, isError } = useSelector(
@@ -259,9 +262,20 @@ export default function App() {
               ) : null}
             </div>
           </div>
-          <button className="btn pry-btn" type="submit" onClick={handleSubmit}>
+          <LoadingButton
+            size="large"
+            type="submit"
+            onClick={handleSubmit}
+            loadingPosition="start"
+            startIcon={<SendIcon />}
+            loading={isLoading}
+            variant="outlined"
+          >
+            Post your Question
+          </LoadingButton>
+          {/* <button className="btn pry-btn" type="submit" onClick={handleSubmit}>
             {isLoading ? "Posting question..." : " Post question"}
-          </button>
+          </button> */}
         </div>
         <article className="articles">
           <div className="accordion-wrapper">

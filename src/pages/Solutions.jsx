@@ -33,6 +33,9 @@ import IconButton from "@mui/material/IconButton";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SaveIcon from "@mui/icons-material/Save";
+import SendIcon from "@mui/icons-material/Send";
 
 const Solutions = () => {
   const navigate = useNavigate();
@@ -335,9 +338,17 @@ const Solutions = () => {
               value={solution}
               onChange={handleChange}
             ></textarea>
-            <button className="btn pry-btn" type="submit">
-              {isLoading ? "Posting..." : "Post your answer"}
-            </button>
+            <LoadingButton
+              size="large"
+              type="submit"
+              //onClick={handleClick}
+              loadingPosition="start"
+              startIcon={<SaveIcon />}
+              loading={isLoading}
+              variant="contained"
+            >
+              Post your answer
+            </LoadingButton>
             <small>
               Not the answer you're looking for? Browse other questions tagged
               student account or <span>ask your own question.</span>

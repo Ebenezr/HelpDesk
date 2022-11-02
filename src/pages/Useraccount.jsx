@@ -14,6 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { updateUser, reset } from "../features/users/userSlice";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SaveIcon from "@mui/icons-material/Save";
+import SendIcon from "@mui/icons-material/Send";
 
 function Useraccount() {
   const [status, setStatus] = useState(null);
@@ -201,9 +204,20 @@ function Useraccount() {
                   </div>
                 ) : null}
               </div>
-              <button type="submit" className="btn sec-btn">
+              <LoadingButton
+                size="large"
+                type="submit"
+                //onClick={handleClick}
+                loadingPosition="start"
+                startIcon={<SaveIcon />}
+                loading={isLoading}
+                variant="outlined"
+              >
+                Save updates
+              </LoadingButton>
+              {/* <button type="submit" className="btn sec-btn">
                 {isLoading ? "Saving..." : "Save"}
-              </button>
+              </button> */}
             </form>
           </article>
         </main>

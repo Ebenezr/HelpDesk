@@ -14,6 +14,9 @@ import { HiLightBulb } from "react-icons/hi";
 import { MdAccountCircle, MdHome } from "react-icons/md";
 import Select from "react-select";
 import Axios from "../API/axios";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SaveIcon from "@mui/icons-material/Save";
+import SendIcon from "@mui/icons-material/Send";
 
 const EditQuiz = () => {
   const { isLoading, isSuccess, isError, currentQuestion } = useSelector(
@@ -237,12 +240,23 @@ const EditQuiz = () => {
               ) : null}
             </div>
           </div>
-          <button
+          <LoadingButton
+            size="large"
+            type="submit"
+            onClick={() => UpdateQuestion(currentQuestion?.id, formData)}
+            loadingPosition="start"
+            startIcon={<SaveIcon />}
+            loading={isLoading}
+            variant="outlined"
+          >
+            Update Question
+          </LoadingButton>
+          {/* <button
             className="btn pry-btn-var"
             onClick={() => UpdateQuestion(currentQuestion?.id, formData)}
           >
             {isLoading ? "Updating question..." : " Update question"}
-          </button>
+          </button> */}
         </div>
         <article className="articles">
           <div className="accordion-wrapper">
