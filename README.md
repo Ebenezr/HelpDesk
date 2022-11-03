@@ -1,13 +1,22 @@
 # Help Desk
 
-### Authors
+## Contributers
 
-    Cecilia Anyega
-    Allan Ngoma
-    Alice Auko
-    Lewis Mwendwa
-    Karugo Murage
-    Ebenezar Bukosia
+<!-- <a href="https://github.com/Ebenezr/Helpdesk-api/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Ebenezr/Helpdesk-api" />
+</a>
+<a href="https://github.com/Ebenezr/Helpdesk/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Ebenezr/Helpdesk" />
+</a> -->
+
+- [Cecilia Anyega](https://github.com/Cecilia5404)
+- [Allan Ngoma](https://github.com/allanstar-byte)
+- [Alice Auko](https://github.com/aliceauko)
+- [Lewis Mwendwa](https://github.com/LewKM)
+- [Karugo Murage](https://github.com/karugo-murage)
+- [Ebenezar Bukosia](https://github.com/Ebenezr)
+
+---
 
 ## Project Description
 
@@ -19,23 +28,29 @@ Helpdesk is a question and answer website for students. A student can ask questi
 
 ### ![Demo](./src/assets/demo-helpdesk.gif)
 
+---
+
 ## Screen shots
 
 ### landing page
 
 #### ![image](https://user-images.githubusercontent.com/37300065/199033287-084eee6c-b3f1-472a-823b-d8ba7119a0ef.png)
 
+---
+
 ### home page
 
 #### ![image](https://user-images.githubusercontent.com/37300065/199033785-0395dbb1-efcb-49a3-af9d-acfc4d43f3dd.png)
 
+---
+
 ### ask question page
 
-![image](https://user-images.githubusercontent.com/37300065/199034124-9edd18eb-8c71-448c-9e67-d9eb47d2784c.png)
+## ![image](https://user-images.githubusercontent.com/37300065/199034124-9edd18eb-8c71-448c-9e67-d9eb47d2784c.png)
 
 ### profiles page
 
-![image](https://user-images.githubusercontent.com/37300065/199034553-cc249837-ced9-43ae-b4ab-1c65ec12b7da.png)
+## ![image](https://user-images.githubusercontent.com/37300065/199034553-cc249837-ced9-43ae-b4ab-1c65ec12b7da.png)
 
 ## Table of content
 
@@ -99,8 +114,6 @@ Helpdesk is a question and answer website for students. A student can ask questi
 
 ## How to set up and run the project
 
----
-
 ### Requirements
 
 --- the following are the requirements for the project
@@ -125,8 +138,6 @@ Helpdesk is a question and answer website for students. A student can ask questi
 - npm
 
 ### setup
-
----
 
 #### Client (React)
 
