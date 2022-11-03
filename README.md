@@ -11,7 +11,13 @@
 
 ## Project Description
 
+Helpdesk is a question and answer website for students. A student can ask questions, view previusly assked questions, answer questions and vote for questions that was helpfull. A student can also bookmark a question and be able to follow up on it later.
+
 ---
+
+## Demo
+
+### ![Demo](./src/assets/demo-helpdesk.gif)
 
 ## Screen shots
 
