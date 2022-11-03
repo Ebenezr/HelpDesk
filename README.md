@@ -30,6 +30,10 @@ Helpdesk is a question and answer website for students. A student can ask questi
 
 ---
 
+## Wireframe design
+
+- [Figma](https://www.figma.com/file/xlsyDqdbf9o3UfLrxwQ39j/Helpdesk?node-id=0%3A1)
+
 ## Screen shots
 
 ### landing page
